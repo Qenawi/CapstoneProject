@@ -3,14 +3,14 @@ package com.example.qenawi.ttasker_capstone.modle;
 /**
  * Created by QEnawi on 10/22/2016.
  */
-public class users_data_modle
+public class users_data_modleitem
 {
     private String name;
     private String email;
     private String photo_url;
-  public users_data_modle(){}
+  public users_data_modleitem(){}
 
-    public users_data_modle(String email, String name, String photo_url)
+    public users_data_modleitem(String email, String name, String photo_url)
     {
         this.email = email;
         this.name = name;

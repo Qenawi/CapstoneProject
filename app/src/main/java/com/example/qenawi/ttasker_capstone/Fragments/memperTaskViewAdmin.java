@@ -83,4 +83,6 @@ public class memperTaskViewAdmin extends Fragment  implements MempertasksViewAdm
         // TODO: Update argument type and name
         void onFragmentInteraction6(Object uri);
     }
+    //-----------------------------------
+
 }

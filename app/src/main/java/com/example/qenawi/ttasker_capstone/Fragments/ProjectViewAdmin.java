@@ -1,28 +1,42 @@
 package com.example.qenawi.ttasker_capstone.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.qenawi.ttasker_capstone.CallBack.Data_loadedMyProjectsViewAdmin;
+import com.example.qenawi.ttasker_capstone.ChatActivity;
+import com.example.qenawi.ttasker_capstone.Contract.ContractDepug;
 import com.example.qenawi.ttasker_capstone.R;
 import com.example.qenawi.ttasker_capstone.adapters.RecyclerViewAdapterMainActivity;
+import com.example.qenawi.ttasker_capstone.modle.pmemberitem;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class ProjectViewAdmin extends Fragment implements RecyclerViewAdapterMainActivity.onClickListner {
+public class ProjectViewAdmin extends Fragment implements RecyclerViewAdapterMainActivity.onClickListner,Data_loadedMyProjectsViewAdmin {
 
     RecyclerViewAdapterMainActivity adapter;
     RecyclerView rv;
     RecyclerView.LayoutManager ly;
     ArrayList<String> data = new ArrayList<>();
-
+    ArrayList<pmemberitem> datax = new ArrayList<>();
+    FloatingActionButton Chat;
     private OnFragmentInteractionListener mListener;
-
+    private String Pname="alpha7e";
+    private  Data_loadedMyProjectsViewAdmin mCallBack;
     public ProjectViewAdmin()
     {
         // Required empty public constructor
@@ -31,14 +45,21 @@ public class ProjectViewAdmin extends Fragment implements RecyclerViewAdapterMai
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_project_view_admin, container, false);
+        Chat=(FloatingActionButton)root.findViewById(R.id.floatingActionButton2);
+        mCallBack=this;
         rv = (RecyclerView) root.findViewById(R.id.project_team);
-        data.add("ahmed");
-        data.add("mona");
-        data.add("Alaa Omer");
         adapter = new RecyclerViewAdapterMainActivity(getContext(), this, data, 0);
         ly = new LinearLayoutManager(getActivity());
         rv.setLayoutManager(ly);
         rv.setAdapter(adapter);
+        Chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                startActivity(new Intent(getActivity(), ChatActivity.class));
+            }
+        });
+        get_UserProjects();
         return root;
     }
     @Override
@@ -65,5 +86,36 @@ public class ProjectViewAdmin extends Fragment implements RecyclerViewAdapterMai
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction5(Object uri);
+    }
+    //----------------------------------
+    void get_UserProjects()
+    {
+        FirebaseDatabase Fdb = FirebaseDatabase.getInstance();
+        DatabaseReference Fdbr = Fdb.getReference().child("pmember").child(Pname);
+        //Query query = Fdbr.g
+        Fdbr.addListenerForSingleValueEvent(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                Log.v(ContractDepug.PUBTAG," "+dataSnapshot.getChildrenCount());
+                for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren())
+                {
+                    pmemberitem myPair = dataSnapshot1.getValue(pmemberitem.class);
+                    data.add(myPair.getName());
+                    datax.add(new pmemberitem(myPair.getKey(),myPair.getName()));
+                }
+                mCallBack.data_arrived("0");
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+    @Override
+    public void data_arrived(Object object)
+    {
+        adapter.notifyDataSetChanged();
     }
 }

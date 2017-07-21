@@ -45,5 +45,7 @@ public class ChatActivity extends EmojiCompatActivity implements WhatsAppPanelEv
     public void onSendClicked()
     {
         data.add(new smsitem(mBottomPanel.getText(),null,"21/7/2017", acc.get_username().getEmail()));
+        adapter.notifyDataSetChanged();
+        rv.scrollToPosition(adapter.getItemCount()-1);
     }
 }

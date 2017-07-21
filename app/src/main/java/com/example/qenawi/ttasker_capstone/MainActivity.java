@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 import com.example.qenawi.ttasker_capstone.Contract.ContractAcc;
 import com.example.qenawi.ttasker_capstone.Sign.SignInActivity;
-import com.example.qenawi.ttasker_capstone.modle.users_data_modle;
+import com.example.qenawi.ttasker_capstone.modle.users_data_modleitem;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity
     private void is_user_signed()
     {
         ContractAcc con = new ContractAcc();
-        users_data_modle mUdm = con.get_username();
+        users_data_modleitem mUdm = con.get_username();
         if (mUdm == null)
         {
             // Not signed in, launch the Sign In activity

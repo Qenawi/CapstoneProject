@@ -25,7 +25,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.qenawi.ttasker_capstone.R;
-import com.example.qenawi.ttasker_capstone.modle.users_data_modle;
+import com.example.qenawi.ttasker_capstone.modle.users_data_modleitem;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -60,7 +60,7 @@ public class SignInActivity extends AppCompatActivity implements
     // Firebase instance variables
     private FirebaseAuth mFirebaseAuth;
    private DatabaseReference dp_ref;
-     users_data_modle user;
+     users_data_modleitem user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -194,7 +194,7 @@ public class SignInActivity extends AppCompatActivity implements
       Log.v("AIAAWBUYB", "add u d 3");
       try
       {
-          user = new users_data_modle(mFirebaseAuth.getCurrentUser().getEmail(), mFirebaseAuth.getCurrentUser().getDisplayName(), mFirebaseAuth.getCurrentUser().getPhotoUrl().toString());
+          user = new users_data_modleitem(mFirebaseAuth.getCurrentUser().getEmail(), mFirebaseAuth.getCurrentUser().getDisplayName(), mFirebaseAuth.getCurrentUser().getPhotoUrl().toString());
           dp_ref.push().setValue(user);
       }
       catch (Exception e){e.printStackTrace();}

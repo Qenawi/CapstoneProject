@@ -97,7 +97,8 @@ public class AndroidEmoji {
             return mInstance;
         }
 
-        private FontProvider(Context context) {
+        private FontProvider(Context context)
+        {
             mFontEmoji = Typeface.createFromAsset(context.getAssets(), PATH_EMOJI);
         }
 
@@ -118,19 +119,18 @@ public class AndroidEmoji {
     private static boolean isEmoji(int codePoint) {
         return
                 // Digits and number sign on keys (actually defined in concatenated form)
-                // codePoint == 0x0023 0x20E3 ||
-                // codePoint == 0x0030 0x20E3 ||
-                // codePoint == 0x0031 0x20E3 ||
-                // codePoint == 0x0032 0x20E3 ||
-                // codePoint == 0x0033 0x20E3 ||
-                // codePoint == 0x0034 0x20E3 ||
-                // codePoint == 0x0035 0x20E3 ||
-                // codePoint == 0x0036 0x20E3 ||
-                // codePoint == 0x0037 0x20E3 ||
-                // codePoint == 0x0038 0x20E3 ||
-                // codePoint == 0x0039 0x20E3 ||
-
-                codePoint == 0x00A9 ||
+//                 codePoint == 0x0023 0x20E3 ||
+//                 codePoint == 0x0030 0x20E3 ||
+//                 codePoint == 0x0031 0x20E3 ||
+//                 codePoint == 0x0032 0x20E3 ||
+//                 codePoint == 0x0033 0x20E3 ||
+//                 codePoint == 0x0034 0x20E3 ||
+//                 codePoint == 0x0035 0x20E3 ||
+//                 codePoint == 0x0036 0x20E3 ||
+//                 codePoint == 0x0037 0x20E3 ||
+//                 codePoint == 0x0038 0x20E3 ||
+//                 codePoint == 0x0039 0x20E3 ||
+                      codePoint == 0x00A9 ||
                         codePoint == 0x00AE ||
                         codePoint == 0x2002 ||
                         codePoint == 0x2003 ||
