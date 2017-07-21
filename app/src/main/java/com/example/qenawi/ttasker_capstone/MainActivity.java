@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity
         {
             Toast.makeText(this,"user is oReady signed in",Toast.LENGTH_SHORT).show();
             // Call main Activity Create,Join,myprojects
+            startActivity(new Intent(this,MainActivity3Tasks.class));
         }
         }
-
     }
