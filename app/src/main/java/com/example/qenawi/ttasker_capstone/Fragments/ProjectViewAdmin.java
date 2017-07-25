@@ -18,6 +18,7 @@ import com.example.qenawi.ttasker_capstone.Contract.ContractDepug;
 import com.example.qenawi.ttasker_capstone.R;
 import com.example.qenawi.ttasker_capstone.adapters.RecyclerViewAdapterMainActivity;
 import com.example.qenawi.ttasker_capstone.modle.pmemberitem;
+import com.example.qenawi.ttasker_capstone.modle.userprojectItem;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,7 +36,7 @@ public class ProjectViewAdmin extends Fragment implements RecyclerViewAdapterMai
     ArrayList<pmemberitem> datax = new ArrayList<>();
     FloatingActionButton Chat;
     private OnFragmentInteractionListener mListener;
-    private String Pname="alpha7e";
+    private userprojectItem Pkey;
     private  Data_loadedMyProjectsViewAdmin mCallBack;
     public ProjectViewAdmin()
     {
@@ -45,6 +46,7 @@ public class ProjectViewAdmin extends Fragment implements RecyclerViewAdapterMai
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_project_view_admin, container, false);
+        Pkey =(userprojectItem) getActivity().getIntent().getExtras().getSerializable("PKey");//project key
         Chat=(FloatingActionButton)root.findViewById(R.id.floatingActionButton2);
         mCallBack=this;
         rv = (RecyclerView) root.findViewById(R.id.project_team);
@@ -81,7 +83,10 @@ public class ProjectViewAdmin extends Fragment implements RecyclerViewAdapterMai
     @Override
     public void onListItemClick(int Clickpos)
     {
-      mListener.onFragmentInteraction5(data.get(Clickpos));
+       Bundle bundle=new Bundle();
+        bundle.putSerializable("member data",datax.get(Clickpos));
+        bundle.putSerializable("project data",Pkey);
+      mListener.onFragmentInteraction5(bundle);
     }
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
@@ -91,7 +96,7 @@ public class ProjectViewAdmin extends Fragment implements RecyclerViewAdapterMai
     void get_UserProjects()
     {
         FirebaseDatabase Fdb = FirebaseDatabase.getInstance();
-        DatabaseReference Fdbr = Fdb.getReference().child("pmember").child(Pname);
+        DatabaseReference Fdbr = Fdb.getReference().child("pmember").child(Pkey.getPkey());
         //Query query = Fdbr.g
         Fdbr.addListenerForSingleValueEvent(new ValueEventListener()
         {

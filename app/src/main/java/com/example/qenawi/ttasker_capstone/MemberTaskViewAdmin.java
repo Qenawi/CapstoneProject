@@ -5,20 +5,25 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.KeyEvent;
 
 import com.example.qenawi.ttasker_capstone.Fragments.AddTaskAdmin;
 import com.example.qenawi.ttasker_capstone.Fragments.memperTaskViewAdmin;
+import com.example.qenawi.ttasker_capstone.modle.pmemberitem;
 
 public class MemberTaskViewAdmin extends AppCompatActivity implements memperTaskViewAdmin.OnFragmentInteractionListener,AddTaskAdmin.OnFragmentInteractionListener
 {
+    private pmemberitem user;
+    private  String Pkey,Pname;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member_task_view_admin);
+        user=(pmemberitem)getIntent().getExtras().getSerializable("member data");
+        Pkey=getIntent().getExtras().getString("project data");
         Call_tasks();
     }
     private void Call_tasks() // status
@@ -49,7 +54,6 @@ public class MemberTaskViewAdmin extends AppCompatActivity implements memperTask
                 && keyCode == KeyEvent.KEYCODE_BACK
                 && event.getRepeatCount() == 0&&myFragment!=null&&myFragment.isVisible())
         {
-            Log.d("CDA", "onKeyDown Called");
             Call_tasks();
             return true;
         }
@@ -60,5 +64,5 @@ public class MemberTaskViewAdmin extends AppCompatActivity implements memperTask
     public void onFragmentInteraction(Uri uri)
     {
 
-    }
+    }// add task fragment call back
 }

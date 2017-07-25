@@ -17,6 +17,7 @@ package com.example.qenawi.ttasker_capstone.Sign;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -194,8 +195,11 @@ public class SignInActivity extends AppCompatActivity implements
       Log.v("AIAAWBUYB", "add u d 3");
       try
       {
+
           user = new users_data_modleitem(mFirebaseAuth.getCurrentUser().getEmail(), mFirebaseAuth.getCurrentUser().getDisplayName(), mFirebaseAuth.getCurrentUser().getPhotoUrl().toString());
-          dp_ref.push().setValue(user);
+          String key=dp_ref.push().getKey();
+          setSTored(key);
+          dp_ref.child(key).setValue(user);
       }
       catch (Exception e){e.printStackTrace();}
 
@@ -212,4 +216,9 @@ public class SignInActivity extends AppCompatActivity implements
       setResult(RESULT_OK,returnIntent);
       finish();
   }
+    void setSTored(String e)
+    {
+        PreferenceManager.getDefaultSharedPreferences(this).edit().putString("eTa",e).apply();
+    }
+
 }//clas

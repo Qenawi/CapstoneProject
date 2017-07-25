@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.example.qenawi.ttasker_capstone.Fragments.CreateProject;
 import com.example.qenawi.ttasker_capstone.Fragments.JoinProject;
 import com.example.qenawi.ttasker_capstone.Fragments.MyProjects;
+import com.example.qenawi.ttasker_capstone.modle.userprojectItem;
 
 public class MainActivity3TasksHandler extends AppCompatActivity  implements CreateProject.OnFragmentInteractionListener,JoinProject.OnFragmentInteractionListener,MyProjects.OnFragmentInteractionListener
 {
@@ -26,16 +27,19 @@ public class MainActivity3TasksHandler extends AppCompatActivity  implements Cre
     @Override
     public void onFragmentInteraction(Object uri)
     {
+
     }// create
     @Override
     public void onFragmentInteraction2(Object uri)
     {
+
     }//join
     @Override
-    public void onFragmentInteraction3(Object uri)
+    public void onFragmentInteraction3(Object uri,Object uri2)
     {
         Intent i=new Intent(this,ProjectView.class);
-        i.putExtra("Access","1");
+        i.putExtra("Access",(String) uri);
+        i.putExtra("PKey",(userprojectItem)uri2);
         startActivity(i);
     }//My_Projects
  //--Frags Calls

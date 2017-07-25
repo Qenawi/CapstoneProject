@@ -71,6 +71,7 @@ public class ProjectViewUserAdp extends RecyclerView.Adapter<ProjectViewUserAdp.
             tData = (TextView) itemView.findViewById(R.id.DATA);
             tDate = (TextView) itemView.findViewById(R.id.DATE);
             tState=(CheckBox)itemView.findViewById(R.id.checkBox);
+            tState.setOnClickListener(this);
             itemView.setOnClickListener(this);
         }
 
@@ -80,11 +81,12 @@ public class ProjectViewUserAdp extends RecyclerView.Adapter<ProjectViewUserAdp.
             tName.setText(task.getTaskName());
             tData.setText(task.getTaskDesc());
             tDate.setText(task.getDate());
-            tState.setChecked(task.getDone());
+            tState.setChecked(task.getDoneB());
         }
 
         @Override
-        public void onClick(View view) {
+        public void onClick(View view)
+        {
             int Clickpos = getAdapterPosition();
             mOnClickListener.onListItemClick(Clickpos);
         }

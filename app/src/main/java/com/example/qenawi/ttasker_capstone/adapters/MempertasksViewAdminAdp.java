@@ -78,7 +78,7 @@ public class MempertasksViewAdminAdp extends RecyclerView.Adapter<MempertasksVie
             tName.setText(task.getTaskName());
             tData.setText(task.getTaskDesc());
             tDate.setText(task.getDate());
-            tState.setChecked(task.getDone());
+            tState.setChecked(task.getDoneB());
         }
         @Override
         public void onClick(View view) {

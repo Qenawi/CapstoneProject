@@ -12,39 +12,30 @@ public class projectsitem implements Serializable
     {
     }
 
-    String Pname;
+    private String pname;
 
     public projectsitem(String pname, String adminKey, String chatroomKey) {
-        Pname = pname;
+        this.pname = pname;
         this.adminKey = adminKey;
         this.chatroomKey = chatroomKey;
     }
 
-    String adminKey;
+    private String adminKey;
 
     public String getPname() {
-        return Pname;
+        return pname;
     }
 
-    public void setPname(String pname) {
-        Pname = pname;
-    }
 
     public String getAdminKey() {
         return adminKey;
     }
 
-    public void setAdminKey(String adminKey) {
-        this.adminKey = adminKey;
-    }
 
     public String getChatroomKey() {
         return chatroomKey;
     }
 
-    public void setChatroomKey(String chatroomKey) {
-        this.chatroomKey = chatroomKey;
-    }
 
-    String chatroomKey;
+   private   String chatroomKey;
 }

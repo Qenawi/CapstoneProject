@@ -8,19 +8,32 @@ import java.io.Serializable;
 
 public class taskItem implements Serializable
 {
-    public taskItem(String taskName, String taskDesc, String date, String done)
+    public String getName() {
+        return name;
+    }
+
+    public taskItem(String taskName, String taskDesc, String date, String done, String name)
     {
         this.taskName = taskName;
         this.taskDesc = taskDesc;
         this.date = date;
         this.done = done;
+        this.name=name;
     }
-    String taskName;
-    String taskDesc;
+
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
+    private  String name;
+    private String taskName;
+    private  String taskDesc;
     public taskItem()
     {
+
     }
-    String date;
+    private String date;
     public String getTaskName()
     {
         return taskName;
@@ -31,10 +44,20 @@ public class taskItem implements Serializable
     public String getDate() {
         return date;
     }
-    public Boolean getDone()
+    public Boolean getDoneB()
     {
         if (this.done.equals("1"))return true;
         else return  false;
     }
-    String done;
+    public String getDone()
+    {
+        return  this.done;
+    }
+
+    public void setDone(String done)
+    {
+        this.done = done;
+    }
+
+    private   String done;
 }

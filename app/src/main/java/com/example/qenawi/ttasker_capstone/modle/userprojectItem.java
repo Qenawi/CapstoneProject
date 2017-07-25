@@ -17,7 +17,7 @@ public class userprojectItem implements Serializable
         this.pname = pname;
     }
 
-    String pkey;
+    private  String pkey;
 
     public String getPkey() {
         return pkey;
@@ -35,5 +35,5 @@ public class userprojectItem implements Serializable
         this.pname = pname;
     }
 
-    String pname;
+    private    String pname;
 }

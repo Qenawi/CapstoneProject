@@ -9,11 +9,13 @@ import android.support.v7.app.AppCompatActivity;
 import com.example.qenawi.ttasker_capstone.Fragments.ProjectViewAdmin;
 import com.example.qenawi.ttasker_capstone.Fragments.ProjectViewUser;
 public class ProjectView extends AppCompatActivity  implements  ProjectViewUser.OnFragmentInteractionListener,ProjectViewAdmin.OnFragmentInteractionListener{
+    private String pKey;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_project_view);
+    //    pKey=(String)getIntent().getExtras().get("PKey");
         if(getIntent().getExtras().get("Access").equals("1"))
         {
             Call_Admin();
@@ -46,7 +48,8 @@ public class ProjectView extends AppCompatActivity  implements  ProjectViewUser.
     @Override
     public void onFragmentInteraction5(Object uri)
     {
-
-        startActivity(new Intent(this,MemberTaskViewAdmin.class));
+        Intent intent =new Intent(this,MemberTaskViewAdmin.class);
+        intent.putExtras((Bundle)uri);
+        startActivity(intent);
     }
 }
