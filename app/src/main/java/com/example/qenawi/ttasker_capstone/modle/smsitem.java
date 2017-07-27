@@ -1,10 +1,12 @@
 package com.example.qenawi.ttasker_capstone.modle;
 
+import java.io.Serializable;
+
 /**
  * Created by QEnawi on 4/17/2017.
  */
 
-public class smsitem
+public class smsitem implements Serializable
 {
     public smsitem()
     {

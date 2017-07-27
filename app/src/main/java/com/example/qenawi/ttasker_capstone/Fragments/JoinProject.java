@@ -88,7 +88,8 @@ public class JoinProject extends Fragment {
         fdbr.child(pushKey).setValue(new pmemberitem(getStoredPair(), acc.get_username().getName()));
 
         fdbr2.child(pushKey2).setValue(new userprojectItem(pkey, pName))
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                .addOnSuccessListener(new OnSuccessListener<Void>()
+                {
                     @Override
                     public void onSuccess(Void aVoid) {
                         mListener.onFragmentInteraction2((String) ProjectKey.getText().toString());

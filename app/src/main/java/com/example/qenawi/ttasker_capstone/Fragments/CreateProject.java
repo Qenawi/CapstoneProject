@@ -12,8 +12,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.qenawi.ttasker_capstone.Contract.ContractAcc;
 import com.example.qenawi.ttasker_capstone.Contract.ContractDepug;
 import com.example.qenawi.ttasker_capstone.R;
+import com.example.qenawi.ttasker_capstone.modle.pmemberitem;
 import com.example.qenawi.ttasker_capstone.modle.projectsitem;
 import com.example.qenawi.ttasker_capstone.modle.userprojectItem;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -74,10 +76,11 @@ CreatP.setOnClickListener(new View.OnClickListener()
     //--------------------------------
     void AddPToFireBase()
     {
-
+        ContractAcc acc=new ContractAcc();
         final FirebaseDatabase fdb = FirebaseDatabase.getInstance();
         final DatabaseReference fdbr = fdb.getReference().child("projects");
         final DatabaseReference fdbr2 = fdb.getReference().child("userproject").child(getStoredPair());
+        final DatabaseReference fdbr3 = fdb.getReference().child("pmember");
         String pushKey = fdbr.push().getKey();
         String pushKey2 = fdbr2.push().getKey();
         Log.v(ContractDepug.PUBTAG,pushKey);
@@ -89,6 +92,7 @@ CreatP.setOnClickListener(new View.OnClickListener()
                 Toast.makeText(getActivity(),"project Created Successfully ",Toast.LENGTH_SHORT).show();
             }
         });
+        fdbr3.child(pushKey).push().setValue(new pmemberitem(getStoredPair(),acc.get_username().getName()));
     }
     String getStoredPair()
     {

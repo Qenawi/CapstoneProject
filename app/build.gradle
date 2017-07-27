@@ -10,6 +10,11 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        // Enabling multidex support.
+        multiDexEnabled true
+    }
+    dexOptions {
+        javaMaxHeapSize "4g"
     }
     buildTypes {
         release {
@@ -32,8 +37,11 @@ dependencies {
         exclude group: 'com.android.support', module: 'design'
         exclude group: 'com.android.support', module: 'recyclerview-v7'
     }
+
+    compile 'com.android.support:multidex:1.0.0'
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'br.com.instachat:emoji-library:1.0.8'
+    compile 'com.google.firebase:firebase-messaging:10.2.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:recyclerview-v7:25.3.1'
     compile 'com.android.support.test.espresso:espresso-idling-resource:2.2.2'
@@ -41,6 +49,7 @@ dependencies {
     compile 'com.google.firebase:firebase-database:10.2.0'
     compile 'com.google.firebase:firebase-auth:10.2.0'
     compile 'com.google.android.gms:play-services-auth:10.2.0'
+    compile 'com.google.android.gms:play-services-gcm:10.2.0'
     compile 'com.google.android.gms:play-services-places:10.2.0'
     compile 'com.google.android.gms:play-services-location:10.2.0'
     compile 'com.google.firebase:firebase-storage:10.2.0'

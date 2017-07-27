@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.qenawi.ttasker_capstone.R;
+import com.example.qenawi.ttasker_capstone.modle.NotificationItem;
 import com.example.qenawi.ttasker_capstone.modle.pmemberitem;
 import com.example.qenawi.ttasker_capstone.modle.taskItem;
 import com.example.qenawi.ttasker_capstone.modle.userprojectItem;
@@ -83,11 +84,12 @@ public class AddTaskAdmin extends Fragment {
         final FirebaseDatabase fdb = FirebaseDatabase.getInstance();
         final DatabaseReference fdbr = fdb.getReference().child("widgetdata").child(user.getKey()).child(Pkey.getPkey());
       //  final DatabaseReference fdbr2 = fdb.getReference().child("userproject").child(getStoredPair());
-        String pushKey = fdbr.push().getKey();
+        final String pushKey = fdbr.push().getKey();
         //String pushKey2 = fdbr2.push().getKey();
    //     Log.v(ContractDepug.PUBTAG,pushKey);
         setTaskState(pushKey);
-        fdbr.child(pushKey).setValue(new taskItem(Title.getText().toString(),Desc.getText().toString(),DateY.getText().toString()+"/"+DateM.getText().toString()+"/"+DateD.getText().toString(),"0", Pkey.getPname())).addOnSuccessListener(new OnSuccessListener<Void>()
+        final taskItem item=new taskItem(Title.getText().toString(),Desc.getText().toString(),DateY.getText().toString()+"/"+DateM.getText().toString()+"/"+DateD.getText().toString(),"0", Pkey.getPname());
+        fdbr.child(pushKey).setValue(item).addOnSuccessListener(new OnSuccessListener<Void>()
         {
             @Override
             public void onSuccess(Void aVoid)
@@ -97,6 +99,7 @@ public class AddTaskAdmin extends Fragment {
                 DateM.setText("");
                 DateD.setText("");
                 Title.setText("");
+                notfy(item,pushKey);
             }
         });
     }
@@ -105,5 +108,13 @@ public class AddTaskAdmin extends Fragment {
         final FirebaseDatabase fdb = FirebaseDatabase.getInstance();
         final DatabaseReference fdbr = fdb.getReference().child("userTaskstate").child(user.getKey()).child(taskKey);
         fdbr.child("state").setValue("0");
+    }
+
+    private void notfy(taskItem item, String pushKey)
+    {
+        FirebaseDatabase fdb=FirebaseDatabase.getInstance();
+        DatabaseReference dbr=fdb.getReference().child("Notification").child(user.getKey());
+        dbr.child(dbr.push().getKey()).setValue(new NotificationItem("tasktype",item.getTaskDesc(),item.getTaskName(),Pkey.getPkey(),pushKey, "ServerValue.TIMESTAMP","0"));
+
     }
 }

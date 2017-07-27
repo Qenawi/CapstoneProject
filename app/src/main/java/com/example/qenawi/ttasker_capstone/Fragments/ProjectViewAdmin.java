@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 
 import com.example.qenawi.ttasker_capstone.CallBack.Data_loadedMyProjectsViewAdmin;
 import com.example.qenawi.ttasker_capstone.ChatActivity;
-import com.example.qenawi.ttasker_capstone.Contract.ContractDepug;
 import com.example.qenawi.ttasker_capstone.R;
 import com.example.qenawi.ttasker_capstone.adapters.RecyclerViewAdapterMainActivity;
 import com.example.qenawi.ttasker_capstone.modle.pmemberitem;
@@ -58,7 +57,9 @@ public class ProjectViewAdmin extends Fragment implements RecyclerViewAdapterMai
             @Override
             public void onClick(View view)
             {
-                startActivity(new Intent(getActivity(), ChatActivity.class));
+                Intent intent=new Intent(getActivity(),ChatActivity.class);
+                intent.putExtra("Alpha",Pkey);
+                startActivity(intent);
             }
         });
         get_UserProjects();
@@ -96,6 +97,7 @@ public class ProjectViewAdmin extends Fragment implements RecyclerViewAdapterMai
     void get_UserProjects()
     {
         FirebaseDatabase Fdb = FirebaseDatabase.getInstance();
+        Log.v("assasin",Pkey.getPkey());
         DatabaseReference Fdbr = Fdb.getReference().child("pmember").child(Pkey.getPkey());
         //Query query = Fdbr.g
         Fdbr.addListenerForSingleValueEvent(new ValueEventListener()
@@ -103,10 +105,12 @@ public class ProjectViewAdmin extends Fragment implements RecyclerViewAdapterMai
             @Override
             public void onDataChange(DataSnapshot dataSnapshot)
             {
-                Log.v(ContractDepug.PUBTAG," "+dataSnapshot.getChildrenCount());
+                Log.v("assasin",dataSnapshot.getChildrenCount()+" ");
+                if (dataSnapshot.getChildrenCount()<=0){return;}
                 for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren())
                 {
                     pmemberitem myPair = dataSnapshot1.getValue(pmemberitem.class);
+                    Log.v("assasin",myPair.getName());
                     data.add(myPair.getName());
                     datax.add(new pmemberitem(myPair.getKey(),myPair.getName()));
                 }
