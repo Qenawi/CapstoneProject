@@ -91,6 +91,7 @@ public class MyProjects extends Fragment implements  RecyclerViewAdapterMainActi
     public interface OnFragmentInteractionListener
     {
         void onFragmentInteraction3(Object uri,Object uri2);
+        void espressoTest();
     }
      void get_UserProjects()
      {

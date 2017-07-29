@@ -14,13 +14,12 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
     app:layout_constraintBottom_toTopOf="@+id/ProjectNameET"
-    app:layout_constraintTop_toTopOf="parent"
-    android:layout_marginTop="8dp"
-    app:layout_constraintVertical_bias="0.845"
     android:layout_marginLeft="8dp"
     app:layout_constraintLeft_toLeftOf="parent"
     android:layout_marginStart="8dp"
-    android:paddingLeft="15dp" />
+    android:paddingLeft="15dp"
+    app:layout_constraintTop_toTopOf="parent"
+    android:layout_marginTop="8dp" />
 
     <EditText
         android:id="@+id/ProjectNameET"
@@ -32,31 +31,33 @@
         android:hint="ProjectName"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="223dp"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintVertical_bias="0.0"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:paddingLeft="15dp" />
+        android:paddingLeft="15dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline7" />
     <Button
         android:layout_width="wrap_content"
         android:text="Join"
         android:id="@+id/joinProject"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        app:layout_constraintTop_toBottomOf="@+id/ProjectNameET"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintVertical_bias="0.0"
+        android:layout_marginBottom="65dp"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
+        android:layout_marginEnd="8dp"
+        app:layout_constraintTop_toTopOf="@+id/guideline7"
+        android:layout_marginTop="8dp" />
+
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/guideline7"
+        app:layout_constraintGuide_percent="0.33"
+        android:orientation="horizontal" />
 
 </android.support.constraint.ConstraintLayout>

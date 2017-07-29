@@ -5,6 +5,10 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
+import android.support.test.espresso.IdlingResource;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -15,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.qenawi.ttasker_capstone.Contract.ContractAcc;
 import com.example.qenawi.ttasker_capstone.Sign.SignInActivity;
+import com.example.qenawi.ttasker_capstone.idlelingResource.SimpleIdlingResource;
 import com.example.qenawi.ttasker_capstone.modle.taskItem;
 import com.example.qenawi.ttasker_capstone.modle.users_data_modleitem;
 import com.example.qenawi.ttasker_capstone.provider.ContractProvider;
@@ -33,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Pair<String, String>> pkey_taskkey = new ArrayList<>();
     TextView textView;
     private ProgressBar PG;
+    @Nullable
+    private SimpleIdlingResource simpleIdlingResource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,20 +56,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1) {
+        if (requestCode == 1)
+        {
             if (resultCode == Activity.RESULT_OK) {
                 // sign in finished
     //            Toast.makeText(this, "Sign in successfully", Toast.LENGTH_SHORT).show();
                 //   DoExtraWork();
                 test();
             }
-            if (resultCode == Activity.RESULT_CANCELED) {
+            if (resultCode == Activity.RESULT_CANCELED)
+            {
                 //Write your code if there's no result
             }
         }
     }
 
-    private void is_user_signed() {
+    private void is_user_signed()
+    {
         ContractAcc con = new ContractAcc();
         users_data_modleitem mUdm = con.get_username();
         if (mUdm == null) {
@@ -148,6 +158,7 @@ public class MainActivity extends AppCompatActivity {
 
     void lunch()
     {
+        if(simpleIdlingResource!=null)simpleIdlingResource.setIdleState(false);
         PG.setEnabled(false);
         PG.setVisibility(View.GONE);
         startService(new Intent(this, NotificationService.class));
@@ -206,11 +217,22 @@ public class MainActivity extends AppCompatActivity {
         getContentResolver().insert(ContractProvider.CONTENT_URI, contentValues);
     }
 
-    void UpdateWedgie() {
+    void UpdateWedgie()
+    {
 
         Intent i = new Intent(this, MyTasksAppWidget.class);
         i.setAction(getString(R.string.Action0));
         sendBroadcast(i);
+    }
+    @VisibleForTesting
+    @NonNull
+    public IdlingResource getIdlingResource()
+    {
+        if (simpleIdlingResource == null)
+        {
+            simpleIdlingResource = new SimpleIdlingResource();
+        }
+        return simpleIdlingResource;
     }
 
 }

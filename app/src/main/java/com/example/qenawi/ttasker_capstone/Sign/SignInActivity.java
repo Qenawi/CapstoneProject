@@ -62,7 +62,6 @@ public class SignInActivity extends AppCompatActivity implements
     private FirebaseAuth mFirebaseAuth;
    private DatabaseReference dp_ref;
      users_data_modleitem user;
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -89,8 +88,10 @@ public class SignInActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
+    public void onClick(View v)
+    {
+        switch (v.getId())
+        {
             case R.id.sign_in_button:
                 signIn();
                 break;
