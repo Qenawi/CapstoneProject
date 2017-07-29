@@ -39,7 +39,8 @@ public class ChatAdp extends RecyclerView.Adapter<GenericViewHolder> {
     public int getItemViewType(int position) //1 ,2
     {
         int ret;
-        if (data1 == null) {
+        if (data1 == null)
+        {
             return 1;
         }
         ret = get_type(data1.get(position));
@@ -57,17 +58,21 @@ public class ChatAdp extends RecyclerView.Adapter<GenericViewHolder> {
   //6 hyber him l 3 other v 3
     {
         View view;
-        if (viewType == 1) {
+        if (viewType == 1)
+        {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item2, parent, false);
             return new Viewholder1(view);
-        } else if (viewType == 3) {
+        } else if (viewType == 3)
+        {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item3, parent, false);
             return new Viewholder3(view);
         } //-----------------------------------------------------------------------------------------------------------------
-        else if (viewType == 4) {
+        else if (viewType == 4)
+        {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item2other, parent, false);
             return new Viewholder1Other(view);
-        } else if (viewType == 6) {
+        } else if (viewType == 6)
+        {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item3other, parent, false);
             return new Viewholder3Other(view);
         }
@@ -197,10 +202,11 @@ public class ChatAdp extends RecyclerView.Adapter<GenericViewHolder> {
 
     private int getUser(int ret, smsitem msg) {
         ContractAcc acc = new ContractAcc();
-        if (msg.getSender().equals(acc.get_username().getEmail())) {
+        if (msg.getSender().equals(acc.get_username().getName())) {
             return ret;
         }
-        switch (ret) {
+        switch (ret)
+        {
 
             case 1:
                 return 4;

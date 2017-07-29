@@ -22,7 +22,7 @@ public class MemberTaskViewAdmin extends AppCompatActivity implements memperTask
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member_task_view_admin);
-        user=(pmemberitem)getIntent().getExtras().getSerializable("member data");
+        user=(pmemberitem)getIntent().getExtras().getParcelable("member data");
         Pkey=getIntent().getExtras().getString("project data");
         Call_tasks();
     }

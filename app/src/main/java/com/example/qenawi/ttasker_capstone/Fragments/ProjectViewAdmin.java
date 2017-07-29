@@ -9,13 +9,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.qenawi.ttasker_capstone.CallBack.Data_loadedMyProjectsViewAdmin;
 import com.example.qenawi.ttasker_capstone.ChatActivity;
 import com.example.qenawi.ttasker_capstone.R;
-import com.example.qenawi.ttasker_capstone.adapters.RecyclerViewAdapterMainActivity;
+import com.example.qenawi.ttasker_capstone.adapters.AdminViewAdapter;
 import com.example.qenawi.ttasker_capstone.modle.pmemberitem;
 import com.example.qenawi.ttasker_capstone.modle.userprojectItem;
 import com.google.firebase.database.DataSnapshot;
@@ -26,9 +29,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class ProjectViewAdmin extends Fragment implements RecyclerViewAdapterMainActivity.onClickListner,Data_loadedMyProjectsViewAdmin {
+public class ProjectViewAdmin extends Fragment implements AdminViewAdapter.onClickListner,Data_loadedMyProjectsViewAdmin {
 
-    RecyclerViewAdapterMainActivity adapter;
+    AdminViewAdapter adapter;
     RecyclerView rv;
     RecyclerView.LayoutManager ly;
     ArrayList<String> data = new ArrayList<>();
@@ -41,15 +44,35 @@ public class ProjectViewAdmin extends Fragment implements RecyclerViewAdapterMai
     {
         // Required empty public constructor
     }
+
+    @Override
+    public void onCreate( Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+    {
+        // TODO Add your menu entries here
+        inflater.inflate(R.menu.adminv_view_share,menu);
+        super.onCreateOptionsMenu(menu,inflater);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        shareKey();
+        return true;
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_project_view_admin, container, false);
-        Pkey =(userprojectItem) getActivity().getIntent().getExtras().getSerializable("PKey");//project key
+        Pkey =(userprojectItem) getActivity().getIntent().getExtras().getParcelable("PKey");//project key
         Chat=(FloatingActionButton)root.findViewById(R.id.floatingActionButton2);
         mCallBack=this;
         rv = (RecyclerView) root.findViewById(R.id.project_team);
-        adapter = new RecyclerViewAdapterMainActivity(getContext(), this, data, 0);
+        adapter = new AdminViewAdapter(getContext(), this, data, 0);
         ly = new LinearLayoutManager(getActivity());
         rv.setLayoutManager(ly);
         rv.setAdapter(adapter);
@@ -85,8 +108,8 @@ public class ProjectViewAdmin extends Fragment implements RecyclerViewAdapterMai
     public void onListItemClick(int Clickpos)
     {
        Bundle bundle=new Bundle();
-        bundle.putSerializable("member data",datax.get(Clickpos));
-        bundle.putSerializable("project data",Pkey);
+        bundle.putParcelable("member data",datax.get(Clickpos));
+        bundle.putParcelable("project data",Pkey);
       mListener.onFragmentInteraction5(bundle);
     }
     public interface OnFragmentInteractionListener {
@@ -126,5 +149,13 @@ public class ProjectViewAdmin extends Fragment implements RecyclerViewAdapterMai
     public void data_arrived(Object object)
     {
         adapter.notifyDataSetChanged();
+    }
+    void shareKey()
+    {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, Pkey.getPname()+'\n'+"Key : "+Pkey.getPkey());
+        sendIntent.setType("text/plain");
+        startActivity(sendIntent);
     }
 }

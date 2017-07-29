@@ -38,8 +38,8 @@ public class AddTaskAdmin extends Fragment {
     {
         // Inflate the layout for this fragment
         View Root= inflater.inflate(R.layout.fragment_add_task_admin, container, false);
-        user = (pmemberitem) getActivity().getIntent().getExtras().getSerializable("member data");
-        Pkey =(userprojectItem) getActivity().getIntent().getExtras().getSerializable("project data");
+        user = (pmemberitem) getActivity().getIntent().getExtras().getParcelable("member data");
+        Pkey =(userprojectItem) getActivity().getIntent().getExtras().getParcelable("project data");
         Desc=(EditText)Root.findViewById(R.id.editText2);
         DateY=(EditText)Root.findViewById(R.id.editText);
         DateM=(EditText)Root.findViewById(R.id.editText4);

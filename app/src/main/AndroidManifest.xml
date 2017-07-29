@@ -28,24 +28,52 @@
         <activity android:name=".MainActivity3TasksHandler" />
         <activity android:name=".ProjectView" />
         <activity android:name=".MemberTaskViewAdmin" />
-        <activity android:name=".ChatActivity"/>
-        <service
-            android:name=".MyFirebaseMessagingService">
+        <activity android:name=".ChatActivity" />
+
+        <service android:name=".MyFirebaseMessagingService">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
         <!-- [END firebase_service] -->
         <!-- [START firebase_iid_service] -->
-        <service android:name=".services.NotificationService"/>
-        <service
-            android:name=".MyFirebaseInstanceIDService">
+        <service android:name=".services.NotificationService" />
+        <service android:name=".MyFirebaseInstanceIDService">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
         <!-- [END firebase_iid_service] -->
-  <service
-      android:name=".services.NotfyUsers"/>
+        <service android:name=".services.NotfyUsers" />
+
+        <provider
+            android:name=".provider.providerMain"
+            android:authorities="com.example.qenawi.ttasker_capstone"
+            android:exported="true" />
+
+        <receiver android:name=".MyTasksAppWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="ActionReceiverRefresh"/>
+                <action android:name="com.imranandroid.xxx.xxxx.ACTION_WIDGET_CLICK"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/my_tasks_app_widget_info" />
+        </receiver>
+        <service android:name=".BakingAppService"/>
+        <service
+            android:name=".GridWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
+
+
+
+
+
+
+
     </application>
+
 </manifest>

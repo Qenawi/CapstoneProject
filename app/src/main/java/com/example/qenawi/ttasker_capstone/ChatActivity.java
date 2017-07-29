@@ -47,7 +47,7 @@ public class ChatActivity extends EmojiCompatActivity implements WhatsAppPanelEv
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-        Pkey=(userprojectItem)getIntent().getExtras().getSerializable("Alpha");
+        Pkey=(userprojectItem)getIntent().getExtras().getParcelable("Alpha");
         mBottomPanel=new WhatsAppPanel(this,this,R.color.colorPrimary);
         data = new ArrayList<>();
         rv = (RecyclerView) findViewById(R.id.chat);

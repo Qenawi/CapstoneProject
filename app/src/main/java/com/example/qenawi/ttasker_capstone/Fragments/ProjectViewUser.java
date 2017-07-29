@@ -49,7 +49,7 @@ public class ProjectViewUser extends Fragment implements ProjectViewUserAdp.onCl
         View root= inflater.inflate(R.layout.fragment_project_view_user, container, false);
         Chat=(FloatingActionButton)root.findViewById(R.id.floatingActionButton2);
         taskItems=new ArrayList<>();
-        Pkey =(userprojectItem) getActivity().getIntent().getExtras().getSerializable("PKey");//project key
+        Pkey =(userprojectItem) getActivity().getIntent().getExtras().getParcelable("PKey");//project key
 
         rv=(RecyclerView) root.findViewById(R.id.project_tasks);
         ly=new LinearLayoutManager(getActivity());

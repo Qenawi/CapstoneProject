@@ -35,11 +35,11 @@ public class memperTaskViewAdmin extends Fragment implements MempertasksViewAdmi
     private pmemberitem user;
     private userprojectItem Pkey;
     private  MempertaskViewAdmin mCallback=this;
+    private int lastFirstVisiblePosition;
 
     public memperTaskViewAdmin() {
         // Required empty public constructor
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -47,8 +47,8 @@ public class memperTaskViewAdmin extends Fragment implements MempertasksViewAdmi
         View Root = inflater.inflate(R.layout.fragment_memper_task_view_admin, container, false);
         Add = (FloatingActionButton) Root.findViewById(R.id.floatingActionButton);
         taskItems = new ArrayList<>();
-         user = (pmemberitem) getActivity().getIntent().getExtras().getSerializable("member data");
-        Pkey =(userprojectItem) getActivity().getIntent().getExtras().getSerializable("project data");
+         user = (pmemberitem) getActivity().getIntent().getExtras().getParcelable("member data");
+        Pkey =(userprojectItem) getActivity().getIntent().getExtras().getParcelable("project data");
         rv = (RecyclerView) Root.findViewById(R.id.tasks_list);
         ly = new LinearLayoutManager(getContext());
         rv.setLayoutManager(ly);
@@ -61,8 +61,24 @@ public class memperTaskViewAdmin extends Fragment implements MempertasksViewAdmi
             }
         });
         getActivity().setTitle(Pkey.getPname());
-        getMemberTasks();
+        if (savedInstanceState!= null)
+        {
+            lastFirstVisiblePosition=savedInstanceState.getInt(getString(R.string.bundleK4));
+            taskItems=savedInstanceState.getParcelableArrayList(getString(R.string.bundleK7));
+            adapter.notifyDataSetChanged();
+            rv.scrollToPosition(lastFirstVisiblePosition);
+        }
+        else
+        {
+            getMemberTasks();
+        }
         return Root;
+    }
+    @Override
+    public void onPause()
+    {
+        lastFirstVisiblePosition = ((LinearLayoutManager) rv.getLayoutManager()).findLastVisibleItemPosition();
+        super.onPause();
     }
     @Override
     public void onAttach(Context context)
@@ -93,7 +109,7 @@ public class memperTaskViewAdmin extends Fragment implements MempertasksViewAdmi
     {
         final FirebaseDatabase fdb = FirebaseDatabase.getInstance();
         final DatabaseReference fdbr = fdb.getReference().child("widgetdata").child(user.getKey()).child(Pkey.getPkey());
-        fdbr.addListenerForSingleValueEvent(new ValueEventListener()
+        fdbr .addListenerForSingleValueEvent(new ValueEventListener()
         {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot)
@@ -115,5 +131,12 @@ public class memperTaskViewAdmin extends Fragment implements MempertasksViewAdmi
     public void data_arrived(Object object)
     {
         adapter.notifyDataSetChanged();
+    }
+    @Override
+    public void onSaveInstanceState(Bundle outState)
+    {
+        outState.putInt(getString(R.string.bundleK4),lastFirstVisiblePosition);
+        outState.putParcelableArrayList(getString(R.string.bundleK7),taskItems);
+        super.onSaveInstanceState(outState);
     }
 }

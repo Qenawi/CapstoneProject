@@ -1,11 +1,37 @@
 package com.example.qenawi.ttasker_capstone.modle;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by QEnawi on 7/25/2017.
  */
 
-public class NotificationItem
+public class NotificationItem implements Parcelable
 {
+    protected NotificationItem(Parcel in)
+    {
+        notftype = in.readString();
+        notfcontent = in.readString();
+        notftitle = in.readString();
+        notfprojectkey = in.readString();
+        notftaskkey = in.readString();
+        notfstate = in.readString();
+        notftimestamp = in.readString();
+    }
+
+    public static final Creator<NotificationItem> CREATOR = new Creator<NotificationItem>() {
+        @Override
+        public NotificationItem createFromParcel(Parcel in) {
+            return new NotificationItem(in);
+        }
+
+        @Override
+        public NotificationItem[] newArray(int size) {
+            return new NotificationItem[size];
+        }
+    };
+
     public String getNotftype()
     {
         return notftype;
@@ -77,5 +103,22 @@ public class NotificationItem
         this.notftaskkey = notftaskkey;
         this.notftimestamp = timestamp;
         this.notfstate = notfstate;
+    }
+
+    @Override
+    public int describeContents()
+    {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(notftype);
+        parcel.writeString(notfcontent);
+        parcel.writeString(notftitle);
+        parcel.writeString(notfprojectkey);
+        parcel.writeString(notftaskkey);
+        parcel.writeString(notfstate);
+        parcel.writeString(notftimestamp);
     }
 }

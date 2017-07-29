@@ -1,16 +1,36 @@
 package com.example.qenawi.ttasker_capstone.modle;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * Created by QEnawi on 7/21/2017.
  */
 
-public class pmemberitem implements Serializable
+public class pmemberitem implements Parcelable
 {
     public pmemberitem()
     {
     }
+
+    protected pmemberitem(Parcel in)
+    {
+        key = in.readString();
+        name = in.readString();
+    }
+
+    public static final Creator<pmemberitem> CREATOR = new Creator<pmemberitem>() {
+        @Override
+        public pmemberitem createFromParcel(Parcel in) {
+            return new pmemberitem(in);
+        }
+
+        @Override
+        public pmemberitem[] newArray(int size) {
+            return new pmemberitem[size];
+        }
+    };
+
     public String getKey() {
         return key;
     }
@@ -36,4 +56,15 @@ public class pmemberitem implements Serializable
     }
 
     private String name;
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(key);
+        parcel.writeString(name);
+    }
 }

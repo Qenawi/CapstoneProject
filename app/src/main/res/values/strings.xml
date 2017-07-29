@@ -3,4 +3,21 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Res -->
+    <string name="RESPONSE0">must implement OnFragmentInteraction</string>
+    <string name="RESPONSE1">vnd.android.cursor.dir</string>
+    <string name="Action0">Xe589</string>
+    <string name="RESPONSE2">Unknown Uri :</string>
+    <string name="RESPONSE3">Faild to insert into</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <!---  bundle -->
+    <string name="bundleK1">AE7ECO0</string>
+    <string name="bundleK2">AE7ECO1</string>
+    <string name="bundleK3">AE7ECO2</string>
+    <string name="bundleK4">AE7ECO3</string>
+    <string name="bundleK5">AE7ECO4</string>
+    <string name="bundleK6">AE7ECO5</string>
+    <string name="bundleK7">AE7ECO6</string>
 </resources>
+
