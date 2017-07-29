@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.example.qenawi.ttasker_capstone.Contract.ContractAcc;
@@ -48,6 +49,7 @@ public class ChatActivity extends EmojiCompatActivity implements WhatsAppPanelEv
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         Pkey=(userprojectItem)getIntent().getExtras().getParcelable("Alpha");
+        Log.v("hugo",Pkey.getPkey()+" "+Pkey.getPname());
         mBottomPanel=new WhatsAppPanel(this,this,R.color.colorPrimary);
         data = new ArrayList<>();
         rv = (RecyclerView) findViewById(R.id.chat);

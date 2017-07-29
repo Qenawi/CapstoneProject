@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.qenawi.ttasker_capstone.R;
+
 import java.util.ArrayList;
 /**
  * Created by QEnawi on 7/19/2017
@@ -28,7 +30,7 @@ public class RecyclerViewAdapterMainActivity extends RecyclerView.Adapter<Recycl
     public MainVIewHOlder onCreateViewHolder(ViewGroup parent, int viewType)
     {
         Context parent_C=parent.getContext();
-         int Layoutidforitem=android.R.layout.simple_expandable_list_item_1;
+         int Layoutidforitem=R.layout.list_item_txt2;
         LayoutInflater inflater=LayoutInflater.from(parent_C);
         boolean shouldAttachToParentImmediately = false;
         View view=inflater.inflate(Layoutidforitem,parent,shouldAttachToParentImmediately);
@@ -65,7 +67,7 @@ public class RecyclerViewAdapterMainActivity extends RecyclerView.Adapter<Recycl
         public MainVIewHOlder(View itemView)
         {
             super(itemView);
-            PName =(TextView)itemView.findViewById(android.R.id.text1);
+            PName =(TextView)itemView.findViewById(R.id.item2text2);
             itemView.setOnClickListener(this);
         }
 

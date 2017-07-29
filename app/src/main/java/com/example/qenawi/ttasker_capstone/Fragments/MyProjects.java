@@ -35,6 +35,7 @@ public class MyProjects extends Fragment implements  RecyclerViewAdapterMainActi
     private OnFragmentInteractionListener mListener;
     private  ArrayList<userprojectItem>datax=new ArrayList<>();
     private Data_loadedMyProjects mCallback;
+    private int lastFirstVisiblePosition;
     public MyProjects()
     {
         // Required empty public constructor
@@ -43,9 +44,15 @@ public class MyProjects extends Fragment implements  RecyclerViewAdapterMainActi
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState)
     {
         View root= inflater.inflate(R.layout.fragment_my_projects, container, false);
+        if (savedInstanceState!= null)
+        {
+            Log.v("hugo","restore");
+            lastFirstVisiblePosition=savedInstanceState.getInt(getString(R.string.bundleK4));
+            datax=savedInstanceState.getParcelableArrayList(getString(R.string.bundleK7));
+            data=savedInstanceState.getStringArrayList(getString(R.string.bundleK5));
+        }
         mCallback=this;
         rv=(RecyclerView)root.findViewById(R.id.project_list);
-
         adapter=new RecyclerViewAdapterMainActivity(getContext(),this,data,0);
         ly=new LinearLayoutManager(getActivity());
         rv.setLayoutManager(ly);
@@ -67,6 +74,12 @@ public class MyProjects extends Fragment implements  RecyclerViewAdapterMainActi
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+    @Override
+    public void onPause()
+    {
+        lastFirstVisiblePosition = ((LinearLayoutManager) rv.getLayoutManager()).findLastVisibleItemPosition();
+        super.onPause();
     }
     @Override
     public void onListItemClick(int Clickpos)
@@ -149,5 +162,13 @@ public class MyProjects extends Fragment implements  RecyclerViewAdapterMainActi
     String getStoredPair()
     {
         return  PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("eTa","null");
+    }
+    @Override
+    public void onSaveInstanceState(Bundle outState)
+    {
+        outState.putInt(getString(R.string.bundleK4),lastFirstVisiblePosition);
+        outState.putParcelableArrayList(getString(R.string.bundleK7),datax);
+        outState.putStringArrayList(getString(R.string.bundleK5),data);
+        super.onSaveInstanceState(outState);
     }
 }

@@ -19,5 +19,9 @@
     <string name="bundleK5">AE7ECO4</string>
     <string name="bundleK6">AE7ECO5</string>
     <string name="bundleK7">AE7ECO6</string>
+    <string name="date">DATE</string>
+    <string name="description">Description</string>
+    <string name="name">NAME</string>
+    <string name="string_text2">string/text2</string>
 </resources>
 

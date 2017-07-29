@@ -32,6 +32,7 @@ public class NotificationService extends Service
     Context context;
     static String TAG = "FirebaseService";
     int cnt1=1;
+    int imgIcon=R.drawable.common_google_signin_btn_icon_dark;
     @Override
     public void onCreate()
     {
@@ -120,12 +121,14 @@ public class NotificationService extends Service
             cnt1=1;
             settasksCnt(getTc()+1);
             cntx=getTc();
+            imgIcon=R.drawable.task2;
         }
         else
             {
             cnt1=2;
             setchatCnt(getCc()+1);
                 cntx=getCc();
+                imgIcon=R.drawable.messege;
             }
         //--------------------------------
         final PendingIntent pendingIntent = PendingIntent.getActivities(context, 900,
@@ -134,7 +137,7 @@ public class NotificationService extends Service
         stackBuilder.addParentStack(MainActivity.class);
         //-------------------
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(imgIcon)
                 .setContentTitle(notification.getNotftitle())
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setContentText(notification.getNotfcontent())

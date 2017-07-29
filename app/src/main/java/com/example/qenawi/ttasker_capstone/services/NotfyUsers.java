@@ -32,8 +32,8 @@ public class NotfyUsers extends MyBaseTaskService
     public int onStartCommand(Intent intent, int flags, int startId)
     {
         taskStarted();
-        smsitem smsitem=(smsitem)intent.getExtras().getSerializable("smsitem");
-        userprojectItem userprojectItem=(userprojectItem)intent.getExtras().getSerializable("userprojectItem");
+        smsitem smsitem=(smsitem)intent.getExtras().getParcelable("smsitem");
+        userprojectItem userprojectItem=(userprojectItem)intent.getExtras().getParcelable("userprojectItem");
         //------------------
         get_users_list(smsitem,userprojectItem);
         return START_REDELIVER_INTENT;//

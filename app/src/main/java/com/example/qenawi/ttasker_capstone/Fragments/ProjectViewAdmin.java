@@ -40,6 +40,7 @@ public class ProjectViewAdmin extends Fragment implements AdminViewAdapter.onCli
     private OnFragmentInteractionListener mListener;
     private userprojectItem Pkey;
     private  Data_loadedMyProjectsViewAdmin mCallBack;
+    private int lastFirstVisiblePosition=0;
     public ProjectViewAdmin()
     {
         // Required empty public constructor
@@ -65,9 +66,16 @@ public class ProjectViewAdmin extends Fragment implements AdminViewAdapter.onCli
         return true;
     }
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_project_view_admin, container, false);
+        if(savedInstanceState!=null)
+        {
+            data=savedInstanceState.getStringArrayList(getString(R.string.bundleK5));
+            datax=savedInstanceState.getParcelableArrayList(getString(R.string.bundleK1));
+            lastFirstVisiblePosition=savedInstanceState.getInt(getString(R.string.bundleK4));
+        }
         Pkey =(userprojectItem) getActivity().getIntent().getExtras().getParcelable("PKey");//project key
         Chat=(FloatingActionButton)root.findViewById(R.id.floatingActionButton2);
         mCallBack=this;
@@ -85,7 +93,19 @@ public class ProjectViewAdmin extends Fragment implements AdminViewAdapter.onCli
                 startActivity(intent);
             }
         });
-        get_UserProjects();
+        if(savedInstanceState==null)
+        {
+            get_UserProjects();
+        }
+        else
+            {
+                try
+                {
+                    rv.scrollToPosition(lastFirstVisiblePosition);
+                }catch (Exception e){e.printStackTrace();}
+
+            }
+
         return root;
     }
     @Override
@@ -146,6 +166,12 @@ public class ProjectViewAdmin extends Fragment implements AdminViewAdapter.onCli
         });
     }
     @Override
+    public void onPause()
+    {
+        lastFirstVisiblePosition = ((LinearLayoutManager) rv.getLayoutManager()).findLastVisibleItemPosition();
+        super.onPause();
+    }
+    @Override
     public void data_arrived(Object object)
     {
         adapter.notifyDataSetChanged();
@@ -157,5 +183,13 @@ public class ProjectViewAdmin extends Fragment implements AdminViewAdapter.onCli
         sendIntent.putExtra(Intent.EXTRA_TEXT, Pkey.getPname()+'\n'+"Key : "+Pkey.getPkey());
         sendIntent.setType("text/plain");
         startActivity(sendIntent);
+    }
+    @Override
+    public void onSaveInstanceState(Bundle outState)
+    {
+        outState.putInt(getString(R.string.bundleK4),lastFirstVisiblePosition);
+        outState.putStringArrayList(getString(R.string.bundleK5),data);
+        outState.putParcelableArrayList(getString(R.string.bundleK1),datax);
+        super.onSaveInstanceState(outState);
     }
 }

@@ -14,6 +14,7 @@
         android:clipChildren="false"
         android:clipToPadding="false"
         android:padding="10dp" />
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floatingActionButton2"
         android:layout_width="wrap_content"

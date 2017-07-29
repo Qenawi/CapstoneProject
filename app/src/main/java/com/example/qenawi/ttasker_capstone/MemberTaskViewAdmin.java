@@ -22,9 +22,17 @@ public class MemberTaskViewAdmin extends AppCompatActivity implements memperTask
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member_task_view_admin);
-        user=(pmemberitem)getIntent().getExtras().getParcelable("member data");
-        Pkey=getIntent().getExtras().getString("project data");
-        Call_tasks();
+        if (savedInstanceState==null)
+        {
+            user=(pmemberitem)getIntent().getExtras().getParcelable("member data");
+            Pkey=getIntent().getExtras().getString("project data");
+            Call_tasks();
+        }
+        else
+        {
+            user=savedInstanceState.getParcelable(getString(R.string.bundleK1));
+            Pkey=savedInstanceState.getString(getString(R.string.bundleK2));
+        }
     }
     private void Call_tasks() // status
     {
@@ -59,10 +67,15 @@ public class MemberTaskViewAdmin extends AppCompatActivity implements memperTask
         }
         return super.onKeyDown(keyCode, event);
     }
-
     @Override
     public void onFragmentInteraction(Uri uri)
     {
-
-    }// add task fragment call back
+    }// add task fragment call back.
+    @Override
+    protected void onSaveInstanceState(Bundle outState)
+    {
+         outState.putParcelable(getString(R.string.bundleK1),user);
+         outState.putString(getString(R.string.bundleK2),Pkey);
+        super.onSaveInstanceState(outState);
+    }
 }

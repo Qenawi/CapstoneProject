@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +36,7 @@ public class memperTaskViewAdmin extends Fragment implements MempertasksViewAdmi
     private pmemberitem user;
     private userprojectItem Pkey;
     private  MempertaskViewAdmin mCallback=this;
-    private int lastFirstVisiblePosition;
+    private int lastFirstVisiblePosition=0;
 
     public memperTaskViewAdmin() {
         // Required empty public constructor
@@ -45,28 +46,36 @@ public class memperTaskViewAdmin extends Fragment implements MempertasksViewAdmi
     {
         // Inflate the layout for this fragment
         View Root = inflater.inflate(R.layout.fragment_memper_task_view_admin, container, false);
-        Add = (FloatingActionButton) Root.findViewById(R.id.floatingActionButton);
         taskItems = new ArrayList<>();
-         user = (pmemberitem) getActivity().getIntent().getExtras().getParcelable("member data");
-        Pkey =(userprojectItem) getActivity().getIntent().getExtras().getParcelable("project data");
-        rv = (RecyclerView) Root.findViewById(R.id.tasks_list);
-        ly = new LinearLayoutManager(getContext());
-        rv.setLayoutManager(ly);
-        adapter = new MempertasksViewAdminAdp(getContext(), this, taskItems, 0);
-        rv.setAdapter(adapter);
-        Add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mListener.onFragmentInteraction6("add");
-            }
-        });
-        getActivity().setTitle(Pkey.getPname());
         if (savedInstanceState!= null)
         {
+            Log.v("hugo","restore");
             lastFirstVisiblePosition=savedInstanceState.getInt(getString(R.string.bundleK4));
             taskItems=savedInstanceState.getParcelableArrayList(getString(R.string.bundleK7));
-            adapter.notifyDataSetChanged();
-            rv.scrollToPosition(lastFirstVisiblePosition);
+        }
+            Add = (FloatingActionButton) Root.findViewById(R.id.floatingActionButton);
+            user = (pmemberitem) getActivity().getIntent().getExtras().getParcelable("member data");
+            Pkey =(userprojectItem) getActivity().getIntent().getExtras().getParcelable("project data");
+            rv = (RecyclerView) Root.findViewById(R.id.tasks_list);
+            ly = new LinearLayoutManager(getContext());
+            rv.setLayoutManager(ly);
+            adapter = new MempertasksViewAdminAdp(getContext(), this, taskItems, 0);
+            rv.setAdapter(adapter);
+            Add.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view) {
+                    mListener.onFragmentInteraction6("add");
+                }
+            });
+            getActivity().setTitle(Pkey.getPname());
+        if (savedInstanceState!=null)
+        {
+
+            try {
+                rv.scrollToPosition(lastFirstVisiblePosition);
+            }catch (Exception e){e.printStackTrace();}
+
         }
         else
         {

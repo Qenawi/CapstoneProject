@@ -4,11 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +39,7 @@ public class ProjectViewUser extends Fragment implements ProjectViewUserAdp.onCl
     private FloatingActionButton Chat;
     private userprojectItem Pkey;
     private ProjectView_user mCallback=this;
-
+    private int lastFirstVisiblePosition;
     public ProjectViewUser()
     {
         // Required empty public constructor
@@ -47,10 +49,16 @@ public class ProjectViewUser extends Fragment implements ProjectViewUserAdp.onCl
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root= inflater.inflate(R.layout.fragment_project_view_user, container, false);
+        if (savedInstanceState!= null)
+        {
+            Log.v("hugo","restore");
+            lastFirstVisiblePosition=savedInstanceState.getInt(getString(R.string.bundleK4));
+            taskItems=savedInstanceState.getParcelableArrayList(getString(R.string.bundleK7));
+            taskKey=savedInstanceState.getStringArrayList(getString(R.string.bundleK5));
+        }
         Chat=(FloatingActionButton)root.findViewById(R.id.floatingActionButton2);
         taskItems=new ArrayList<>();
         Pkey =(userprojectItem) getActivity().getIntent().getExtras().getParcelable("PKey");//project key
-
         rv=(RecyclerView) root.findViewById(R.id.project_tasks);
         ly=new LinearLayoutManager(getActivity());
         rv.setLayoutManager(ly);
@@ -62,7 +70,7 @@ public class ProjectViewUser extends Fragment implements ProjectViewUserAdp.onCl
             public void onClick(View view)
             {
                 Intent intent=new Intent(getActivity(),ChatActivity.class);
-                intent.putExtra("Alpha",Pkey);
+                intent.putExtra("Alpha",(Parcelable)Pkey);
                 startActivity(intent);
             }
         });
@@ -85,6 +93,12 @@ public class ProjectViewUser extends Fragment implements ProjectViewUserAdp.onCl
     {
         super.onDetach();
         mListener = null;
+    }
+    @Override
+    public void onPause()
+    {
+        lastFirstVisiblePosition = ((LinearLayoutManager) rv.getLayoutManager()).findLastVisibleItemPosition();
+        super.onPause();
     }
     @Override
     public void onListItemClick(int Clickpos)
@@ -149,5 +163,13 @@ adapter.notifyDataSetChanged();
     String getStoredPair()
     {
         return  PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("eTa","null");
+    }
+    @Override
+    public void onSaveInstanceState(Bundle outState)
+    {
+        outState.putInt(getString(R.string.bundleK4),lastFirstVisiblePosition);
+        outState.putParcelableArrayList(getString(R.string.bundleK7),taskItems);
+        outState.putStringArrayList(getString(R.string.bundleK5),taskKey);
+        super.onSaveInstanceState(outState);
     }
 }

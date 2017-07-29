@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
+import com.example.qenawi.ttasker_capstone.modle.taskItem;
 import com.example.qenawi.ttasker_capstone.provider.ContractProvider;
 
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class GridWidgetService extends RemoteViewsService
 }
 
 class GridRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
-    private ArrayList<String> data=new ArrayList<>();
+    private ArrayList<taskItem> data=new ArrayList<>();
     private Context mContext;
     public GridRemoteViewsFactory(Context applicationContext)
     {
@@ -56,9 +57,12 @@ class GridRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
     public RemoteViews getViewAt(int position)
     {
         //bind
-        RemoteViews views = new RemoteViews(mContext.getPackageName(), R.layout.list_item_txt2);
+        RemoteViews views = new RemoteViews(mContext.getPackageName(), R.layout.widgetitem);
         // Update the plant image
-        views.setTextViewText(R.id.item2text2, data.get(position));
+        views.setTextViewText(R.id.NAME, data.get(position).getName()+'\t'+data.get(position).getTaskName());
+        views.setTextViewText(R.id.DATA, data.get(position).getTaskDesc());
+        views.setTextViewText(R.id.DATE, data.get(position).getDate());
+        views.setTextViewText(R.id.checkBox, data.get(position).getDoneB().toString());
         return views;
     }
     @Override
@@ -87,7 +91,13 @@ class GridRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
         }
         while (!result.isAfterLast())
         {
-            data.add(result.getString(result.getColumnIndex(ContractProvider.TaskTitle)));
+            taskItem da=new taskItem(
+                    result.getString(result.getColumnIndex(ContractProvider.TaskTitle)),
+                    result.getString(result.getColumnIndex(ContractProvider.TaskContent)),
+                    result.getString(result.getColumnIndex(ContractProvider.TaskDate)),
+                    result.getString(result.getColumnIndex(ContractProvider.Taskstate)),
+                    result.getString(result.getColumnIndex(ContractProvider.ProjectName)));
+            data.add(da);
             result.moveToNext();
         }
     }
