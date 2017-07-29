@@ -1,4 +1,4 @@
-package com.example.qenawi.ttasker_capstone.Fragments;
+package com.example.qenawi.ttasker_capstone.fragmentsx;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,8 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.qenawi.ttasker_capstone.Contract.ContractAcc;
-import com.example.qenawi.ttasker_capstone.Contract.ContractDepug;
+import com.example.qenawi.ttasker_capstone.contractx.ContractAcc;
+import com.example.qenawi.ttasker_capstone.contractx.ContractDepug;
 import com.example.qenawi.ttasker_capstone.R;
 import com.example.qenawi.ttasker_capstone.modle.pmemberitem;
 import com.example.qenawi.ttasker_capstone.modle.projectsitem;

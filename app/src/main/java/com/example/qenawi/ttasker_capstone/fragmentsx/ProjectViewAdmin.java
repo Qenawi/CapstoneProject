@@ -1,4 +1,4 @@
-package com.example.qenawi.ttasker_capstone.Fragments;
+package com.example.qenawi.ttasker_capstone.fragmentsx;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,10 +15,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.qenawi.ttasker_capstone.CallBack.Data_loadedMyProjectsViewAdmin;
+import com.example.qenawi.ttasker_capstone.callbackx.Data_loadedMyProjectsViewAdmin;
 import com.example.qenawi.ttasker_capstone.ChatActivity;
 import com.example.qenawi.ttasker_capstone.R;
-import com.example.qenawi.ttasker_capstone.adapters.AdminViewAdapter;
+import com.example.qenawi.ttasker_capstone.adapterx.AdminViewAdapter;
 import com.example.qenawi.ttasker_capstone.modle.pmemberitem;
 import com.example.qenawi.ttasker_capstone.modle.userprojectItem;
 import com.google.firebase.database.DataSnapshot;

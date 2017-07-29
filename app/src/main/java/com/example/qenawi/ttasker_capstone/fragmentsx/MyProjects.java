@@ -1,4 +1,4 @@
-package com.example.qenawi.ttasker_capstone.Fragments;
+package com.example.qenawi.ttasker_capstone.fragmentsx;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,10 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.qenawi.ttasker_capstone.CallBack.Data_loadedMyProjects;
-import com.example.qenawi.ttasker_capstone.Contract.ContractDepug;
+import com.example.qenawi.ttasker_capstone.callbackx.Data_loadedMyProjects;
+import com.example.qenawi.ttasker_capstone.contractx.ContractDepug;
 import com.example.qenawi.ttasker_capstone.R;
-import com.example.qenawi.ttasker_capstone.adapters.RecyclerViewAdapterMainActivity;
+import com.example.qenawi.ttasker_capstone.adapterx.RecyclerViewAdapterMainActivity;
 import com.example.qenawi.ttasker_capstone.modle.projectsitem;
 import com.example.qenawi.ttasker_capstone.modle.userprojectItem;
 import com.google.firebase.database.DataSnapshot;

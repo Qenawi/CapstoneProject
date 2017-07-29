@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import com.example.qenawi.ttasker_capstone.Fragments.ProjectViewAdmin;
-import com.example.qenawi.ttasker_capstone.Fragments.ProjectViewUser;
+import com.example.qenawi.ttasker_capstone.fragmentsx.ProjectViewAdmin;
+import com.example.qenawi.ttasker_capstone.fragmentsx.ProjectViewUser;
 public class ProjectView extends AppCompatActivity  implements  ProjectViewUser.OnFragmentInteractionListener,ProjectViewAdmin.OnFragmentInteractionListener{
     private String pKey;
     @Override

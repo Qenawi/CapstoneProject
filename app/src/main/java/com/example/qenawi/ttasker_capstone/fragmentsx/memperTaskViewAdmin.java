@@ -1,4 +1,4 @@
-package com.example.qenawi.ttasker_capstone.Fragments;
+package com.example.qenawi.ttasker_capstone.fragmentsx;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,9 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.qenawi.ttasker_capstone.CallBack.MempertaskViewAdmin;
+import com.example.qenawi.ttasker_capstone.callbackx.MempertaskViewAdmin;
 import com.example.qenawi.ttasker_capstone.R;
-import com.example.qenawi.ttasker_capstone.adapters.MempertasksViewAdminAdp;
+import com.example.qenawi.ttasker_capstone.adapterx.MempertasksViewAdminAdp;
 import com.example.qenawi.ttasker_capstone.modle.pmemberitem;
 import com.example.qenawi.ttasker_capstone.modle.taskItem;
 import com.example.qenawi.ttasker_capstone.modle.userprojectItem;

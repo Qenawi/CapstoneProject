@@ -1,24 +1,24 @@
-package com.example.qenawi.ttasker_capstone.adapters;
+package com.example.qenawi.ttasker_capstone.adapterx;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.example.qenawi.ttasker_capstone.R;
-
 import java.util.ArrayList;
+
 /**
  * Created by QEnawi on 7/19/2017
  */
-public class RecyclerViewAdapterMainActivity extends RecyclerView.Adapter<RecyclerViewAdapterMainActivity.MainVIewHOlder> {
+public class AdminViewAdapter extends RecyclerView.Adapter<AdminViewAdapter.MainVIewHOlder> {
    private Context context;
     private int rotate;
     private  onClickListner mOnClickListener;
     private  ArrayList<String> recipeItemArrayList;
-    public RecyclerViewAdapterMainActivity(Context C, onClickListner L, ArrayList<String>D, int Rotate)
+    public AdminViewAdapter(Context C, onClickListner L, ArrayList<String>D, int Rotate)
     {
         context=C;
         mOnClickListener=L;
@@ -30,7 +30,7 @@ public class RecyclerViewAdapterMainActivity extends RecyclerView.Adapter<Recycl
     public MainVIewHOlder onCreateViewHolder(ViewGroup parent, int viewType)
     {
         Context parent_C=parent.getContext();
-         int Layoutidforitem=R.layout.list_item_txt2;
+         int Layoutidforitem= android.R.layout.simple_list_item_1;
         LayoutInflater inflater=LayoutInflater.from(parent_C);
         boolean shouldAttachToParentImmediately = false;
         View view=inflater.inflate(Layoutidforitem,parent,shouldAttachToParentImmediately);
@@ -64,23 +64,22 @@ public class RecyclerViewAdapterMainActivity extends RecyclerView.Adapter<Recycl
     class MainVIewHOlder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
         TextView PName;
+        ImageButton share;
         public MainVIewHOlder(View itemView)
         {
             super(itemView);
-            PName =(TextView)itemView.findViewById(R.id.item2text2);
+            PName =(TextView)itemView.findViewById(android.R.id.text1);
             itemView.setOnClickListener(this);
         }
-
         void bind(String Pname, int rotate)
           {
              PName.setText(Pname);
           }
-
         @Override
         public void onClick(View view)
         {
             int Clickpos = getAdapterPosition();
-            mOnClickListener.onListItemClick(Clickpos);
+                mOnClickListener.onListItemClick(Clickpos);
         }
     }
     public interface onClickListner

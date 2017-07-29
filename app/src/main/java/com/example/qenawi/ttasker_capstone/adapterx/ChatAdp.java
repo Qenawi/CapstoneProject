@@ -1,4 +1,4 @@
-package com.example.qenawi.ttasker_capstone.adapters;
+package com.example.qenawi.ttasker_capstone.adapterx;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.qenawi.ttasker_capstone.AndroidEmoji;
-import com.example.qenawi.ttasker_capstone.Contract.ContractAcc;
+import com.example.qenawi.ttasker_capstone.contractx.ContractAcc;
 import com.example.qenawi.ttasker_capstone.R;
 import com.example.qenawi.ttasker_capstone.genericviewholders.GenericViewHolder;
 import com.example.qenawi.ttasker_capstone.modle.smsitem;

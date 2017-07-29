@@ -10,9 +10,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
-import com.example.qenawi.ttasker_capstone.Fragments.CreateProject;
-import com.example.qenawi.ttasker_capstone.Fragments.JoinProject;
-import com.example.qenawi.ttasker_capstone.Fragments.MyProjects;
+import com.example.qenawi.ttasker_capstone.fragmentsx.CreateProject;
+import com.example.qenawi.ttasker_capstone.fragmentsx.JoinProject;
+import com.example.qenawi.ttasker_capstone.fragmentsx.MyProjects;
 import com.example.qenawi.ttasker_capstone.idlelingResource.SimpleIdlingResource;
 import com.example.qenawi.ttasker_capstone.modle.userprojectItem;
 

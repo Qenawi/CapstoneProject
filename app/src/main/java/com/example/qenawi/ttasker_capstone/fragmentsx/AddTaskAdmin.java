@@ -1,4 +1,4 @@
-package com.example.qenawi.ttasker_capstone.Fragments;
+package com.example.qenawi.ttasker_capstone.fragmentsx;
 
 import android.content.Context;
 import android.net.Uri;

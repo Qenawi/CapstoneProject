@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
-import com.example.qenawi.ttasker_capstone.Fragments.MainFragment;
+import com.example.qenawi.ttasker_capstone.fragmentsx.MainFragment;
 
 public class MainActivity3Tasks extends AppCompatActivity  implements MainFragment.OnFragmentInteractionListener{
 

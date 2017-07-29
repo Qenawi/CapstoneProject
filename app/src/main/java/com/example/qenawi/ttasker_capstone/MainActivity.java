@@ -17,7 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.qenawi.ttasker_capstone.Contract.ContractAcc;
+import com.example.qenawi.ttasker_capstone.contractx.ContractAcc;
 import com.example.qenawi.ttasker_capstone.Sign.SignInActivity;
 import com.example.qenawi.ttasker_capstone.idlelingResource.SimpleIdlingResource;
 import com.example.qenawi.ttasker_capstone.modle.taskItem;

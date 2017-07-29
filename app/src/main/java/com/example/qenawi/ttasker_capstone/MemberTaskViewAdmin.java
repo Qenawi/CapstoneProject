@@ -7,8 +7,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 
-import com.example.qenawi.ttasker_capstone.Fragments.AddTaskAdmin;
-import com.example.qenawi.ttasker_capstone.Fragments.memperTaskViewAdmin;
+import com.example.qenawi.ttasker_capstone.fragmentsx.AddTaskAdmin;
+import com.example.qenawi.ttasker_capstone.fragmentsx.memperTaskViewAdmin;
 import com.example.qenawi.ttasker_capstone.modle.pmemberitem;
 
 public class MemberTaskViewAdmin extends AppCompatActivity implements memperTaskViewAdmin.OnFragmentInteractionListener,AddTaskAdmin.OnFragmentInteractionListener

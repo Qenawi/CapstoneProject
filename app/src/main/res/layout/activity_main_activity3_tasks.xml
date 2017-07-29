@@ -7,7 +7,7 @@
     tools:context="com.example.qenawi.ttasker_capstone.MainActivity3Tasks">
     <fragment
         android:id="@+id/fragment"
-        android:name="com.example.qenawi.ttasker_capstone.Fragments.MainFragment"
+        android:name="com.example.qenawi.ttasker_capstone.fragmentsx.MainFragment"
         android:layout_width="0dp"
         tools:layout="@layout/fragment_main"
         android:layout_height="0dp"

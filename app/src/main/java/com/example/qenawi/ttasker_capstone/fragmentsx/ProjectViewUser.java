@@ -1,4 +1,4 @@
-package com.example.qenawi.ttasker_capstone.Fragments;
+package com.example.qenawi.ttasker_capstone.fragmentsx;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,10 +15,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.qenawi.ttasker_capstone.CallBack.ProjectView_user;
+import com.example.qenawi.ttasker_capstone.callbackx.ProjectView_user;
 import com.example.qenawi.ttasker_capstone.ChatActivity;
 import com.example.qenawi.ttasker_capstone.R;
-import com.example.qenawi.ttasker_capstone.adapters.ProjectViewUserAdp;
+import com.example.qenawi.ttasker_capstone.adapterx.ProjectViewUserAdp;
 import com.example.qenawi.ttasker_capstone.modle.taskItem;
 import com.example.qenawi.ttasker_capstone.modle.userprojectItem;
 import com.google.android.gms.tasks.OnSuccessListener;
