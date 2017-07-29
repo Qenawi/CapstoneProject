@@ -23,8 +23,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * Created by QEnawi on 7/26/2017.
+ * src https://www.codementor.io/sundayakinsete/firebase-real-time-notifications-app-to-app-opkwbo6ba
  */
-
 public class NotificationService extends Service
 {
     public FirebaseDatabase mDatabase;
