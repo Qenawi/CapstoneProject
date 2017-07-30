@@ -7,8 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.example.qenawi.ttasker_capstone.contractx.ContractAcc;
 import com.example.qenawi.ttasker_capstone.adapterx.ChatAdp;
+import com.example.qenawi.ttasker_capstone.contractx.ContractAcc;
 import com.example.qenawi.ttasker_capstone.modle.smsitem;
 import com.example.qenawi.ttasker_capstone.modle.userprojectItem;
 import com.example.qenawi.ttasker_capstone.services.NotfyUsers;
