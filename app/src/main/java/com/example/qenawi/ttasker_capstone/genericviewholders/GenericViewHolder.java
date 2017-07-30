@@ -7,11 +7,10 @@ import android.view.View;
  * Created by QEnawi on 3/18/2017.
  */
 
-public abstract class GenericViewHolder extends RecyclerView.ViewHolder
-{
+public abstract class GenericViewHolder extends RecyclerView.ViewHolder {
     public GenericViewHolder(View itemView) {
         super(itemView);
     }
 
-    public abstract  void bind(int position);
+    public abstract void bind(int position);
 }

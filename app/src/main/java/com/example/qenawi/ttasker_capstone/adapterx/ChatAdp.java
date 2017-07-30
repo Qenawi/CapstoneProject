@@ -13,7 +13,7 @@ import com.example.qenawi.ttasker_capstone.AndroidEmoji;
 import com.example.qenawi.ttasker_capstone.contractx.ContractAcc;
 import com.example.qenawi.ttasker_capstone.R;
 import com.example.qenawi.ttasker_capstone.genericviewholders.GenericViewHolder;
-import com.example.qenawi.ttasker_capstone.modle.smsitem;
+import com.example.qenawi.ttasker_capstone.modle.Smsitem;
 
 import java.util.ArrayList;
 
@@ -22,11 +22,11 @@ import java.util.ArrayList;
  */
 
 public class ChatAdp extends RecyclerView.Adapter<GenericViewHolder> {
-    ArrayList<smsitem> data1;
-    Context C;
     private static int selectedItem = -1;
+    ArrayList<Smsitem> data1;
+    Context C;
 
-    public ChatAdp(ArrayList<smsitem> data1, Context c) {
+    public ChatAdp(ArrayList<Smsitem> data1, Context c) {
         this.data1 = data1;
         C = c;
     }
@@ -39,8 +39,7 @@ public class ChatAdp extends RecyclerView.Adapter<GenericViewHolder> {
     public int getItemViewType(int position) //1 ,2
     {
         int ret;
-        if (data1 == null)
-        {
+        if (data1 == null) {
             return 1;
         }
         ret = get_type(data1.get(position));
@@ -51,28 +50,24 @@ public class ChatAdp extends RecyclerView.Adapter<GenericViewHolder> {
     @Override
     public GenericViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     //1 text pubblechatme  -> vh 1->list item 2
-   //2 img pubblechatme -> vh 2 ->  item 1
-  //3 hybet txt pubblechatme  vh3-> iem 3
-  //4 text him  vh 1 other -> l2 other
-  //5 img him  v2 l 1 other
-  //6 hyber him l 3 other v 3
+    //2 img pubblechatme -> vh 2 ->  item 1
+    //3 hybet txt pubblechatme  vh3-> iem 3
+    //4 text him  vh 1 other -> l2 other
+    //5 img him  v2 l 1 other
+    //6 hyber him l 3 other v 3
     {
         View view;
-        if (viewType == 1)
-        {
+        if (viewType == 1) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item2, parent, false);
             return new Viewholder1(view);
-        } else if (viewType == 3)
-        {
+        } else if (viewType == 3) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item3, parent, false);
             return new Viewholder3(view);
         } //-----------------------------------------------------------------------------------------------------------------
-        else if (viewType == 4)
-        {
+        else if (viewType == 4) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item2other, parent, false);
             return new Viewholder1Other(view);
-        } else if (viewType == 6)
-        {
+        } else if (viewType == 6) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item3other, parent, false);
             return new Viewholder3Other(view);
         }
@@ -89,6 +84,35 @@ public class ChatAdp extends RecyclerView.Adapter<GenericViewHolder> {
         return (data1.size());
     }
 
+    private int get_type(Smsitem msg) {
+        String demo1 = "http";
+        String imgTag1 = "wallbapers";
+        if (msg.getMsg().startsWith(demo1)) {
+            if (msg.getMsg().contains(imgTag1)) {
+                return getUser(2, msg);
+            }
+            return getUser(3, msg);
+        }
+        return getUser(1, msg);
+    }
+
+    private int getUser(int ret, Smsitem msg) {
+        ContractAcc acc = new ContractAcc();
+        if (msg.getSender().equals(acc.get_username().getName())) {
+            return ret;
+        }
+        switch (ret) {
+
+            case 1:
+                return 4;
+            case 2:
+                return 5;
+            case 3:
+                return 6;
+        }
+        return 2;
+    }
+
     //_-_veiw holder-------------------------------------------------
     private class Viewholder1 extends GenericViewHolder {
         View x;
@@ -103,13 +127,12 @@ public class ChatAdp extends RecyclerView.Adapter<GenericViewHolder> {
 
         @Override
 
-        public void bind(int position)
-        {
-         //   Typeface custom_font = Typeface.createFromAsset(C.getAssets(), "fonts/AndroidEmoji.ttf");
-           // e.setTypeface(custom_font);
+        public void bind(int position) {
+            //   Typeface custom_font = Typeface.createFromAsset(C.getAssets(), "fonts/AndroidEmoji.ttf");
+            // e.setTypeface(custom_font);
             String em = data1.get(position).getMsg();
             e.setText(AndroidEmoji.ensure(em, C));
-          //  e.setTypeface(custom_font);
+            //  e.setTypeface(custom_font);
         }
     }
 
@@ -186,36 +209,6 @@ public class ChatAdp extends RecyclerView.Adapter<GenericViewHolder> {
             Intent chooser = Intent.createChooser(intent, "Open with");
             C.startActivity(chooser);
         }
-    }
-
-    private int get_type(smsitem msg) {
-        String demo1 = "http";
-        String imgTag1 = "wallbapers";
-        if (msg.getMsg().startsWith(demo1)) {
-            if (msg.getMsg().contains(imgTag1)) {
-                return getUser(2, msg);
-            }
-            return getUser(3, msg);
-        }
-        return getUser(1, msg);
-    }
-
-    private int getUser(int ret, smsitem msg) {
-        ContractAcc acc = new ContractAcc();
-        if (msg.getSender().equals(acc.get_username().getName())) {
-            return ret;
-        }
-        switch (ret)
-        {
-
-            case 1:
-                return 4;
-            case 2:
-                return 5;
-            case 3:
-                return 6;
-        }
-        return 2;
     }
 }
 //1 text pubblechatme

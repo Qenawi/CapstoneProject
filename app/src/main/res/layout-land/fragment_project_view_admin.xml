@@ -13,16 +13,18 @@
         android:alwaysDrawnWithCache="true"
         android:clipChildren="false"
         android:clipToPadding="false"
+        android:contentDescription="@string/recycler_view"
         android:padding="10dp" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floatingActionButton2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:layout_margin="10dp"
-        app:fabSize="mini"
         android:layout_gravity="bottom|right"
+        android:layout_margin="10dp"
+        android:clickable="true"
+        android:contentDescription="@string/chatbutton"
+        app:fabSize="mini"
         app:srcCompat="@android:drawable/sym_action_chat" />
 
 </FrameLayout>

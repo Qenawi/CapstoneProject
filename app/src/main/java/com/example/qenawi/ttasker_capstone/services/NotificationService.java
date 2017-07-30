@@ -25,23 +25,23 @@ import com.google.firebase.database.FirebaseDatabase;
  * Created by QEnawi on 7/26/2017.
  * src https://www.codementor.io/sundayakinsete/firebase-real-time-notifications-app-to-app-opkwbo6ba
  */
-public class NotificationService extends Service
-{
+public class NotificationService extends Service {
+    static String TAG = "FirebaseService";
     public FirebaseDatabase mDatabase;
     FirebaseAuth firebaseAuth;
     Context context;
-    static String TAG = "FirebaseService";
-    int cnt1=1;
-    int imgIcon=R.drawable.common_google_signin_btn_icon_dark;
+    int cnt1 = 1;
+    int imgIcon = R.drawable.common_google_signin_btn_icon_dark;
+
     @Override
-    public void onCreate()
-    {
+    public void onCreate() {
         super.onCreate();
         context = this;
         mDatabase = FirebaseDatabase.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         setupNotificationListener();
     }
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         return Service.START_STICKY;
@@ -49,90 +49,79 @@ public class NotificationService extends Service
 
     @Nullable
     @Override
-    public IBinder onBind(Intent intent)
-    {
+    public IBinder onBind(Intent intent) {
         return null;
     }
+
     @Override
-    public void onDestroy()
-    {
+    public void onDestroy() {
         super.onDestroy();
     }
-    private void setupNotificationListener()
-    {
+
+    private void setupNotificationListener() {
 
         mDatabase.getReference().child("Notification")
                 .child(getStoredPair())
                 .orderByChild("notfstate").equalTo("0")
-                .addChildEventListener(new ChildEventListener()
-                {
+                .addChildEventListener(new ChildEventListener() {
                     @Override
-                    public void onChildAdded(DataSnapshot dataSnapshot, String s)
-                    {
-                        if(dataSnapshot != null)
-                        {
-                            NotificationItem notification =(NotificationItem)dataSnapshot.getValue(NotificationItem.class);
-                           showNotification(context,notification,dataSnapshot.getKey());
-                         //   notfy2(context,notification);
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        if (dataSnapshot != null) {
+                            NotificationItem notification = (NotificationItem) dataSnapshot.getValue(NotificationItem.class);
+                            showNotification(context, notification, dataSnapshot.getKey());
+                            //   notfy2(context,notification);
                         }
                     }
+
                     @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s)
-                    {
-                    //    Utilities.log("onChildChanged",dataSnapshot);
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                        //    Utilities.log("onChildChanged",dataSnapshot);
                     }
 
                     @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot)
-                    {
-                    //    Utilities.log("onChildRemoved",dataSnapshot);
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+                        //    Utilities.log("onChildRemoved",dataSnapshot);
                     }
 
                     @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s)
-                    {
-                     //   Utilities.log("onChildMoved",dataSnapshot);
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                        //   Utilities.log("onChildMoved",dataSnapshot);
                     }
 
                     @Override
-                    public void onCancelled(DatabaseError databaseError)
-                    {
+                    public void onCancelled(DatabaseError databaseError) {
 //                        Utilities.log("onCancelled",databaseError);
                     }
                 });
     }
-    private void showNotification(Context context, NotificationItem notification,String notification_key)
-    {
-        if (notification.getNotftaskkey().equals(getStoredPair()))
-        {
+
+    private void showNotification(Context context, NotificationItem notification, String notification_key) {
+        if (notification.getNotftaskkey().equals(getStoredPair())) {
             flagNotificationAsSent(notification_key);
             return;
         }
-        int cntx=0;
+        int cntx = 0;
         Intent backIntent = new Intent(context, MainActivity.class);
         backIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         backIntent.setAction("resetTasks");
         Intent intent = new Intent(context, MainActivity.class);
         intent.setAction("resetChat");
         /*  Use the notification type to switch activity to stack on the main activity*/
-        if(notification.getNotftype().equals("tasktype"))
-        {
+        if (notification.getNotftype().equals("tasktype")) {
             intent = new Intent(context, MainActivity3Tasks.class);
-            cnt1=1;
-            settasksCnt(getTc()+1);
-            cntx=getTc();
-            imgIcon=R.drawable.task2;
+            cnt1 = 1;
+            settasksCnt(getTc() + 1);
+            cntx = getTc();
+            imgIcon = R.drawable.task2;
+        } else {
+            cnt1 = 2;
+            setchatCnt(getCc() + 1);
+            cntx = getCc();
+            imgIcon = R.drawable.messege;
         }
-        else
-            {
-            cnt1=2;
-            setchatCnt(getCc()+1);
-                cntx=getCc();
-                imgIcon=R.drawable.messege;
-            }
         //--------------------------------
         final PendingIntent pendingIntent = PendingIntent.getActivities(context, 900,
-                new Intent[] {backIntent}, PendingIntent.FLAG_ONE_SHOT);
+                new Intent[]{backIntent}, PendingIntent.FLAG_ONE_SHOT);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         stackBuilder.addParentStack(MainActivity.class);
         //-------------------
@@ -141,43 +130,43 @@ public class NotificationService extends Service
                 .setContentTitle(notification.getNotftitle())
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setContentText(notification.getNotfcontent())
-                .setContentInfo(cntx+"")
+                .setContentInfo(cntx + "")
                 .setAutoCancel(true);
         //-----------------------------
         mBuilder.setContentIntent(pendingIntent);
-        NotificationManager mNotificationManager =  (NotificationManager)context. getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(cnt1, mBuilder.build());
         /* Update firebase set notifcation with this key to 1 so it doesnt get pulled by our notification listener*/
         flagNotificationAsSent(notification_key);
     }
-    private void flagNotificationAsSent(String notification_key)
-    {
+
+    private void flagNotificationAsSent(String notification_key) {
         mDatabase.getReference().child("Notification").child(getStoredPair())
                 .child(notification_key)
-               .child("notfstate")
-               .setValue("1");
+                .child("notfstate")
+                .setValue("1");
     }
-    String getStoredPair()
-    {
-        String res= PreferenceManager.getDefaultSharedPreferences(this).getString("eTa","null");
-        return  res;
+
+    String getStoredPair() {
+        String res = PreferenceManager.getDefaultSharedPreferences(this).getString("eTa", "null");
+        return res;
     }
-    int getTc()
-    {
-        int res= PreferenceManager.getDefaultSharedPreferences(this).getInt("eTa7",0);
-        return  res;
+
+    int getTc() {
+        int res = PreferenceManager.getDefaultSharedPreferences(this).getInt("eTa7", 0);
+        return res;
     }
-    int getCc()
-    {
-        int res= PreferenceManager.getDefaultSharedPreferences(this).getInt("eTa7",0);
-        return  res;
+
+    int getCc() {
+        int res = PreferenceManager.getDefaultSharedPreferences(this).getInt("eTa7", 0);
+        return res;
     }
-    void settasksCnt(int x)
-    {
-        PreferenceManager.getDefaultSharedPreferences(this).edit().putInt("eTa7",x).apply();
+
+    void settasksCnt(int x) {
+        PreferenceManager.getDefaultSharedPreferences(this).edit().putInt("eTa7", x).apply();
     }
-    void setchatCnt(int x)
-    {
-        PreferenceManager.getDefaultSharedPreferences(this).edit().putInt("eTa7",x).apply();
+
+    void setchatCnt(int x) {
+        PreferenceManager.getDefaultSharedPreferences(this).edit().putInt("eTa7", x).apply();
     }
-    }
+}

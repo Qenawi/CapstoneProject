@@ -17,6 +17,7 @@
         android:alwaysDrawnWithCache="true"
         android:clipChildren="false"
         android:clipToPadding="false"
+        android:contentDescription="@string/recycler_view"
         android:padding="10dp"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"

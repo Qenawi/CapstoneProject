@@ -27,15 +27,15 @@ public class MainActivityTest {
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
     private IdlingResource idlingResource;
+
     @Before
-    public void Reg()
-    {
-        idlingResource=mActivityTestRule.getActivity().getIdlingResource();
+    public void Reg() {
+        idlingResource = mActivityTestRule.getActivity().getIdlingResource();
         Espresso.registerIdlingResources(idlingResource);
     }
+
     @Test
-    public void mainActivityTest()
-    {
+    public void mainActivityTest() {
         // Added a sleep statement to match the app's execution delay.
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
@@ -44,11 +44,11 @@ public class MainActivityTest {
                         withParent(allOf(withId(R.id.creat),
                                 withParent(withId(R.id.fragment)))
                         ),
-                                 isDisplayed()));
+                        isDisplayed()));
 
     }
-    public void UnReg()
-    {
+
+    public void UnReg() {
         Espresso.unregisterIdlingResources(idlingResource);
     }
 

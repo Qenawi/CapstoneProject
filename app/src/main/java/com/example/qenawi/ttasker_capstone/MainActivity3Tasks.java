@@ -7,35 +7,39 @@ import android.widget.Toast;
 
 import com.example.qenawi.ttasker_capstone.fragmentsx.MainFragment;
 
-public class MainActivity3Tasks extends AppCompatActivity  implements MainFragment.OnFragmentInteractionListener{
+public class MainActivity3Tasks extends AppCompatActivity implements MainFragment.OnFragmentInteractionListener {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_activity3_tasks);
     }
+
     @Override
     public void onFragmentInteraction(Object uri) //MainFragment
     {
-        switch ((String)uri)
-        {
+        switch ((String) uri) {
             case "create":
-                Toast.makeText(this,"create",Toast.LENGTH_LONG).show();call("1"); break;
+                Toast.makeText(this, "create", Toast.LENGTH_LONG).show();
+                call("1");
+                break;
             case "join":
-                Toast.makeText(this,"join",Toast.LENGTH_LONG).show();call("2");
+                Toast.makeText(this, "join", Toast.LENGTH_LONG).show();
+                call("2");
                 break;
             case "MYP":
-                Toast.makeText(this,"MYP",Toast.LENGTH_LONG).show();call("3");
+                Toast.makeText(this, "MYP", Toast.LENGTH_LONG).show();
+                call("3");
                 break;
-            default:break;
+            default:
+                break;
         }
 
     }
-    void call(String E)
-    {
-        Intent intent=new Intent(this,MainActivity3TasksHandler.class);
-        intent.putExtra("target",E);
+
+    void call(String E) {
+        Intent intent = new Intent(this, MainActivity3TasksHandler.class);
+        intent.putExtra("target", E);
         startActivity(intent);
     }
 }

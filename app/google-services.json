@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "616631632779-i829cr2foa7rpcs5sv6m8dhjno5pjuge.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.qenawi.ttasker_capstone",
+            "certificate_hash": "6a987ff95088878764d473eedf102aeee47a1068"
+          }
+        },
+        {
           "client_id": "616631632779-0jtq61hahtpvtu7t90qega6fl8nqmhgi.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

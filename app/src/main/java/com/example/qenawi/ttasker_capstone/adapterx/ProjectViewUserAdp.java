@@ -9,7 +9,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.example.qenawi.ttasker_capstone.R;
-import com.example.qenawi.ttasker_capstone.modle.taskItem;
+import com.example.qenawi.ttasker_capstone.modle.TaskItem;
 
 import java.util.ArrayList;
 
@@ -20,15 +20,15 @@ public class ProjectViewUserAdp extends RecyclerView.Adapter<ProjectViewUserAdp.
     private Context context;
     private int rotate;
     private onClickListner mOnClickListener;
-    private ArrayList<taskItem> recipeItemArrayList;
+    private ArrayList<TaskItem> recipeItemArrayList;
 
-    public ProjectViewUserAdp(Context C, onClickListner L, ArrayList<taskItem> D, int Rotate)
-    {
+    public ProjectViewUserAdp(Context C, onClickListner L, ArrayList<TaskItem> D, int Rotate) {
         context = C;
         mOnClickListener = L;
         recipeItemArrayList = D;
         rotate = Rotate;
     }
+
     //basic Fn
     @Override
     public MainVIewHOlder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -38,10 +38,13 @@ public class ProjectViewUserAdp extends RecyclerView.Adapter<ProjectViewUserAdp.
         boolean shouldAttachToParentImmediately = false;
         View view = inflater.inflate(Layoutidforitem, parent, shouldAttachToParentImmediately);
         MainVIewHOlder hOlder = new MainVIewHOlder(view);
-        return hOlder;}
+        return hOlder;
+    }
+
     @Override
     public void onBindViewHolder(MainVIewHOlder holder, int position) {
-        holder.bind(recipeItemArrayList.get(position), rotate);}
+        holder.bind(recipeItemArrayList.get(position), rotate);
+    }
 
     @Override
     public int getItemCount() {
@@ -61,6 +64,10 @@ public class ProjectViewUserAdp extends RecyclerView.Adapter<ProjectViewUserAdp.
         return position;
     }
 
+    public interface onClickListner {
+        void onListItemClick(int Clickpos);
+    }
+
     class MainVIewHOlder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tName, tData, tDate;
         CheckBox tState;
@@ -70,12 +77,12 @@ public class ProjectViewUserAdp extends RecyclerView.Adapter<ProjectViewUserAdp.
             tName = (TextView) itemView.findViewById(R.id.NAME);
             tData = (TextView) itemView.findViewById(R.id.DATA);
             tDate = (TextView) itemView.findViewById(R.id.DATE);
-            tState=(CheckBox)itemView.findViewById(R.id.checkBox);
+            tState = (CheckBox) itemView.findViewById(R.id.checkBox);
             tState.setOnClickListener(this);
             itemView.setOnClickListener(this);
         }
 
-        void bind(taskItem task, int rotate)
+        void bind(TaskItem task, int rotate)
 
         {
             tName.setText(task.getTaskName());
@@ -85,14 +92,9 @@ public class ProjectViewUserAdp extends RecyclerView.Adapter<ProjectViewUserAdp.
         }
 
         @Override
-        public void onClick(View view)
-        {
+        public void onClick(View view) {
             int Clickpos = getAdapterPosition();
             mOnClickListener.onListItemClick(Clickpos);
         }
-    }
-
-    public interface onClickListner {
-        void onListItemClick(int Clickpos);
     }
 }

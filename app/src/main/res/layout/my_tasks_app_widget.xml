@@ -2,33 +2,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/widget_margin">
+
     <GridView
-        android:background="@color/colorPrimaryDark"
         android:id="@+id/widget_grid_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/colorPrimaryDark"
         android:gravity="center"
-        android:numColumns="1"/>
+        android:numColumns="1" />
+
     <RelativeLayout
         android:id="@+id/empty_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <TextView
-            android:layout_centerInParent="true"
-            android:alpha="0.4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:alpha="0.4"
+            android:text="@string/string_text0"
             android:textAlignment="center"
-            android:text="string/text0"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="20sp"
             android:textStyle="bold" />
+
         <ImageView
-            android:alpha="0.2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_ab_attach"/>
+            android:alpha="0.2"
+            android:contentDescription="@string/text1"
+            android:src="@drawable/ic_ab_attach" />
 
     </RelativeLayout>
 </RelativeLayout>

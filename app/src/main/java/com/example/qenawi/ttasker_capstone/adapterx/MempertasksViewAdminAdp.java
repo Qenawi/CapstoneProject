@@ -9,7 +9,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.example.qenawi.ttasker_capstone.R;
-import com.example.qenawi.ttasker_capstone.modle.taskItem;
+import com.example.qenawi.ttasker_capstone.modle.TaskItem;
 
 import java.util.ArrayList;
 
@@ -20,14 +20,15 @@ public class MempertasksViewAdminAdp extends RecyclerView.Adapter<MempertasksVie
     private Context context;
     private int rotate;
     private onClickListner mOnClickListener;
-    private ArrayList<taskItem> recipeItemArrayList;
-    public MempertasksViewAdminAdp(Context C, onClickListner L, ArrayList<taskItem> D, int Rotate)
-    {
+    private ArrayList<TaskItem> recipeItemArrayList;
+
+    public MempertasksViewAdminAdp(Context C, onClickListner L, ArrayList<TaskItem> D, int Rotate) {
         context = C;
         mOnClickListener = L;
         recipeItemArrayList = D;
         rotate = Rotate;
     }
+
     //basic Fn
     @Override
     public MainVIewHOlder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -37,10 +38,13 @@ public class MempertasksViewAdminAdp extends RecyclerView.Adapter<MempertasksVie
         boolean shouldAttachToParentImmediately = false;
         View view = inflater.inflate(Layoutidforitem, parent, shouldAttachToParentImmediately);
         MainVIewHOlder hOlder = new MainVIewHOlder(view);
-        return hOlder;}
+        return hOlder;
+    }
+
     @Override
     public void onBindViewHolder(MainVIewHOlder holder, int position) {
-        holder.bind(recipeItemArrayList.get(position), rotate);}
+        holder.bind(recipeItemArrayList.get(position), rotate);
+    }
 
     @Override
     public int getItemCount() {
@@ -60,34 +64,35 @@ public class MempertasksViewAdminAdp extends RecyclerView.Adapter<MempertasksVie
         return position;
     }
 
+    public interface onClickListner {
+        void onListItemClick(int Clickpos);
+    }
+
     class MainVIewHOlder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tName, tData, tDate;
         CheckBox tState;
-        public MainVIewHOlder(View itemView)
-        {
+
+        public MainVIewHOlder(View itemView) {
             super(itemView);
             tName = (TextView) itemView.findViewById(R.id.NAME);
             tData = (TextView) itemView.findViewById(R.id.DATA);
             tDate = (TextView) itemView.findViewById(R.id.DATE);
-            tState=(CheckBox)itemView.findViewById(R.id.checkBox);
+            tState = (CheckBox) itemView.findViewById(R.id.checkBox);
             tState.setEnabled(false);
             itemView.setOnClickListener(this);
         }
-        void bind(taskItem task, int rotate)
-        {
+
+        void bind(TaskItem task, int rotate) {
             tName.setText(task.getTaskName());
             tData.setText(task.getTaskDesc());
             tDate.setText(task.getDate());
             tState.setChecked(task.getDoneB());
         }
+
         @Override
         public void onClick(View view) {
             int Clickpos = getAdapterPosition();
             mOnClickListener.onListItemClick(Clickpos);
         }
-    }
-
-    public interface onClickListner {
-        void onListItemClick(int Clickpos);
     }
 }

@@ -23,5 +23,33 @@
     <string name="description">Description</string>
     <string name="name">NAME</string>
     <string name="string_text2">string/text2</string>
+    <string name="text1">image</string>
+    <string name="android_charting_application_xml_ui_design_tutorial_with_example_android_charting_application_xml_ui_design_tutorial_with_example_android_charting_application_xml_ui_design_tutorial_with_example_android_charting_application_xml_ui_design_tutorial_with_example">Android charting application xml ui design tutorial with example. Android charting application xml ui design tutorial with example. Android charting application xml ui design tutorial with example. Android charting application xml ui design tutorial with example.</string>
+    <string name="android_charting_application_xml_ui_design_android_charting_application_xml_ui_design_tutorial_with_example_android_charting_application_xml_ui_design_android_charting_application_xml_ui_design">Android charting application xml ui design. Android charting application xml ui design tutorial with example. Android charting application xml ui design. Android charting application xml ui design.</string>
+    <string name="http_eccooookkpo">http// eccooookkpo</string>
+    <string name="http">http///</string>
+    <string name="string_text0">string/text0</string>
+    <string name="project_name">project name</string>
+    <string name="loading">loading.....</string>
+    <string name="sign_in">sign_in</string>
+    <string name="shareproject">shareProject</string>
+    <string name="titlelable">TitleLable</string>
+    <string name="title">Title</string>
+    <string name="desclab">DescLab</string>
+    <string name="desc">DESC</string>
+    <string name="year">year</string>
+    <string name="month">month</string>
+    <string name="day">Day</string>
+    <string name="addtask">AddTask</string>
+    <string name="projectname">ProjectName</string>
+    <string name="create">Create</string>
+    <string name="projectkey">ProjectKey</string>
+    <string name="join">Join</string>
+    <string name="creat_project">Creat Project</string>
+    <string name="join_project">Join Project</string>
+    <string name="my_projects">My Projects</string>
+    <string name="x_o">x/O</string>
+    <string name="recycler_view">recycler view</string>
+    <string name="chatbutton">chatButton</string>
 </resources>
 

@@ -15,12 +15,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.qenawi.ttasker_capstone.callbackx.ProjectView_user;
 import com.example.qenawi.ttasker_capstone.ChatActivity;
 import com.example.qenawi.ttasker_capstone.R;
 import com.example.qenawi.ttasker_capstone.adapterx.ProjectViewUserAdp;
-import com.example.qenawi.ttasker_capstone.modle.taskItem;
-import com.example.qenawi.ttasker_capstone.modle.userprojectItem;
+import com.example.qenawi.ttasker_capstone.callbackx.ProjectViewUserL;
+import com.example.qenawi.ttasker_capstone.modle.TaskItem;
+import com.example.qenawi.ttasker_capstone.modle.UserprojectItem;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,53 +29,52 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-public class ProjectViewUser extends Fragment implements ProjectViewUserAdp.onClickListner, ProjectView_user {
-    private OnFragmentInteractionListener mListener;
-    ArrayList<taskItem> taskItems;
-    ArrayList<String>taskKey=new ArrayList<>();
+
+public class ProjectViewUser extends Fragment implements ProjectViewUserAdp.onClickListner, ProjectViewUserL {
+    ArrayList<TaskItem> taskItems;
+    ArrayList<String> taskKey = new ArrayList<>();
     RecyclerView rv;
     ProjectViewUserAdp adapter;
     RecyclerView.LayoutManager ly;
+    private OnFragmentInteractionListener mListener;
     private FloatingActionButton Chat;
-    private userprojectItem Pkey;
-    private ProjectView_user mCallback=this;
+    private UserprojectItem Pkey;
+    private ProjectViewUserL mCallback = this;
     private int lastFirstVisiblePosition;
-    public ProjectViewUser()
-    {
+
+    public ProjectViewUser() {
         // Required empty public constructor
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root= inflater.inflate(R.layout.fragment_project_view_user, container, false);
-        if (savedInstanceState!= null)
-        {
-            Log.v("hugo","restore");
-            lastFirstVisiblePosition=savedInstanceState.getInt(getString(R.string.bundleK4));
-            taskItems=savedInstanceState.getParcelableArrayList(getString(R.string.bundleK7));
-            taskKey=savedInstanceState.getStringArrayList(getString(R.string.bundleK5));
+        View root = inflater.inflate(R.layout.fragment_project_view_user, container, false);
+        if (savedInstanceState != null) {
+            Log.v("hugo", "restore");
+            lastFirstVisiblePosition = savedInstanceState.getInt(getString(R.string.bundleK4));
+            taskItems = savedInstanceState.getParcelableArrayList(getString(R.string.bundleK7));
+            taskKey = savedInstanceState.getStringArrayList(getString(R.string.bundleK5));
         }
-        Chat=(FloatingActionButton)root.findViewById(R.id.floatingActionButton2);
-        taskItems=new ArrayList<>();
-        Pkey =(userprojectItem) getActivity().getIntent().getExtras().getParcelable("PKey");//project key
-        rv=(RecyclerView) root.findViewById(R.id.project_tasks);
-        ly=new LinearLayoutManager(getActivity());
+        Chat = (FloatingActionButton) root.findViewById(R.id.floatingActionButton2);
+        taskItems = new ArrayList<>();
+        Pkey = (UserprojectItem) getActivity().getIntent().getExtras().getParcelable("PKey");//project key
+        rv = (RecyclerView) root.findViewById(R.id.project_tasks);
+        ly = new LinearLayoutManager(getActivity());
         rv.setLayoutManager(ly);
-        adapter=new ProjectViewUserAdp(getContext(),this,taskItems,0);
+        adapter = new ProjectViewUserAdp(getContext(), this, taskItems, 0);
         rv.setAdapter(adapter);
-        Chat.setOnClickListener(new View.OnClickListener()
-        {
+        Chat.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
-                Intent intent=new Intent(getActivity(),ChatActivity.class);
-                intent.putExtra("Alpha",(Parcelable)Pkey);
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ChatActivity.class);
+                intent.putExtra("Alpha", (Parcelable) Pkey);
                 startActivity(intent);
             }
         });
         getMemberTasks();
-        return  root;
+        return root;
     }
 
     @Override
@@ -88,67 +87,57 @@ public class ProjectViewUser extends Fragment implements ProjectViewUserAdp.onCl
                     + " must implement OnFragmentInteractionListener");
         }
     }
+
     @Override
-    public void onDetach()
-    {
+    public void onDetach() {
         super.onDetach();
         mListener = null;
     }
+
     @Override
-    public void onPause()
-    {
+    public void onPause() {
         lastFirstVisiblePosition = ((LinearLayoutManager) rv.getLayoutManager()).findLastVisibleItemPosition();
         super.onPause();
     }
-    @Override
-    public void onListItemClick(int Clickpos)
-    {
 
-     changeState(Clickpos);
+    @Override
+    public void onListItemClick(int Clickpos) {
+
+        changeState(Clickpos);
 
     }
 
 
-    private void changeState(int clickpos)
-    {
+    private void changeState(int clickpos) {
         final FirebaseDatabase fdb = FirebaseDatabase.getInstance();
         final DatabaseReference fdbr = fdb.getReference().child("userTaskstate").child(getStoredPair()).child(taskKey.get(clickpos));
         final DatabaseReference fdbr2 = fdb.getReference().child("widgetdata").child(getStoredPair()).child(Pkey.getPkey()).child(taskKey.get(clickpos));
-        String val=taskItems.get(clickpos).getDone().equals("1")?"0":"1";
+        String val = taskItems.get(clickpos).getDone().equals("1") ? "0" : "1";
         taskItems.get(clickpos).setDone(val);
-        fdbr.child("state").setValue(taskItems.get(clickpos).getDone()).addOnSuccessListener(new OnSuccessListener<Void>()
-        {
+        fdbr.child("state").setValue(taskItems.get(clickpos).getDone()).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
-            public void onSuccess(Void aVoid)
-            {
+            public void onSuccess(Void aVoid) {
 
             }
         });
         fdbr2.child("done").setValue(taskItems.get(clickpos).getDone());
 
     }
-    public interface OnFragmentInteractionListener
-    {
-        // TODO: Update argument type and name
-        void onFragmentInteraction4(Uri uri);
-    }
-    void getMemberTasks()
-    {
+
+    void getMemberTasks() {
         final FirebaseDatabase fdb = FirebaseDatabase.getInstance();
         final DatabaseReference fdbr = fdb.getReference().child("widgetdata").child(getStoredPair()).child(Pkey.getPkey());
-        fdbr.addListenerForSingleValueEvent(new ValueEventListener()
-        {
+        fdbr.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot)
-            {
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren())
-                {
-                    taskItem d= (taskItem)dataSnapshot1.getValue(taskItem.class);
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    TaskItem d = (TaskItem) dataSnapshot1.getValue(TaskItem.class);
                     taskItems.add(d);
                     taskKey.add(dataSnapshot1.getKey());
                 }
                 mCallback.data_arrived(null);
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
@@ -156,20 +145,24 @@ public class ProjectViewUser extends Fragment implements ProjectViewUserAdp.onCl
     }
 
     @Override
-    public void data_arrived(Object object)
-    {
-adapter.notifyDataSetChanged();
+    public void data_arrived(Object object) {
+        adapter.notifyDataSetChanged();
     }
-    String getStoredPair()
-    {
-        return  PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("eTa","null");
+
+    String getStoredPair() {
+        return PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("eTa", "null");
     }
+
     @Override
-    public void onSaveInstanceState(Bundle outState)
-    {
-        outState.putInt(getString(R.string.bundleK4),lastFirstVisiblePosition);
-        outState.putParcelableArrayList(getString(R.string.bundleK7),taskItems);
-        outState.putStringArrayList(getString(R.string.bundleK5),taskKey);
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putInt(getString(R.string.bundleK4), lastFirstVisiblePosition);
+        outState.putParcelableArrayList(getString(R.string.bundleK7), taskItems);
+        outState.putStringArrayList(getString(R.string.bundleK5), taskKey);
         super.onSaveInstanceState(outState);
+    }
+
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onFragmentInteraction4(Uri uri);
     }
 }

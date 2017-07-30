@@ -22,24 +22,23 @@ import static org.hamcrest.Matchers.allOf;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class myprojects
-{
+public class myprojects {
 
     @Rule
-    public ActivityTestRule<MainActivity3TasksHandler> mActivityTestRule = new ActivityTestRule<>(MainActivity3TasksHandler.class,true,false);
+    public ActivityTestRule<MainActivity3TasksHandler> mActivityTestRule = new ActivityTestRule<>(MainActivity3TasksHandler.class, true, false);
     private IdlingResource idlingResource;
+
     @Before
-    public void Reg()
-    {
-        Intent i=new Intent();
-        i.putExtra("target","3");
+    public void Reg() {
+        Intent i = new Intent();
+        i.putExtra("target", "3");
         mActivityTestRule.launchActivity(i);
-        idlingResource=mActivityTestRule.getActivity().getIdlingResource();
+        idlingResource = mActivityTestRule.getActivity().getIdlingResource();
         Espresso.registerIdlingResources(idlingResource);
     }
+
     @Test
-    public void mainActivityTest()
-    {
+    public void mainActivityTest() {
         ViewInteraction recyclerView = onView
                 (
                         allOf(withId(R.id.project_list),
@@ -47,8 +46,8 @@ public class myprojects
                                 isDisplayed()));
 
     }
-    public void UnReg()
-    {
+
+    public void UnReg() {
         Espresso.unregisterIdlingResources(idlingResource);
     }
 

@@ -20,8 +20,8 @@ import android.widget.Toast;
 import com.example.qenawi.ttasker_capstone.contractx.ContractAcc;
 import com.example.qenawi.ttasker_capstone.Sign.SignInActivity;
 import com.example.qenawi.ttasker_capstone.idlelingResource.SimpleIdlingResource;
-import com.example.qenawi.ttasker_capstone.modle.taskItem;
-import com.example.qenawi.ttasker_capstone.modle.users_data_modleitem;
+import com.example.qenawi.ttasker_capstone.modle.TaskItem;
+import com.example.qenawi.ttasker_capstone.modle.Usersdataitem;
 import com.example.qenawi.ttasker_capstone.provider.ContractProvider;
 import com.example.qenawi.ttasker_capstone.services.NotificationService;
 import com.google.firebase.database.DataSnapshot;
@@ -34,7 +34,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    ArrayList<taskItem> sync = new ArrayList<>();
+    ArrayList<TaskItem> sync = new ArrayList<>();
     ArrayList<Pair<String, String>> pkey_taskkey = new ArrayList<>();
     TextView textView;
     private ProgressBar PG;
@@ -45,36 +45,32 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        textView=(TextView)findViewById(R.id.textView5);
-        PG=(ProgressBar)findViewById(R.id.progressBar2);
+        textView = (TextView) findViewById(R.id.textView5);
+        PG = (ProgressBar) findViewById(R.id.progressBar2);
         textView.setText("signing in.....");
         PG.setVisibility(View.VISIBLE);
         is_user_signed();
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1)
-        {
+        if (requestCode == 1) {
             if (resultCode == Activity.RESULT_OK) {
                 // sign in finished
-    //            Toast.makeText(this, "Sign in successfully", Toast.LENGTH_SHORT).show();
+                //            Toast.makeText(this, "Sign in successfully", Toast.LENGTH_SHORT).show();
                 //   DoExtraWork();
                 test();
             }
-            if (resultCode == Activity.RESULT_CANCELED)
-            {
+            if (resultCode == Activity.RESULT_CANCELED) {
                 //Write your code if there's no result
             }
         }
     }
 
-    private void is_user_signed()
-    {
+    private void is_user_signed() {
         ContractAcc con = new ContractAcc();
-        users_data_modleitem mUdm = con.get_username();
+        Usersdataitem mUdm = con.get_username();
         if (mUdm == null) {
             // Not signed in, launch the Sign In activity
             startActivityForResult(new Intent(this, SignInActivity.class), 1);
@@ -86,21 +82,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    void test()
-    {
+    void test() {
         textView.setText("Syncing.....");
         FirebaseDatabase fdb = FirebaseDatabase.getInstance();
         DatabaseReference fdbr = fdb.getReference().child("widgetdata").child(getStoredPair());
         fdbr.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot)
-            {
+            public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.v("HERO", dataSnapshot.getChildrenCount() + "  A0");
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     Log.v("HERO", "project Key" + dataSnapshot1.getKey());
                     for (DataSnapshot dataSnapshot2 : dataSnapshot1.getChildren()) {
                         Log.v("HERO", "task key " + dataSnapshot2.getKey());
-                        taskItem item = (taskItem) dataSnapshot2.getValue(taskItem.class);
+                        TaskItem item = (TaskItem) dataSnapshot2.getValue(TaskItem.class);
                         Pair<String, String> pair = new Pair<>(dataSnapshot1.getKey(), dataSnapshot2.getKey());
                         pkey_taskkey.add(pair);
                         sync.add(item);
@@ -122,8 +116,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    void DoExtraWork()
-    {
+    void DoExtraWork() {
 
         // check if shared prefs is empty
         //start service
@@ -132,8 +125,7 @@ public class MainActivity extends AppCompatActivity {
         } else if (getIntent().getAction().equals("resetChat")) {
             setchatCnt();
         }
-        if (getStoredPair().equals("null"))
-        {
+        if (getStoredPair().equals("null")) {
             ContractAcc acc = new ContractAcc();
             final FirebaseDatabase fdb = FirebaseDatabase.getInstance();
             final DatabaseReference fdbr = fdb.getReference().child("users");
@@ -156,9 +148,8 @@ public class MainActivity extends AppCompatActivity {
         lunch();
     }
 
-    void lunch()
-    {
-        if(simpleIdlingResource!=null)simpleIdlingResource.setIdleState(false);
+    void lunch() {
+        if (simpleIdlingResource != null) simpleIdlingResource.setIdleState(false);
         PG.setEnabled(false);
         PG.setVisibility(View.GONE);
         startService(new Intent(this, NotificationService.class));
@@ -183,8 +174,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy()
-    {
+    protected void onDestroy() {
         UpdateWedgie();
         super.onDestroy();
     }
@@ -204,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
         DoExtraWork();
     }
 
-    public void add(taskItem x, Pair<String, String> pktk) {
+    public void add(TaskItem x, Pair<String, String> pktk) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(ContractProvider.TaskTitle, x.getTaskName());
         contentValues.put(ContractProvider.TaskDate, x.getDate());
@@ -217,19 +207,17 @@ public class MainActivity extends AppCompatActivity {
         getContentResolver().insert(ContractProvider.CONTENT_URI, contentValues);
     }
 
-    void UpdateWedgie()
-    {
+    void UpdateWedgie() {
 
         Intent i = new Intent(this, MyTasksAppWidget.class);
         i.setAction(getString(R.string.Action0));
         sendBroadcast(i);
     }
+
     @VisibleForTesting
     @NonNull
-    public IdlingResource getIdlingResource()
-    {
-        if (simpleIdlingResource == null)
-        {
+    public IdlingResource getIdlingResource() {
+        if (simpleIdlingResource == null) {
             simpleIdlingResource = new SimpleIdlingResource();
         }
         return simpleIdlingResource;

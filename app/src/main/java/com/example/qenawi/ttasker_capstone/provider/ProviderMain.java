@@ -16,15 +16,14 @@ import com.example.qenawi.ttasker_capstone.R;
  * Created by QEnawi on 7/28/2017.
  */
 
-public class providerMain  extends ContentProvider
-{
+public class ProviderMain extends ContentProvider {
     //base objects
     public static final int Data = 1; //task directory
     public static final int DataWithId = 2;  // single item by id
     private static final UriMatcher mUriMatcher = getUriMatcher();
-    private providerDataBase Dbinstance;
-    private static UriMatcher getUriMatcher()
-    {
+    private ProviderDataBase Dbinstance;
+
+    private static UriMatcher getUriMatcher() {
         UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);//base case
         uriMatcher.addURI(ContractProvider.ProviderName, ContractProvider.const_path, Data);
         uriMatcher.addURI(ContractProvider.ProviderName, ContractProvider.const_path + "/#", DataWithId);
@@ -32,32 +31,30 @@ public class providerMain  extends ContentProvider
     }
 
     @Override
-    public boolean onCreate()
-    {
+    public boolean onCreate() {
         Context context = getContext();
-        Dbinstance= new providerDataBase(context);
+        Dbinstance = new ProviderDataBase(context);
         return true;
     }
 
     @Nullable
     @Override
-    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder)
-    {
+    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         int match = mUriMatcher.match(uri);
-        SQLiteDatabase db=Dbinstance.getWritableDatabase();
+        SQLiteDatabase db = Dbinstance.getWritableDatabase();
         Cursor retCursor;
-        switch (match)
-        {
+        switch (match) {
             case Data:
-                retCursor = db.query(ContractProvider.TableName,null,null,null,null,null,sortOrder);
+                retCursor = db.query(ContractProvider.TableName, null, null, null, null, null, sortOrder);
                 break;
             default:
                 throw new UnsupportedOperationException(getContext().getString(R.string.RESPONSE2) + uri);
         }
-        try
-        {
+        try {
             retCursor.setNotificationUri(getContext().getContentResolver(), uri);
-        }catch (Exception e){e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return retCursor;
     }
 
@@ -70,7 +67,7 @@ public class providerMain  extends ContentProvider
         int match = mUriMatcher.match(uri);
         switch (match) {
             case Data:
-                return getContext().getString(R.string.RESPONSE1)+ "/" + ContractProvider.ProviderName + "/" + ContractProvider.const_path;
+                return getContext().getString(R.string.RESPONSE1) + "/" + ContractProvider.ProviderName + "/" + ContractProvider.const_path;
             case DataWithId:
                 return getContext().getString(R.string.RESPONSE1) + "/" + ContractProvider.ProviderName + "/" + ContractProvider.const_path;
             default:
@@ -80,57 +77,55 @@ public class providerMain  extends ContentProvider
 
     @Nullable
     @Override
-    public Uri insert(Uri uri, ContentValues contentValues)
-    {
+    public Uri insert(Uri uri, ContentValues contentValues) {
         // final SQLiteDatabase db = mDbHelper.getWritableDatabase();
-        Uri returnUri=null;
-        SQLiteDatabase db=Dbinstance.getWritableDatabase();
+        Uri returnUri = null;
+        SQLiteDatabase db = Dbinstance.getWritableDatabase();
         final int match = mUriMatcher.match(uri);
         //  Table1 v1;
         //      v1 = new Table1(contentValues.get(Contract.C_MOVIE_ID).toString(),contentValues.get(Contract.C_OVERVIEW).toString(), contentValues.get(Contract.C_POSTER_PATH).toString(), contentValues.get(Contract.C_RELEASE_DATE).toString(), contentValues.get(Contract.C_TITLE).toString(),contentValues.get(Contract.VOTEAVG).toString());
         switch (match) {
             case Data:
-                long id = db.insertOrThrow(ContractProvider.TableName,null,contentValues);
+                long id = db.insertOrThrow(ContractProvider.TableName, null, contentValues);
                 if (id > 0) {
                     returnUri = ContentUris.withAppendedId(ContractProvider.CONTENT_URI, id);
                 } else {
-                    throw new android.database.SQLException( getContext().getString(R.string.RESPONSE3)+ uri);
+                    throw new android.database.SQLException(getContext().getString(R.string.RESPONSE3) + uri);
                 }
                 break;
 
             default:
-                throw new UnsupportedOperationException(getContext().getString(R.string.RESPONSE2)+ uri);
+                throw new UnsupportedOperationException(getContext().getString(R.string.RESPONSE2) + uri);
         }
         getContext().getContentResolver().notifyChange(uri, null);
         return returnUri;
 
     }
+
     @Override
     /*
     * @param uri The full URI to query, including a row ID (if a specific record is requested).
      * @param selection An optional restriction to apply to rows when deleting.
      * @return The number of rows affected.
      */
-    public int delete(Uri uri, String selection, String[] selectionArgs)
-    {
+    public int delete(Uri uri, String selection, String[] selectionArgs) {
         // final SQLiteDatabase db = mDbHelper.getWritableDatabase();
         int match = mUriMatcher.match(uri);
-        int res ;
-        SQLiteDatabase db=Dbinstance.getWritableDatabase();
-        switch (match)
-        {
+        int res;
+        SQLiteDatabase db = Dbinstance.getWritableDatabase();
+        switch (match) {
             case Data:
-                res=db.delete(ContractProvider.TableName," dummy = ?",new String[] {selection});
+                res = db.delete(ContractProvider.TableName, " dummy = ?", new String[]{selection});
                 break;
             default:
                 throw new UnsupportedOperationException(getContext().getString(R.string.RESPONSE3) + uri);
         }
-        if (res!=-1)
-        {
+        if (res != -1) {
             getContext().getContentResolver().notifyChange(uri, null);
         }
         return res;
     }
+
     @Override
     public int update(Uri uri, ContentValues contentValues, String s, String[] strings) {
 

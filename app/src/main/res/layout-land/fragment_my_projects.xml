@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.qenawi.ttasker_capstone.fragmentsx.MyProjects">
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/project_list"
         android:layout_width="0dp"
@@ -15,6 +16,7 @@
         android:alwaysDrawnWithCache="true"
         android:clipChildren="false"
         android:clipToPadding="false"
+        android:contentDescription="@string/recycler_view"
         android:padding="10dp"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"

@@ -15,9 +15,9 @@ import android.widget.Toast;
 import com.example.qenawi.ttasker_capstone.contractx.ContractAcc;
 import com.example.qenawi.ttasker_capstone.contractx.ContractDepug;
 import com.example.qenawi.ttasker_capstone.R;
-import com.example.qenawi.ttasker_capstone.modle.pmemberitem;
-import com.example.qenawi.ttasker_capstone.modle.projectsitem;
-import com.example.qenawi.ttasker_capstone.modle.userprojectItem;
+import com.example.qenawi.ttasker_capstone.modle.Pmemberitem;
+import com.example.qenawi.ttasker_capstone.modle.Projectsitem;
+import com.example.qenawi.ttasker_capstone.modle.UserprojectItem;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -70,14 +70,8 @@ public class JoinProject extends Fragment {
         mListener = null;
     }
 
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction2(Object uri);
-    }
-
     //-------------------------------------------------------------
-    void JoinProject(String pkey)
-    {
+    void JoinProject(String pkey) {
 
         ContractAcc acc = new ContractAcc();
         final FirebaseDatabase fdb = FirebaseDatabase.getInstance();
@@ -85,11 +79,10 @@ public class JoinProject extends Fragment {
         final DatabaseReference fdbr2 = fdb.getReference().child("userproject").child(getStoredPair());
         String pushKey = fdbr.push().getKey();
         String pushKey2 = fdbr2.push().getKey();
-        fdbr.child(pushKey).setValue(new pmemberitem(getStoredPair(), acc.get_username().getName()));
+        fdbr.child(pushKey).setValue(new Pmemberitem(getStoredPair(), acc.get_username().getName()));
 
-        fdbr2.child(pushKey2).setValue(new userprojectItem(pkey, pName))
-                .addOnSuccessListener(new OnSuccessListener<Void>()
-                {
+        fdbr2.child(pushKey2).setValue(new UserprojectItem(pkey, pName))
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         mListener.onFragmentInteraction2((String) ProjectKey.getText().toString());
@@ -101,23 +94,20 @@ public class JoinProject extends Fragment {
         return PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("eTa", "null");
     }
 
-    void getPname()
-    {
+    void getPname() {
         final FirebaseDatabase fdb = FirebaseDatabase.getInstance();
         final DatabaseReference fdbr = fdb.getReference().child("projects").child(ProjectKey.getText().toString());
         fdbr.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot)
-            {
-                if (dataSnapshot.getChildrenCount() <= 0)
-                {
-                    if (getActivity()!=null)
-                  Toast.makeText(getActivity(), "no such project", Toast.LENGTH_SHORT).show();
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getChildrenCount() <= 0) {
+                    if (getActivity() != null)
+                        Toast.makeText(getActivity(), "no such project", Toast.LENGTH_SHORT).show();
                 } else {
 
-                    projectsitem pit = (projectsitem)dataSnapshot.getValue(projectsitem.class);
+                    Projectsitem pit = (Projectsitem) dataSnapshot.getValue(Projectsitem.class);
                     pName = pit.getPname();
-                    Log.v(ContractDepug.PUBTAG,pit.getAdminKey()+" "+pit.getPname()+" "+pit.getChatroomKey());
+                    Log.v(ContractDepug.PUBTAG, pit.getAdminKey() + " " + pit.getPname() + " " + pit.getChatroomKey());
                     JoinProject(ProjectKey.getText().toString());
                 }
 
@@ -128,5 +118,10 @@ public class JoinProject extends Fragment {
 
             }
         });
+    }
+
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onFragmentInteraction2(Object uri);
     }
 }

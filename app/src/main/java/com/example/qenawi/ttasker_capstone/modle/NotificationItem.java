@@ -7,19 +7,7 @@ import android.os.Parcelable;
  * Created by QEnawi on 7/25/2017.
  */
 
-public class NotificationItem implements Parcelable
-{
-    protected NotificationItem(Parcel in)
-    {
-        notftype = in.readString();
-        notfcontent = in.readString();
-        notftitle = in.readString();
-        notfprojectkey = in.readString();
-        notftaskkey = in.readString();
-        notfstate = in.readString();
-        notftimestamp = in.readString();
-    }
-
+public class NotificationItem implements Parcelable {
     public static final Creator<NotificationItem> CREATOR = new Creator<NotificationItem>() {
         @Override
         public NotificationItem createFromParcel(Parcel in) {
@@ -31,17 +19,46 @@ public class NotificationItem implements Parcelable
             return new NotificationItem[size];
         }
     };
+    private String notftype, notfcontent, notftitle, notfprojectkey, notftaskkey;
+    private String notfstate;
+    private String notftimestamp;
 
-    public String getNotftype()
-    {
+    protected NotificationItem(Parcel in) {
+        notftype = in.readString();
+        notfcontent = in.readString();
+        notftitle = in.readString();
+        notfprojectkey = in.readString();
+        notftaskkey = in.readString();
+        notfstate = in.readString();
+        notftimestamp = in.readString();
+    }
+
+    public NotificationItem() {
+    }
+
+    public NotificationItem(String notftype, String notfcontent, String notftitle, String notfprojectkey, String notftaskkey, String timestamp, String notfstate) {
+
+        this.notftype = notftype;
+        this.notfcontent = notfcontent;
+        this.notftitle = notftitle;
+        this.notfprojectkey = notfprojectkey;
+        this.notftaskkey = notftaskkey;
+        this.notftimestamp = timestamp;
+        this.notfstate = notfstate;
+    }
+
+    public String getNotftype() {
         return notftype;
     }
+
     public void setNotftype(String notftype) {
         this.notftype = notftype;
     }
+
     public String getNotfcontent() {
         return notfcontent;
     }
+
     public void setNotfcontent(String notfcontent) {
         this.notfcontent = notfcontent;
     }
@@ -74,8 +91,7 @@ public class NotificationItem implements Parcelable
         return notftimestamp;
     }
 
-    public void setNotftimestamp(String notftimestamp)
-    {
+    public void setNotftimestamp(String notftimestamp) {
         this.notftimestamp = notftimestamp;
     }
 
@@ -87,27 +103,8 @@ public class NotificationItem implements Parcelable
         this.notfstate = notfstate;
     }
 
-    private String notftype,notfcontent,notftitle,notfprojectkey,notftaskkey;
-     private String notfstate;
-    private String notftimestamp;
-
-    public NotificationItem()
-    {
-    }
-    public NotificationItem(String notftype, String notfcontent, String notftitle, String notfprojectkey, String notftaskkey, String timestamp, String notfstate) {
-
-        this.notftype = notftype;
-        this.notfcontent = notfcontent;
-        this.notftitle = notftitle;
-        this.notfprojectkey = notfprojectkey;
-        this.notftaskkey = notftaskkey;
-        this.notftimestamp = timestamp;
-        this.notfstate = notfstate;
-    }
-
     @Override
-    public int describeContents()
-    {
+    public int describeContents() {
         return 0;
     }
 

@@ -47,31 +47,26 @@
         <service android:name=".services.NotfyUsers" />
 
         <provider
-            android:name=".provider.providerMain"
+            android:name=".provider.ProviderMain"
             android:authorities="com.example.qenawi.ttasker_capstone"
             android:exported="true" />
 
         <receiver android:name=".MyTasksAppWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="ActionReceiverRefresh"/>
-                <action android:name="com.imranandroid.xxx.xxxx.ACTION_WIDGET_CLICK"/>
+                <action android:name="ActionReceiverRefresh" />
+                <action android:name="com.imranandroid.xxx.xxxx.ACTION_WIDGET_CLICK" />
             </intent-filter>
 
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/my_tasks_app_widget_info" />
         </receiver>
-        <service android:name=".BakingAppService"/>
+
+        <service android:name=".BakingAppService" />
         <service
             android:name=".GridWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
-
-
-
-
-
-
 
 
     </application>

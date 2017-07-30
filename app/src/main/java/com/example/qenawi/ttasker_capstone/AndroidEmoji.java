@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-/** Source: <https://github.com/delight-im/Emoji> */
+/**
+ * Source: <https://github.com/delight-im/Emoji>
+ */
 package com.example.qenawi.ttasker_capstone;
 
 import android.content.Context;
@@ -31,82 +33,6 @@ import android.text.style.MetricAffectingSpan;
  * Usage: CharSequence myCharSequence = AndroidEmoji.ensure(myString);
  */
 public class AndroidEmoji {
-
-    /**
-     * Span to set on TextView instances in order to have a custom font for single parts of a text
-     *
-     * <pre>
-     * SpannableStringBuilder ssb = new SpannableStringBuilder(myStringToShow);
-     * ssb.setSpan(new CustomTypefaceSpan(myTypeface), myFromPosition, myToPosition, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
-     * myTextView.setText(ssb);
-     * </pre>
-     *
-     * @author Benjamin Dobell
-     */
-    private static class CustomTypefaceSpan extends MetricAffectingSpan {
-
-        private final Typeface mTypeface;
-
-        public CustomTypefaceSpan(final Typeface typeface) {
-            mTypeface = typeface;
-        }
-
-        @Override
-        public void updateDrawState(final TextPaint drawState) {
-            apply(drawState);
-        }
-
-        @Override
-        public void updateMeasureState(final TextPaint paint) {
-            apply(paint);
-        }
-
-        private void apply(final Paint paint) {
-            final Typeface oldTypeface = paint.getTypeface();
-            final int oldStyle = oldTypeface != null ? oldTypeface.getStyle() : 0;
-            final int fakeStyle = oldStyle & ~mTypeface.getStyle();
-
-            if ((fakeStyle & Typeface.BOLD) != 0) {
-                paint.setFakeBoldText(true);
-            }
-
-            if ((fakeStyle & Typeface.ITALIC) != 0) {
-                paint.setTextSkewX(-0.25f);
-            }
-
-            paint.setTypeface(mTypeface);
-        }
-
-    }
-
-    /**
-     * Manages the reference to the emoji font
-     * <p>
-     * Usage: FontProvider.getInstance(context).getFontEmoji()
-     */
-    private static class FontProvider {
-
-        private static final String PATH_EMOJI = "fonts/AndroidEmoji.ttf";
-        private static FontProvider mInstance;
-        private Typeface mFontEmoji;
-
-        public static FontProvider getInstance(Context context) {
-            if (mInstance == null) {
-                mInstance = new FontProvider(context.getApplicationContext());
-            }
-            return mInstance;
-        }
-
-        private FontProvider(Context context)
-        {
-            mFontEmoji = Typeface.createFromAsset(context.getAssets(), PATH_EMOJI);
-        }
-
-        public Typeface getFontEmoji() {
-            return mFontEmoji;
-        }
-
-    }
 
     /**
      * Compares the given code point against 722 emoji code points from Unicode 6.3
@@ -130,7 +56,7 @@ public class AndroidEmoji {
 //                 codePoint == 0x0037 0x20E3 ||
 //                 codePoint == 0x0038 0x20E3 ||
 //                 codePoint == 0x0039 0x20E3 ||
-                      codePoint == 0x00A9 ||
+                codePoint == 0x00A9 ||
                         codePoint == 0x00AE ||
                         codePoint == 0x2002 ||
                         codePoint == 0x2003 ||
@@ -853,8 +779,7 @@ public class AndroidEmoji {
      * @param context the context to get the FontProvider instance from
      * @return the string with adjusted fonts as a CharSequence
      */
-    public static CharSequence ensure(String input, final Context context)
-    {
+    public static CharSequence ensure(String input, final Context context) {
         // if Android version is above 4.1.1
         if (android.os.Build.VERSION.SDK_INT >= 17) {
             // return the text unchanged as emoji support is built-in already
@@ -883,9 +808,9 @@ public class AndroidEmoji {
             // if the char is a trailing part of a surrogate pair (Unicode)
             else if (Character.isLowSurrogate(chars[i])) {
                 // if the char and its predecessor are indeed a valid surrogate pair
-                if (i > 0 && Character.isSurrogatePair(chars[i-1], chars[i])) {
+                if (i > 0 && Character.isSurrogatePair(chars[i - 1], chars[i])) {
                     // get the Unicode code point for the surrogate pair
-                    codePoint = Character.toCodePoint(chars[i-1], chars[i]);
+                    codePoint = Character.toCodePoint(chars[i - 1], chars[i]);
                     // remember that we have a surrogate pair here (which counts as two characters)
                     isSurrogatePair = true;
                 }
@@ -906,12 +831,87 @@ public class AndroidEmoji {
             // if the detected code point is a known emoji
             if (isEmoji(codePoint)) {
                 // change the font for this symbol (two characters if surrogate pair) to the emoji font
-                ssb.setSpan(new CustomTypefaceSpan(FontProvider.getInstance(context).getFontEmoji()), isSurrogatePair ? i-1 : i, i+1, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+                ssb.setSpan(new CustomTypefaceSpan(FontProvider.getInstance(context).getFontEmoji()), isSurrogatePair ? i - 1 : i, i + 1, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
             }
         }
 
         // return the SpannableStringBuilder with adjusted fonts (implements CharSequence)
         return ssb;
+    }
+
+    /**
+     * Span to set on TextView instances in order to have a custom font for single parts of a text
+     *
+     * <pre>
+     * SpannableStringBuilder ssb = new SpannableStringBuilder(myStringToShow);
+     * ssb.setSpan(new CustomTypefaceSpan(myTypeface), myFromPosition, myToPosition, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+     * myTextView.setText(ssb);
+     * </pre>
+     *
+     * @author Benjamin Dobell
+     */
+    private static class CustomTypefaceSpan extends MetricAffectingSpan {
+
+        private final Typeface mTypeface;
+
+        public CustomTypefaceSpan(final Typeface typeface) {
+            mTypeface = typeface;
+        }
+
+        @Override
+        public void updateDrawState(final TextPaint drawState) {
+            apply(drawState);
+        }
+
+        @Override
+        public void updateMeasureState(final TextPaint paint) {
+            apply(paint);
+        }
+
+        private void apply(final Paint paint) {
+            final Typeface oldTypeface = paint.getTypeface();
+            final int oldStyle = oldTypeface != null ? oldTypeface.getStyle() : 0;
+            final int fakeStyle = oldStyle & ~mTypeface.getStyle();
+
+            if ((fakeStyle & Typeface.BOLD) != 0) {
+                paint.setFakeBoldText(true);
+            }
+
+            if ((fakeStyle & Typeface.ITALIC) != 0) {
+                paint.setTextSkewX(-0.25f);
+            }
+
+            paint.setTypeface(mTypeface);
+        }
+
+    }
+
+    /**
+     * Manages the reference to the emoji font
+     * <p>
+     * Usage: FontProvider.getInstance(context).getFontEmoji()
+     */
+    private static class FontProvider {
+
+        private static final String PATH_EMOJI = "fonts/AndroidEmoji.ttf";
+        private static FontProvider mInstance;
+        private Typeface mFontEmoji;
+
+        private FontProvider(Context context) {
+            mFontEmoji = Typeface.createFromAsset(context.getAssets(), PATH_EMOJI);
+        }
+
+        public static FontProvider getInstance(Context context) {
+            if (mInstance == null) {
+                mInstance = new FontProvider(context.getApplicationContext());
+            }
+            return mInstance;
+        }
+
+        public Typeface getFontEmoji() {
+            return mFontEmoji;
+        }
+
     }
 
 }

@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
-import com.example.qenawi.ttasker_capstone.modle.taskItem;
+import com.example.qenawi.ttasker_capstone.modle.TaskItem;
 import com.example.qenawi.ttasker_capstone.provider.ContractProvider;
 
 import java.util.ArrayList;
@@ -15,83 +15,83 @@ import java.util.ArrayList;
  * Created by QEnawi on 6/27/2017.
  */
 // adapter->
-public class GridWidgetService extends RemoteViewsService
-{
+public class GridWidgetService extends RemoteViewsService {
     @Override
-    public RemoteViewsFactory onGetViewFactory(Intent intent)
-    {
+    public RemoteViewsFactory onGetViewFactory(Intent intent) {
 
         return new GridRemoteViewsFactory(this.getApplicationContext());
     }
 }
 
 class GridRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
-    private ArrayList<taskItem> data=new ArrayList<>();
+    private ArrayList<TaskItem> data = new ArrayList<>();
     private Context mContext;
-    public GridRemoteViewsFactory(Context applicationContext)
-    {
+
+    public GridRemoteViewsFactory(Context applicationContext) {
         mContext = applicationContext;
     }
+
     @Override
-    public void onCreate()
-    {
+    public void onCreate() {
 
     }
+
     //called on start and when notifyAppWidgetViewDataChanged is called
     @Override
-    public void onDataSetChanged()
-    {
-    get();
+    public void onDataSetChanged() {
+        get();
     }
+
     @Override
-    public void onDestroy()
-    {
+    public void onDestroy() {
     }
+
     @Override
-    public int getCount()
-    {
-        if (data==null||data.size()==0) return 0;
+    public int getCount() {
+        if (data == null || data.size() == 0) return 0;
         return data.size();
     }
+
     @Override
-    public RemoteViews getViewAt(int position)
-    {
+    public RemoteViews getViewAt(int position) {
         //bind
         RemoteViews views = new RemoteViews(mContext.getPackageName(), R.layout.widgetitem);
         // Update the plant image
-        views.setTextViewText(R.id.NAME, data.get(position).getName()+'\t'+data.get(position).getTaskName());
+        views.setTextViewText(R.id.NAME, data.get(position).getName() + '\t' + data.get(position).getTaskName());
         views.setTextViewText(R.id.DATA, data.get(position).getTaskDesc());
         views.setTextViewText(R.id.DATE, data.get(position).getDate());
         views.setTextViewText(R.id.checkBox, data.get(position).getDoneB().toString());
         return views;
     }
+
     @Override
     public RemoteViews getLoadingView() {
         return null;
     }
+
     @Override
     public int getViewTypeCount() {
         return 1; // Treat all items in the GridView the same
     }
+
     @Override
     public long getItemId(int i) {
         return i;
     }
+
     @Override
     public boolean hasStableIds() {
         return true;
     }
-    private   void get()
-    {
+
+    private void get() {
         data.clear();
-        Cursor result=mContext.getContentResolver().query(ContractProvider.CONTENT_URI,null,null,null,ContractProvider.B_id);
-        if (result!=null)
-        {
+        Cursor result = mContext.getContentResolver().query(ContractProvider.CONTENT_URI, null, null, null, ContractProvider.B_id);
+        if (result != null) {
             result.moveToFirst();
         }
-        while (!result.isAfterLast())
-        {
-            taskItem da=new taskItem(
+        while (!result.isAfterLast()) {
+            TaskItem da = new TaskItem(
                     result.getString(result.getColumnIndex(ContractProvider.TaskTitle)),
                     result.getString(result.getColumnIndex(ContractProvider.TaskContent)),
                     result.getString(result.getColumnIndex(ContractProvider.TaskDate)),

@@ -15,12 +15,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.qenawi.ttasker_capstone.callbackx.Data_loadedMyProjectsViewAdmin;
+import com.example.qenawi.ttasker_capstone.callbackx.DataLoadedMyProjectsViewAdminL;
 import com.example.qenawi.ttasker_capstone.ChatActivity;
 import com.example.qenawi.ttasker_capstone.R;
 import com.example.qenawi.ttasker_capstone.adapterx.AdminViewAdapter;
-import com.example.qenawi.ttasker_capstone.modle.pmemberitem;
-import com.example.qenawi.ttasker_capstone.modle.userprojectItem;
+import com.example.qenawi.ttasker_capstone.modle.Pmemberitem;
+import com.example.qenawi.ttasker_capstone.modle.UserprojectItem;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,56 +29,54 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class ProjectViewAdmin extends Fragment implements AdminViewAdapter.onClickListner,Data_loadedMyProjectsViewAdmin {
+public class ProjectViewAdmin extends Fragment implements AdminViewAdapter.onClickListner, DataLoadedMyProjectsViewAdminL {
 
     AdminViewAdapter adapter;
     RecyclerView rv;
     RecyclerView.LayoutManager ly;
     ArrayList<String> data = new ArrayList<>();
-    ArrayList<pmemberitem> datax = new ArrayList<>();
+    ArrayList<Pmemberitem> datax = new ArrayList<>();
     FloatingActionButton Chat;
     private OnFragmentInteractionListener mListener;
-    private userprojectItem Pkey;
-    private  Data_loadedMyProjectsViewAdmin mCallBack;
-    private int lastFirstVisiblePosition=0;
-    public ProjectViewAdmin()
-    {
+    private UserprojectItem Pkey;
+    private DataLoadedMyProjectsViewAdminL mCallBack;
+    private int lastFirstVisiblePosition = 0;
+
+    public ProjectViewAdmin() {
         // Required empty public constructor
     }
 
     @Override
-    public void onCreate( Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
+
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
-    {
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // TODO Add your menu entries here
-        inflater.inflate(R.menu.adminv_view_share,menu);
-        super.onCreateOptionsMenu(menu,inflater);
+        inflater.inflate(R.menu.adminv_view_share, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
+
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
+    public boolean onOptionsItemSelected(MenuItem item) {
         shareKey();
         return true;
     }
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_project_view_admin, container, false);
-        if(savedInstanceState!=null)
-        {
-            data=savedInstanceState.getStringArrayList(getString(R.string.bundleK5));
-            datax=savedInstanceState.getParcelableArrayList(getString(R.string.bundleK1));
-            lastFirstVisiblePosition=savedInstanceState.getInt(getString(R.string.bundleK4));
+        if (savedInstanceState != null) {
+            data = savedInstanceState.getStringArrayList(getString(R.string.bundleK5));
+            datax = savedInstanceState.getParcelableArrayList(getString(R.string.bundleK1));
+            lastFirstVisiblePosition = savedInstanceState.getInt(getString(R.string.bundleK4));
         }
-        Pkey =(userprojectItem) getActivity().getIntent().getExtras().getParcelable("PKey");//project key
-        Chat=(FloatingActionButton)root.findViewById(R.id.floatingActionButton2);
-        mCallBack=this;
+        Pkey = (UserprojectItem) getActivity().getIntent().getExtras().getParcelable("PKey");//project key
+        Chat = (FloatingActionButton) root.findViewById(R.id.floatingActionButton2);
+        mCallBack = this;
         rv = (RecyclerView) root.findViewById(R.id.project_team);
         adapter = new AdminViewAdapter(getContext(), this, data, 0);
         ly = new LinearLayoutManager(getActivity());
@@ -86,28 +84,26 @@ public class ProjectViewAdmin extends Fragment implements AdminViewAdapter.onCli
         rv.setAdapter(adapter);
         Chat.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
-                Intent intent=new Intent(getActivity(),ChatActivity.class);
-                intent.putExtra("Alpha",Pkey);
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ChatActivity.class);
+                intent.putExtra("Alpha", Pkey);
                 startActivity(intent);
             }
         });
-        if(savedInstanceState==null)
-        {
+        if (savedInstanceState == null) {
             get_UserProjects();
-        }
-        else
-            {
-                try
-                {
-                    rv.scrollToPosition(lastFirstVisiblePosition);
-                }catch (Exception e){e.printStackTrace();}
-
+        } else {
+            try {
+                rv.scrollToPosition(lastFirstVisiblePosition);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+
+        }
 
         return root;
     }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -118,78 +114,79 @@ public class ProjectViewAdmin extends Fragment implements AdminViewAdapter.onCli
                     + " must implement OnFragmentInteractionListener");
         }
     }
+
     @Override
-    public void onDetach()
-    {
+    public void onDetach() {
         super.onDetach();
         mListener = null;
     }
+
     @Override
-    public void onListItemClick(int Clickpos)
-    {
-       Bundle bundle=new Bundle();
-        bundle.putParcelable("member data",datax.get(Clickpos));
-        bundle.putParcelable("project data",Pkey);
-      mListener.onFragmentInteraction5(bundle);
+    public void onListItemClick(int Clickpos) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("member data", datax.get(Clickpos));
+        bundle.putParcelable("project data", Pkey);
+        mListener.onFragmentInteraction5(bundle);
     }
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction5(Object uri);
-    }
+
     //----------------------------------
-    void get_UserProjects()
-    {
+    void get_UserProjects() {
         FirebaseDatabase Fdb = FirebaseDatabase.getInstance();
-        Log.v("assasin",Pkey.getPkey());
+        Log.v("assasin", Pkey.getPkey());
         DatabaseReference Fdbr = Fdb.getReference().child("pmember").child(Pkey.getPkey());
         //Query query = Fdbr.g
-        Fdbr.addListenerForSingleValueEvent(new ValueEventListener()
-        {
+        Fdbr.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot)
-            {
-                Log.v("assasin",dataSnapshot.getChildrenCount()+" ");
-                if (dataSnapshot.getChildrenCount()<=0){return;}
-                for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren())
-                {
-                    pmemberitem myPair = dataSnapshot1.getValue(pmemberitem.class);
-                    Log.v("assasin",myPair.getName());
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.v("assasin", dataSnapshot.getChildrenCount() + " ");
+                if (dataSnapshot.getChildrenCount() <= 0) {
+                    return;
+                }
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    Pmemberitem myPair = dataSnapshot1.getValue(Pmemberitem.class);
+                    Log.v("assasin", myPair.getName());
                     data.add(myPair.getName());
-                    datax.add(new pmemberitem(myPair.getKey(),myPair.getName()));
+                    datax.add(new Pmemberitem(myPair.getKey(), myPair.getName()));
                 }
                 mCallBack.data_arrived("0");
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
         });
     }
+
     @Override
-    public void onPause()
-    {
+    public void onPause() {
         lastFirstVisiblePosition = ((LinearLayoutManager) rv.getLayoutManager()).findLastVisibleItemPosition();
         super.onPause();
     }
+
     @Override
-    public void data_arrived(Object object)
-    {
+    public void data_arrived(Object object) {
         adapter.notifyDataSetChanged();
     }
-    void shareKey()
-    {
+
+    void shareKey() {
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, Pkey.getPname()+'\n'+"Key : "+Pkey.getPkey());
+        sendIntent.putExtra(Intent.EXTRA_TEXT, Pkey.getPname() + '\n' + "Key : " + Pkey.getPkey());
         sendIntent.setType("text/plain");
         startActivity(sendIntent);
     }
+
     @Override
-    public void onSaveInstanceState(Bundle outState)
-    {
-        outState.putInt(getString(R.string.bundleK4),lastFirstVisiblePosition);
-        outState.putStringArrayList(getString(R.string.bundleK5),data);
-        outState.putParcelableArrayList(getString(R.string.bundleK1),datax);
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putInt(getString(R.string.bundleK4), lastFirstVisiblePosition);
+        outState.putStringArrayList(getString(R.string.bundleK5), data);
+        outState.putParcelableArrayList(getString(R.string.bundleK1), datax);
         super.onSaveInstanceState(outState);
+    }
+
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onFragmentInteraction5(Object uri);
     }
 }

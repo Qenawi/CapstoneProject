@@ -8,13 +8,12 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by QEnawi on 7/28/2017.
  */
 
-public class providerDataBase extends SQLiteOpenHelper
-{
-    private static final  int  version=1;
-    private  static final String Dp="datax.db";
-    private   static  final String quireUpdate="ALTER TABLE "
+public class ProviderDataBase extends SQLiteOpenHelper {
+    private static final int version = 1;
+    private static final String Dp = "datax.db";
+    private static final String quireUpdate = "ALTER TABLE "
             + ContractProvider.TableName + " ADD COLUMN " + "null" + " string;";
-    private   static  final String quire=
+    private static final String quire =
             "CREATE TABLE " + ContractProvider.TableName + " (" +
                     ContractProvider.B_id + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     ContractProvider.TaskTitle + " VARCHAR(20)," +
@@ -26,19 +25,18 @@ public class providerDataBase extends SQLiteOpenHelper
                     ContractProvider.ProjectKey + " VARCHAR(20)," +
                     ContractProvider.Dummy + " VARCHAR(20)" +
                     ")";
-    public providerDataBase(Context context)
-    {
-        super(context,Dp , null, version);
+
+    public ProviderDataBase(Context context) {
+        super(context, Dp, null, version);
     }
+
     @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase)
-    {
+    public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(quire);
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1)
-    {
-        if(i<2){/* ad required column */}
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+        if (i < 2) {/* ad required column */}
     }
 }

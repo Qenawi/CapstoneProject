@@ -2,11 +2,11 @@ package com.example.qenawi.ttasker_capstone.services;
 
 import android.app.Service;
 import android.util.Log;
+
 /**
  * Created by QEnawi on 10/20/2016.
  */
 public abstract class MyBaseTaskService extends Service {
-
 
 
     private static final String TAG = "MyBaseTaskService";
@@ -14,14 +14,11 @@ public abstract class MyBaseTaskService extends Service {
     private int mNumTasks = 0;
 
 
-
-    public void taskStarted()
-    {
+    public void taskStarted() {
 
         changeNumberOfTasks(1);
 
     }
-
 
 
     public void taskCompleted() {
@@ -29,7 +26,6 @@ public abstract class MyBaseTaskService extends Service {
         changeNumberOfTasks(-1);
 
     }
-
 
 
     private synchronized void changeNumberOfTasks(int delta) {

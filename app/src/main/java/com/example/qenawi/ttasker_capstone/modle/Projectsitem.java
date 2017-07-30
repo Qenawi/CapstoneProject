@@ -3,62 +3,52 @@ package com.example.qenawi.ttasker_capstone.modle;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
-
 /**
  * Created by QEnawi on 7/21/2017.
  */
 
-public class projectsitem implements Parcelable
-{
-    public projectsitem()
-    {
+public class Projectsitem implements Parcelable {
+    public static final Creator<Projectsitem> CREATOR = new Creator<Projectsitem>() {
+        @Override
+        public Projectsitem createFromParcel(Parcel in) {
+            return new Projectsitem(in);
+        }
+
+        @Override
+        public Projectsitem[] newArray(int size) {
+            return new Projectsitem[size];
+        }
+    };
+    private String pname;
+    private String adminKey;
+    private String chatroomKey;
+
+    public Projectsitem() {
     }
 
-    private String pname;
-
-    public projectsitem(String pname, String adminKey, String chatroomKey) {
+    public Projectsitem(String pname, String adminKey, String chatroomKey) {
         this.pname = pname;
         this.adminKey = adminKey;
         this.chatroomKey = chatroomKey;
     }
 
-    private String adminKey;
-
-    protected projectsitem(Parcel in) {
+    protected Projectsitem(Parcel in) {
         pname = in.readString();
         adminKey = in.readString();
         chatroomKey = in.readString();
     }
 
-    public static final Creator<projectsitem> CREATOR = new Creator<projectsitem>() {
-        @Override
-        public projectsitem createFromParcel(Parcel in) {
-            return new projectsitem(in);
-        }
-
-        @Override
-        public projectsitem[] newArray(int size) {
-            return new projectsitem[size];
-        }
-    };
-
     public String getPname() {
         return pname;
     }
-
 
     public String getAdminKey() {
         return adminKey;
     }
 
-
     public String getChatroomKey() {
         return chatroomKey;
     }
-
-
-   private   String chatroomKey;
 
     @Override
     public int describeContents() {

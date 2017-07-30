@@ -5,5 +5,5 @@ package com.example.qenawi.ttasker_capstone.contractx;
  */
 
 public class ContractDepug {
-    public static  final  String PUBTAG="AIAAWBUYB";//ahmedisaceandwillblowupyourbase
+    public static final String PUBTAG = "AIAAWBUYB";//ahmedisaceandwillblowupyourbase
 }
