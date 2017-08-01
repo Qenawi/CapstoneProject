@@ -113,7 +113,7 @@ public class NotificationService extends Service {
             settasksCnt(getTc() + 1);
             cntx = getTc();
             imgIcon = R.drawable.task2;
-            startService(new Intent(getApplicationContext(),UpdateWidget.class));
+            startService(new Intent(getApplicationContext(), UpdateWidget.class));
         } else {
             cnt1 = 2;
             setchatCnt(getCc() + 1);

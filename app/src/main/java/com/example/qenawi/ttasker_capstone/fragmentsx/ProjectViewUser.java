@@ -128,7 +128,7 @@ public class ProjectViewUser extends Fragment implements ProjectViewUserAdp.onCl
 
     }
 
-    void getMemberTasks() throws  Exception {
+    void getMemberTasks() throws Exception {
         final FirebaseDatabase fdb = FirebaseDatabase.getInstance();
         final DatabaseReference fdbr = fdb.getReference().child("widgetdata").child(getStoredPair()).child(Pkey.getPkey());
         fdbr.addListenerForSingleValueEvent(new ValueEventListener() {

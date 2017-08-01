@@ -82,32 +82,29 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, R.string.userissignedin, Toast.LENGTH_SHORT).show();
             try {
                 test();
-            } catch (Exception ignore)
-            {
+            } catch (Exception ignore) {
 
             }
         }
     }
 
-    void test() throws Exception
-    {
+    void test() throws Exception {
         textView.setText(R.string.msgsync);
         FirebaseDatabase fdb = FirebaseDatabase.getInstance();
         DatabaseReference fdbr = fdb.getReference().child("widgetdata").child(getStoredPair());
         fdbr.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot)
-            {
+            public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.v("HERO", dataSnapshot.getChildrenCount() + "  A0");
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren())
-                {
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     Log.v("HERO", "project Key" + dataSnapshot1.getKey());
-                    for (DataSnapshot dataSnapshot2 : dataSnapshot1.getChildren())
-                    {
+                    for (DataSnapshot dataSnapshot2 : dataSnapshot1.getChildren()) {
                         Log.v("HERO", "task key " + dataSnapshot2.getKey());
                         TaskItem item = (TaskItem) dataSnapshot2.getValue(TaskItem.class);
                         Pair<String, String> pair = new Pair<>(dataSnapshot1.getKey(), dataSnapshot2.getKey());
-                        if (pair.first==null||pair.second==null){continue;}
+                        if (pair.first == null || pair.second == null) {
+                            continue;
+                        }
                         pkey_taskkey.add(pair);
                         sync.add(item);
                     }
@@ -122,8 +119,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void Sync()
-    {
+    private void Sync() {
         clean_add();
 
     }
@@ -144,13 +140,12 @@ public class MainActivity extends AppCompatActivity {
             Query query = fdbr.orderByChild("email").equalTo(acc.get_username().getEmail());
             query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
-                public void onDataChange(DataSnapshot dataSnapshot)
-                {
-                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren())
-                    {
-                        try
-                        {setSTored(dataSnapshot1.getKey());
-                        }catch (Exception ignore){}
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                        try {
+                            setSTored(dataSnapshot1.getKey());
+                        } catch (Exception ignore) {
+                        }
 
                     }
                     lunch();
@@ -192,16 +187,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy()
-    {
+    protected void onDestroy() {
 
         UpdateWedgie();
         super.onDestroy();
     }
 
     @Override
-    protected void onPause()
-    {
+    protected void onPause() {
         super.onPause();
     }
 
@@ -212,8 +205,7 @@ public class MainActivity extends AppCompatActivity {
         add_to_dp();
     }
 
-    void add_to_dp()
-    {
+    void add_to_dp() {
         //    addH(recipeItems.get(pos).getName());
         for (int i = 0; i < sync.size(); i++) {
             add(sync.get(i), pkey_taskkey.get(i));
@@ -234,13 +226,13 @@ public class MainActivity extends AppCompatActivity {
         getContentResolver().insert(ContractProvider.CONTENT_URI, contentValues);
     }
 
-    void UpdateWedgie()
-    {
+    void UpdateWedgie() {
 
         Intent i = new Intent(getApplicationContext(), MyTasksAppWidget.class);
         i.setAction(getString(R.string.Action0));
         sendBroadcast(i);
     }
+
     @VisibleForTesting
     @NonNull
     public IdlingResource getIdlingResource() {

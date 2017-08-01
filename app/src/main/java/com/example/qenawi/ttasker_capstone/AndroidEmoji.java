@@ -775,7 +775,7 @@ public class AndroidEmoji {
     /**
      * Ensures that all emoji in the given string will be displayed correctly by modifying the font for single symbols
      *
-     * @param input the string to guarantee displayable emoji for
+     * @param input   the string to guarantee displayable emoji for
      * @param context the context to get the FontProvider instance from
      * @return the string with adjusted fonts as a CharSequence
      */
@@ -841,7 +841,7 @@ public class AndroidEmoji {
 
     /**
      * Span to set on TextView instances in order to have a custom font for single parts of a text
-     *
+     * <p>
      * <pre>
      * SpannableStringBuilder ssb = new SpannableStringBuilder(myStringToShow);
      * ssb.setSpan(new CustomTypefaceSpan(myTypeface), myFromPosition, myToPosition, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);

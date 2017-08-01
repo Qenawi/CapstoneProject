@@ -153,7 +153,7 @@ public class SignInActivity extends AppCompatActivity implements
         Log.v("AIAAWBUYB", "add u d");
         dp_ref = FirebaseDatabase.getInstance().getReference().child("users");
         try {
-         //   Toast.makeText(SignInActivity.this, "" + mFirebaseAuth.getCurrentUser().getEmail(), Toast.LENGTH_SHORT).show();
+            //   Toast.makeText(SignInActivity.this, "" + mFirebaseAuth.getCurrentUser().getEmail(), Toast.LENGTH_SHORT).show();
             Query query = dp_ref.orderByChild("email").equalTo(mFirebaseAuth.getCurrentUser().getEmail());
             query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override

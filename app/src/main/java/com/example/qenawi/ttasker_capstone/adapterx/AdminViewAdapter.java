@@ -39,11 +39,11 @@ public class AdminViewAdapter extends RecyclerView.Adapter<AdminViewAdapter.Main
     }
 
     @Override
-    public void onBindViewHolder(MainVIewHOlder holder, int position)
-    {
+    public void onBindViewHolder(MainVIewHOlder holder, int position) {
         try {
             holder.bind(recipeItemArrayList.get(position), rotate);
-        }catch (Exception ignore){}
+        } catch (Exception ignore) {
+        }
 
     }
 

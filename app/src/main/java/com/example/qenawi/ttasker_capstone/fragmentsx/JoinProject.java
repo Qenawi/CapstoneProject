@@ -49,8 +49,7 @@ public class JoinProject extends Fragment {
 
                     try {
                         getPname();
-                    } catch (Exception e)
-                    {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
@@ -99,7 +98,7 @@ public class JoinProject extends Fragment {
         return PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("eTa", "null");
     }
 
-    void getPname()throws Exception  {
+    void getPname() throws Exception {
         final FirebaseDatabase fdb = FirebaseDatabase.getInstance();
         final DatabaseReference fdbr = fdb.getReference().child("projects").child(ProjectKey.getText().toString());
         fdbr.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -111,7 +110,7 @@ public class JoinProject extends Fragment {
                 } else {
 
                     Projectsitem pit = (Projectsitem) dataSnapshot.getValue(Projectsitem.class);
-
+                    ProjectKey.setText("");
                     try {
                         pName = pit.getPname();
                         Log.v(ContractDepug.PUBTAG, pit.getAdminKey() + " " + pit.getPname() + " " + pit.getChatroomKey());

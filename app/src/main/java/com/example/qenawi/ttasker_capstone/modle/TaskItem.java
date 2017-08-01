@@ -24,6 +24,7 @@ public class TaskItem implements Parcelable {
     private String taskDesc;
     private String date;
     private String done;
+
     protected TaskItem(Parcel in) {
         name = in.readString();
         taskName = in.readString();
@@ -31,6 +32,7 @@ public class TaskItem implements Parcelable {
         date = in.readString();
         done = in.readString();
     }
+
     public TaskItem(String taskName, String taskDesc, String date, String done, String name) {
         this.taskName = taskName;
         this.taskDesc = taskDesc;

@@ -12,9 +12,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.qenawi.ttasker_capstone.R;
 import com.example.qenawi.ttasker_capstone.contractx.ContractAcc;
 import com.example.qenawi.ttasker_capstone.contractx.ContractDepug;
-import com.example.qenawi.ttasker_capstone.R;
 import com.example.qenawi.ttasker_capstone.modle.Pmemberitem;
 import com.example.qenawi.ttasker_capstone.modle.Projectsitem;
 import com.example.qenawi.ttasker_capstone.modle.UserprojectItem;
@@ -80,6 +80,7 @@ public class CreateProject extends Fragment {
             @Override
             public void onSuccess(Void aVoid) {
                 Toast.makeText(getActivity(), R.string.createdsucss, Toast.LENGTH_SHORT).show();
+                ProjectName.setText("");
             }
         });
         fdbr3.child(pushKey).push().setValue(new Pmemberitem(getStoredPair(), acc.get_username().getName()));

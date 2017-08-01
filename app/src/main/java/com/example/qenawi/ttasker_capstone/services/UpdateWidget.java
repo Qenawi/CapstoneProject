@@ -24,35 +24,33 @@ import java.util.ArrayList;
  * Created by QEnawi on 8/1/2017.
  */
 
-public class UpdateWidget extends  MyBaseTaskService {
+public class UpdateWidget extends MyBaseTaskService {
     @Nullable
     @Override
-    public IBinder onBind(Intent intent)
-    {
+    public IBinder onBind(Intent intent) {
         return null;
     }
+
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId)
-    {
+    public int onStartCommand(Intent intent, int flags, int startId) {
         taskStarted();
-        Log.v("helix","initiate Air Patrol");
+        Log.v("helix", "initiate Air Patrol");
         try {
             test();
-        }catch (Exception ignored){}
+        } catch (Exception ignored) {
+        }
 
         return START_REDELIVER_INTENT;
     }
-    void test()
-    {
+
+    void test() {
         FirebaseDatabase fdb = FirebaseDatabase.getInstance();
         DatabaseReference fdbr = fdb.getReference().child(getString(R.string.widgetdata)).child(getStoredPair());
-        fdbr.addListenerForSingleValueEvent(new ValueEventListener()
-        {
+        fdbr.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot)
-            {
+            public void onDataChange(DataSnapshot dataSnapshot) {
                 ArrayList<Pair<String, String>> pkey_taskkey = new ArrayList<>();
-                ArrayList<TaskItem> sync=new ArrayList<TaskItem>();
+                ArrayList<TaskItem> sync = new ArrayList<TaskItem>();
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     for (DataSnapshot dataSnapshot2 : dataSnapshot1.getChildren()) {
                         TaskItem item = (TaskItem) dataSnapshot2.getValue(TaskItem.class);
@@ -61,7 +59,7 @@ public class UpdateWidget extends  MyBaseTaskService {
                         sync.add(item);
                     }
                 }
-                Sync(pkey_taskkey,sync);
+                Sync(pkey_taskkey, sync);
             }
 
             @Override
@@ -71,19 +69,17 @@ public class UpdateWidget extends  MyBaseTaskService {
         });
     }
 
-    private void Sync(ArrayList<Pair<String, String>> pkey_taskkey, ArrayList<TaskItem> sync)
-    {
-        clean_add(pkey_taskkey,sync);
+    private void Sync(ArrayList<Pair<String, String>> pkey_taskkey, ArrayList<TaskItem> sync) {
+        clean_add(pkey_taskkey, sync);
 
     }
-    void clean_add(ArrayList<Pair<String, String>> pkey_taskkey, ArrayList<TaskItem> sync)
-    {
+
+    void clean_add(ArrayList<Pair<String, String>> pkey_taskkey, ArrayList<TaskItem> sync) {
         getContentResolver().delete(ContractProvider.CONTENT_URI, getString(R.string.dum), null);
-        add_to_dp(pkey_taskkey,sync);
+        add_to_dp(pkey_taskkey, sync);
     }
 
-    void add_to_dp(ArrayList<Pair<String, String>> pkey_taskkey, ArrayList<TaskItem> sync)
-    {
+    void add_to_dp(ArrayList<Pair<String, String>> pkey_taskkey, ArrayList<TaskItem> sync) {
         //    addH(recipeItems.get(pos).getName());
         for (int i = 0; i < sync.size(); i++) {
             add(sync.get(i), pkey_taskkey.get(i));
@@ -104,16 +100,15 @@ public class UpdateWidget extends  MyBaseTaskService {
         getContentResolver().insert(ContractProvider.CONTENT_URI, contentValues);
     }
 
-    void UpdateWedgie()
-    {
-        Log.v("helix","Update Widget");
+    void UpdateWedgie() {
+        Log.v("helix", "Update Widget");
         Intent i = new Intent(getApplicationContext(), MyTasksAppWidget.class);
         i.setAction(getString(R.string.Action0));
         sendBroadcast(i);
         taskCompleted();
     }
-    String getStoredPair()
-    {
+
+    String getStoredPair() {
         String res = PreferenceManager.getDefaultSharedPreferences(this).getString("eTa", "null");
         return res;
     }

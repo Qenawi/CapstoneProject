@@ -48,7 +48,7 @@ public class ChatActivity extends EmojiCompatActivity implements WhatsAppPanelEv
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         Pkey = (UserprojectItem) getIntent().getExtras().getParcelable(getString(R.string.alpha));
-    //    Log.v("hugo", Pkey.getPkey() + " " + Pkey.getPname());
+        //    Log.v("hugo", Pkey.getPkey() + " " + Pkey.getPname());
         mBottomPanel = new WhatsAppPanel(this, this, R.color.colorPrimary);
         data = new ArrayList<>();
         rv = (RecyclerView) findViewById(R.id.chat);
@@ -56,16 +56,20 @@ public class ChatActivity extends EmojiCompatActivity implements WhatsAppPanelEv
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         rv.setLayoutManager(layoutManager);
         rv.setAdapter(adapter);
-        getMesseges();
+        try {
+            getMesseges();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void onSendClicked()
-    {
+    public void onSendClicked() {
         sendmsg(mBottomPanel.getText());
     }
 
-    void getMesseges() {
+    void getMesseges() throws  Exception
+    {
         final FirebaseDatabase fdb = FirebaseDatabase.getInstance();
         final DatabaseReference fdbr = fdb.getReference().child(getString(R.string.chat)).child(Pkey.getPkey());
         fdbr.addChildEventListener(new ChildEventListener() {
@@ -113,6 +117,7 @@ public class ChatActivity extends EmojiCompatActivity implements WhatsAppPanelEv
         String pushKey = fdbr.push().getKey();
         Smsitem s = new Smsitem(msg, "camo", localTime, acc.get_username().getName());
         fdbr.child(pushKey).setValue(s);
+        mBottomPanel.setText("");
         notfy(s);
 
     }

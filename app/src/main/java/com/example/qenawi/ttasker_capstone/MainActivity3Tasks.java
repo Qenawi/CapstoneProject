@@ -19,15 +19,15 @@ public class MainActivity3Tasks extends AppCompatActivity implements MainFragmen
     {
         switch ((String) uri) {
             case "create":
-              //  Toast.makeText(this, "create", Toast.LENGTH_LONG).show();
+                //  Toast.makeText(this, "create", Toast.LENGTH_LONG).show();
                 call("1");
                 break;
             case "join":
-       //         Toast.makeText(this, "join", Toast.LENGTH_LONG).show();
+                //         Toast.makeText(this, "join", Toast.LENGTH_LONG).show();
                 call("2");
                 break;
             case "MYP":
-         //       Toast.makeText(this, "MYP", Toast.LENGTH_LONG).show();
+                //       Toast.makeText(this, "MYP", Toast.LENGTH_LONG).show();
                 call("3");
                 break;
             default:

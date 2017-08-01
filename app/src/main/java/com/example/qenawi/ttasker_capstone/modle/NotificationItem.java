@@ -47,8 +47,7 @@ public class NotificationItem implements Parcelable {
         this.notfstate = notfstate;
     }
 
-    public String getNotftype()
-    {
+    public String getNotftype() {
         return notftype;
     }
 

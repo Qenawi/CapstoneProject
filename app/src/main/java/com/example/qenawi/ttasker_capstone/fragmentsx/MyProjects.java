@@ -97,7 +97,7 @@ public class MyProjects extends Fragment implements RecyclerViewAdapterMainActiv
         }
     }// adapter Call back
 
-    void get_UserProjects() throws  Exception {
+    void get_UserProjects() throws Exception {
         FirebaseDatabase Fdb = FirebaseDatabase.getInstance();
         DatabaseReference Fdbr = Fdb.getReference().child("userproject").child(getStoredPair());
         //Query query = Fdbr.g
@@ -121,8 +121,7 @@ public class MyProjects extends Fragment implements RecyclerViewAdapterMainActiv
         });
     }
 
-    void get_projectData(final UserprojectItem projectKey)  throws  Exception
-    {
+    void get_projectData(final UserprojectItem projectKey) throws Exception {
         FirebaseDatabase Fdb = FirebaseDatabase.getInstance();
         DatabaseReference Fdbr = Fdb.getReference().child("projects").child(projectKey.getPkey());
 
@@ -152,11 +151,11 @@ public class MyProjects extends Fragment implements RecyclerViewAdapterMainActiv
     }
 
     @Override
-    public void adminKeyArrived(Object object, Object object2)
-    {
+    public void adminKeyArrived(Object object, Object object2) {
         if (object == null) mListener.onFragmentInteraction3("0", (UserprojectItem) object2);
-        else if(object2==null){Toast.makeText(getActivity(),"faild to get data",Toast.LENGTH_SHORT).show();}
-        else {
+        else if (object2 == null) {
+            Toast.makeText(getActivity(), "faild to get data", Toast.LENGTH_SHORT).show();
+        } else {
             String res = getStoredPair().equals((String) object) ? "1" : "0";
             mListener.onFragmentInteraction3(res, (UserprojectItem) object2);
         }

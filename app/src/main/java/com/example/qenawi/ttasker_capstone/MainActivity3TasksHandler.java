@@ -44,8 +44,7 @@ public class MainActivity3TasksHandler extends AppCompatActivity implements Crea
     }//join
 
     @Override
-    public void onFragmentInteraction3(Object uri, Object uri2)
-    {
+    public void onFragmentInteraction3(Object uri, Object uri2) {
         Intent i = new Intent(this, ProjectView.class);
         i.putExtra(getString(R.string.acess), (String) uri);
         i.putExtra(getString(R.string.pkey), (UserprojectItem) uri2);

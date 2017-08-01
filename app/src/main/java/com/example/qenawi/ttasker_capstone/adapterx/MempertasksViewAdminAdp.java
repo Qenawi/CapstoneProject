@@ -42,11 +42,11 @@ public class MempertasksViewAdminAdp extends RecyclerView.Adapter<MempertasksVie
     }
 
     @Override
-    public void onBindViewHolder(MainVIewHOlder holder, int position)
-    {
+    public void onBindViewHolder(MainVIewHOlder holder, int position) {
         try {
             holder.bind(recipeItemArrayList.get(position), rotate);
-        }catch (Exception ignore){}
+        } catch (Exception ignore) {
+        }
 
     }
 

@@ -134,8 +134,7 @@ public class ProjectViewAdmin extends Fragment implements AdminViewAdapter.onCli
     }
 
     //----------------------------------
-    void get_UserProjects() throws  Exception
-    {
+    void get_UserProjects() throws Exception {
         FirebaseDatabase Fdb = FirebaseDatabase.getInstance();
         Log.v("assasin", Pkey.getPkey());
         DatabaseReference Fdbr = Fdb.getReference().child("pmember").child(Pkey.getPkey());
@@ -147,8 +146,7 @@ public class ProjectViewAdmin extends Fragment implements AdminViewAdapter.onCli
                 if (dataSnapshot.getChildrenCount() <= 0) {
                     return;
                 }
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren())
-                {
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     Pmemberitem myPair = dataSnapshot1.getValue(Pmemberitem.class);
                     Log.v("assasin", myPair.getName());
                     data.add(myPair.getName());

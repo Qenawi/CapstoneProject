@@ -42,8 +42,7 @@ public class NotfyUsers extends MyBaseTaskService {
         return START_REDELIVER_INTENT;//
     }
 
-    void get_users_list(final Smsitem item, final UserprojectItem Pkey) throws  Exception
-    {
+    void get_users_list(final Smsitem item, final UserprojectItem Pkey) throws Exception {
         DatabaseReference fdbr = fdb.getReference().child("pmember").child(Pkey.getPkey());
         final ArrayList<String> e = new ArrayList<>();
         fdbr.addListenerForSingleValueEvent(new ValueEventListener() {

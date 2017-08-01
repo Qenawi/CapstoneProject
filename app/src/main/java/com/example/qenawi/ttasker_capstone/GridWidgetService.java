@@ -53,14 +53,19 @@ class GridRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
     }
 
     @Override
-    public RemoteViews getViewAt(int position) {
-        //bind
+    public RemoteViews getViewAt(int position)
+    {
         RemoteViews views = new RemoteViews(mContext.getPackageName(), R.layout.widgetitem);
-        // Update the plant image
-        views.setTextViewText(R.id.NAME, data.get(position).getName() + '\t' + data.get(position).getTaskName());
-        views.setTextViewText(R.id.DATA, data.get(position).getTaskDesc());
-        views.setTextViewText(R.id.DATE, data.get(position).getDate());
-        views.setTextViewText(R.id.checkBox, data.get(position).getDoneB().toString());
+        try {
+            //bind
+            // Update the plant image
+            views.setTextViewText(R.id.NAME, data.get(position).getName() + '\t' + data.get(position).getTaskName());
+            views.setTextViewText(R.id.DATA, data.get(position).getTaskDesc());
+            views.setTextViewText(R.id.DATE, data.get(position).getDate());
+            views.setTextViewText(R.id.checkBox, data.get(position).getDoneB().toString());
+        }catch (Exception ignore){}
+
+
         return views;
     }
 
