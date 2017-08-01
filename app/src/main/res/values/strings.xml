@@ -83,5 +83,7 @@
     <string name="addTfragment">Addtasks_fragment</string>
     <string name="msgsignin">signing in.....</string>
     <string name="msgsync">Syncing.....</string>
+    <string name="Auf">Authentication failed.</string>
+    <string name="GSE">Google Play Services error.</string>
 </resources>
 

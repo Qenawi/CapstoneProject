@@ -105,7 +105,7 @@ public class SignInActivity extends AppCompatActivity implements
         // An unresolvable error has occurred and Google APIs (including Sign-In) will not
         // be available.
         Log.v(TAG, "onConnectionFailed:" + connectionResult);
-        Toast.makeText(this, "Google Play Services error.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.GSE, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -139,7 +139,7 @@ public class SignInActivity extends AppCompatActivity implements
                         if (!task.isSuccessful()) {
 
                             Log.w("AIAAWBUYB", "signInWithCredential", task.getException());
-                            Toast.makeText(SignInActivity.this, "Authentication failed.",
+                            Toast.makeText(SignInActivity.this, R.string.Auf,
                                     Toast.LENGTH_SHORT).show();
                         } else {
                             PG.setVisibility(View.VISIBLE);
