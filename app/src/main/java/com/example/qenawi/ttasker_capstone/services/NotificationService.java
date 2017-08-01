@@ -103,9 +103,9 @@ public class NotificationService extends Service {
         int cntx = 0;
         Intent backIntent = new Intent(context, MainActivity.class);
         backIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        backIntent.setAction("resetTasks");
+        backIntent.setAction(getString(R.string.resettasks));
         Intent intent = new Intent(context, MainActivity.class);
-        intent.setAction("resetChat");
+        intent.setAction(getString(R.string.resetchat));
         /*  Use the notification type to switch activity to stack on the main activity*/
         if (notification.getNotftype().equals("tasktype")) {
             intent = new Intent(context, MainActivity3Tasks.class);
@@ -113,6 +113,7 @@ public class NotificationService extends Service {
             settasksCnt(getTc() + 1);
             cntx = getTc();
             imgIcon = R.drawable.task2;
+            startService(new Intent(getApplicationContext(),UpdateWidget.class));
         } else {
             cnt1 = 2;
             setchatCnt(getCc() + 1);
@@ -141,32 +142,32 @@ public class NotificationService extends Service {
     }
 
     private void flagNotificationAsSent(String notification_key) {
-        mDatabase.getReference().child("Notification").child(getStoredPair())
+        mDatabase.getReference().child(getString(R.string.notification)).child(getStoredPair())
                 .child(notification_key)
-                .child("notfstate")
+                .child(getString(R.string.notfstate))
                 .setValue("1");
     }
 
     String getStoredPair() {
-        String res = PreferenceManager.getDefaultSharedPreferences(this).getString("eTa", "null");
+        String res = PreferenceManager.getDefaultSharedPreferences(this).getString(getString(R.string.eta), getString(R.string.N));
         return res;
     }
 
     int getTc() {
-        int res = PreferenceManager.getDefaultSharedPreferences(this).getInt("eTa7", 0);
+        int res = PreferenceManager.getDefaultSharedPreferences(this).getInt(getString(R.string.eta7), 0);
         return res;
     }
 
     int getCc() {
-        int res = PreferenceManager.getDefaultSharedPreferences(this).getInt("eTa7", 0);
+        int res = PreferenceManager.getDefaultSharedPreferences(this).getInt(getString(R.string.eta7x), 0);
         return res;
     }
 
     void settasksCnt(int x) {
-        PreferenceManager.getDefaultSharedPreferences(this).edit().putInt("eTa7", x).apply();
+        PreferenceManager.getDefaultSharedPreferences(this).edit().putInt(getString(R.string.eta7), x).apply();
     }
 
     void setchatCnt(int x) {
-        PreferenceManager.getDefaultSharedPreferences(this).edit().putInt("eTa7", x).apply();
+        PreferenceManager.getDefaultSharedPreferences(this).edit().putInt(getString(R.string.eta7x), x).apply();
     }
 }

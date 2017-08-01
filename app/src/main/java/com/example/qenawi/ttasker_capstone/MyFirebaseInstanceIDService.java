@@ -1,7 +1,6 @@
 package com.example.qenawi.ttasker_capstone;
 
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -25,7 +24,7 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
     public void onTokenRefresh() {
         // Get updated InstanceID token.
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-        Log.v(TAG, "Refreshed token: " + refreshedToken);
+    //    Log.v(TAG, "Refreshed token: " + refreshedToken);
         // If you want to send messages to this application instance or
         // manage this apps subscriptions on the server side, send the
         // Instance ID token to your app server.
@@ -49,6 +48,6 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
     }
 
     String getStoredPair() {
-        return PreferenceManager.getDefaultSharedPreferences(this).getString("eTa", "null");
+        return PreferenceManager.getDefaultSharedPreferences(this).getString(getString(R.string.eta),getString(R.string.N));
     }
 }

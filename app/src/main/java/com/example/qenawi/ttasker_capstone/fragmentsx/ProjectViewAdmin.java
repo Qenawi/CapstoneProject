@@ -74,7 +74,7 @@ public class ProjectViewAdmin extends Fragment implements AdminViewAdapter.onCli
             datax = savedInstanceState.getParcelableArrayList(getString(R.string.bundleK1));
             lastFirstVisiblePosition = savedInstanceState.getInt(getString(R.string.bundleK4));
         }
-        Pkey = (UserprojectItem) getActivity().getIntent().getExtras().getParcelable("PKey");//project key
+        Pkey = (UserprojectItem) getActivity().getIntent().getExtras().getParcelable(getString(R.string.pkey));//project key
         Chat = (FloatingActionButton) root.findViewById(R.id.floatingActionButton2);
         mCallBack = this;
         rv = (RecyclerView) root.findViewById(R.id.project_team);
@@ -86,12 +86,16 @@ public class ProjectViewAdmin extends Fragment implements AdminViewAdapter.onCli
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), ChatActivity.class);
-                intent.putExtra("Alpha", Pkey);
+                intent.putExtra(getString(R.string.alpha), Pkey);
                 startActivity(intent);
             }
         });
         if (savedInstanceState == null) {
-            get_UserProjects();
+            try {
+                get_UserProjects();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } else {
             try {
                 rv.scrollToPosition(lastFirstVisiblePosition);
@@ -124,13 +128,14 @@ public class ProjectViewAdmin extends Fragment implements AdminViewAdapter.onCli
     @Override
     public void onListItemClick(int Clickpos) {
         Bundle bundle = new Bundle();
-        bundle.putParcelable("member data", datax.get(Clickpos));
-        bundle.putParcelable("project data", Pkey);
+        bundle.putParcelable(getString(R.string.memperdata), datax.get(Clickpos));
+        bundle.putParcelable(getString(R.string.projectdata), Pkey);
         mListener.onFragmentInteraction5(bundle);
     }
 
     //----------------------------------
-    void get_UserProjects() {
+    void get_UserProjects() throws  Exception
+    {
         FirebaseDatabase Fdb = FirebaseDatabase.getInstance();
         Log.v("assasin", Pkey.getPkey());
         DatabaseReference Fdbr = Fdb.getReference().child("pmember").child(Pkey.getPkey());
@@ -142,7 +147,8 @@ public class ProjectViewAdmin extends Fragment implements AdminViewAdapter.onCli
                 if (dataSnapshot.getChildrenCount() <= 0) {
                     return;
                 }
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren())
+                {
                     Pmemberitem myPair = dataSnapshot1.getValue(Pmemberitem.class);
                     Log.v("assasin", myPair.getName());
                     data.add(myPair.getName());

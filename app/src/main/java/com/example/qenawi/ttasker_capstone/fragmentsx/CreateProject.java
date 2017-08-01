@@ -79,7 +79,7 @@ public class CreateProject extends Fragment {
         fdbr2.child(pushKey2).setValue(new UserprojectItem(pushKey, ProjectName.getText().toString())).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Toast.makeText(getActivity(), "project Created Successfully ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.createdsucss, Toast.LENGTH_SHORT).show();
             }
         });
         fdbr3.child(pushKey).push().setValue(new Pmemberitem(getStoredPair(), acc.get_username().getName()));

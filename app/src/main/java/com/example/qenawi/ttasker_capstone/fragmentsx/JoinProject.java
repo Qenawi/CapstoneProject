@@ -12,9 +12,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.qenawi.ttasker_capstone.R;
 import com.example.qenawi.ttasker_capstone.contractx.ContractAcc;
 import com.example.qenawi.ttasker_capstone.contractx.ContractDepug;
-import com.example.qenawi.ttasker_capstone.R;
 import com.example.qenawi.ttasker_capstone.modle.Pmemberitem;
 import com.example.qenawi.ttasker_capstone.modle.Projectsitem;
 import com.example.qenawi.ttasker_capstone.modle.UserprojectItem;
@@ -47,7 +47,12 @@ public class JoinProject extends Fragment {
             public void onClick(View view) {
                 if (!ProjectKey.getText().toString().equals("")) {
 
-                    getPname();
+                    try {
+                        getPname();
+                    } catch (Exception e)
+                    {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
@@ -94,7 +99,7 @@ public class JoinProject extends Fragment {
         return PreferenceManager.getDefaultSharedPreferences(getActivity()).getString("eTa", "null");
     }
 
-    void getPname() {
+    void getPname()throws Exception  {
         final FirebaseDatabase fdb = FirebaseDatabase.getInstance();
         final DatabaseReference fdbr = fdb.getReference().child("projects").child(ProjectKey.getText().toString());
         fdbr.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -102,13 +107,17 @@ public class JoinProject extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getChildrenCount() <= 0) {
                     if (getActivity() != null)
-                        Toast.makeText(getActivity(), "no such project", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), R.string.noSuch, Toast.LENGTH_SHORT).show();
                 } else {
 
                     Projectsitem pit = (Projectsitem) dataSnapshot.getValue(Projectsitem.class);
-                    pName = pit.getPname();
-                    Log.v(ContractDepug.PUBTAG, pit.getAdminKey() + " " + pit.getPname() + " " + pit.getChatroomKey());
-                    JoinProject(ProjectKey.getText().toString());
+
+                    try {
+                        pName = pit.getPname();
+                        Log.v(ContractDepug.PUBTAG, pit.getAdminKey() + " " + pit.getPname() + " " + pit.getChatroomKey());
+                        JoinProject(ProjectKey.getText().toString());
+                    } catch (Exception ignore) {
+                    }
                 }
 
             }

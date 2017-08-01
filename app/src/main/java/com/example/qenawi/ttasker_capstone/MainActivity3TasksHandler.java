@@ -24,9 +24,9 @@ public class MainActivity3TasksHandler extends AppCompatActivity implements Crea
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_activity3_tasks_handler);
-        if (getIntent().getExtras().getString("target").equals("1")) {
+        if (getIntent().getExtras().getString(getString(R.string.target)).equals("1")) {
             Call_Create();
-        } else if (getIntent().getExtras().getString("target").equals("2")) {
+        } else if (getIntent().getExtras().getString(getString(R.string.target)).equals("2")) {
             Call_join();
         } else {
             Call_MyProjects();
@@ -44,10 +44,11 @@ public class MainActivity3TasksHandler extends AppCompatActivity implements Crea
     }//join
 
     @Override
-    public void onFragmentInteraction3(Object uri, Object uri2) {
+    public void onFragmentInteraction3(Object uri, Object uri2)
+    {
         Intent i = new Intent(this, ProjectView.class);
-        i.putExtra("Access", (String) uri);
-        i.putExtra("PKey", (UserprojectItem) uri2);
+        i.putExtra(getString(R.string.acess), (String) uri);
+        i.putExtra(getString(R.string.pkey), (UserprojectItem) uri2);
         startActivity(i);
     }//My_Projects
 
@@ -63,7 +64,7 @@ public class MainActivity3TasksHandler extends AppCompatActivity implements Crea
         CreateProject fragment = new CreateProject();
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
-        transaction.replace(R.id.view_holder, fragment, "create_frag"); //Container -> R.id.contentFragment
+        transaction.replace(R.id.view_holder, fragment, getString(R.string.cfrag)); //Container -> R.id.contentFragment
         transaction.commit();
     }
 
@@ -72,7 +73,7 @@ public class MainActivity3TasksHandler extends AppCompatActivity implements Crea
         JoinProject fragment = new JoinProject();
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
-        transaction.replace(R.id.view_holder, fragment, "join_frag"); //Container -> R.id.contentFragment
+        transaction.replace(R.id.view_holder, fragment, getString(R.string.Jfrag)); //Container -> R.id.contentFragment
         transaction.commit();
     }
 
@@ -81,7 +82,7 @@ public class MainActivity3TasksHandler extends AppCompatActivity implements Crea
         MyProjects fragment = new MyProjects();
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
-        transaction.replace(R.id.view_holder, fragment, "MyProjects"); //Container -> R.id.contentFragment
+        transaction.replace(R.id.view_holder, fragment, getString(R.string.MYfrag)); //Container -> R.id.contentFragment
         transaction.commit();
     }
 

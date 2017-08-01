@@ -18,7 +18,7 @@ public class ProjectView extends AppCompatActivity implements ProjectViewUser.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_project_view);
         //    pKey=(String)getIntent().getExtras().get("PKey");
-        if (getIntent().getExtras().get("Access").equals("1")) {
+        if (getIntent().getExtras().get(getString(R.string.acess)).equals("1")) {
             Call_Admin();
         } else {
             Call_User();
@@ -30,7 +30,7 @@ public class ProjectView extends AppCompatActivity implements ProjectViewUser.On
         ProjectViewAdmin fragment = new ProjectViewAdmin();
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
-        transaction.replace(R.id.view_holder, fragment, "admin_frag"); //Container -> R.id.contentFragment
+        transaction.replace(R.id.view_holder, fragment, getString(R.string.adminfag)); //Container -> R.id.contentFragment
         transaction.commit();
     }
 
@@ -39,7 +39,7 @@ public class ProjectView extends AppCompatActivity implements ProjectViewUser.On
         ProjectViewUser fragment = new ProjectViewUser();
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
-        transaction.replace(R.id.view_holder, fragment, "user_frag"); //Container -> R.id.contentFragment
+        transaction.replace(R.id.view_holder, fragment, getString(R.string.userfrag)); //Container -> R.id.contentFragment
         transaction.commit();
     }
 

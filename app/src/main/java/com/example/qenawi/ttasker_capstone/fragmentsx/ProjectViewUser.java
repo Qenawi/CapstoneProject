@@ -73,7 +73,11 @@ public class ProjectViewUser extends Fragment implements ProjectViewUserAdp.onCl
                 startActivity(intent);
             }
         });
-        getMemberTasks();
+        try {
+            getMemberTasks();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return root;
     }
 
@@ -124,7 +128,7 @@ public class ProjectViewUser extends Fragment implements ProjectViewUserAdp.onCl
 
     }
 
-    void getMemberTasks() {
+    void getMemberTasks() throws  Exception {
         final FirebaseDatabase fdb = FirebaseDatabase.getInstance();
         final DatabaseReference fdbr = fdb.getReference().child("widgetdata").child(getStoredPair()).child(Pkey.getPkey());
         fdbr.addListenerForSingleValueEvent(new ValueEventListener() {

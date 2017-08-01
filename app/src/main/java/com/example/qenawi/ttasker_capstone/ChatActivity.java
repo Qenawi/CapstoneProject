@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.example.qenawi.ttasker_capstone.adapterx.ChatAdp;
@@ -48,8 +47,8 @@ public class ChatActivity extends EmojiCompatActivity implements WhatsAppPanelEv
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-        Pkey = (UserprojectItem) getIntent().getExtras().getParcelable("Alpha");
-        Log.v("hugo", Pkey.getPkey() + " " + Pkey.getPname());
+        Pkey = (UserprojectItem) getIntent().getExtras().getParcelable(getString(R.string.alpha));
+    //    Log.v("hugo", Pkey.getPkey() + " " + Pkey.getPname());
         mBottomPanel = new WhatsAppPanel(this, this, R.color.colorPrimary);
         data = new ArrayList<>();
         rv = (RecyclerView) findViewById(R.id.chat);
@@ -61,18 +60,14 @@ public class ChatActivity extends EmojiCompatActivity implements WhatsAppPanelEv
     }
 
     @Override
-    public void onSendClicked() {
-        //   data.add(new Smsitem(mBottomPanel.getText(),null,"21/7/2017", acc.get_username().getEmail()));
-        //  adapter.notifyDataSetChanged();
-        // rv.scrollToPosition(adapter.getItemCount()-1);
-        // sendNotificationToUser("huf","Hal");
-        // FirebaseMessaging.getInstance().subscribeToTopic("project1");
+    public void onSendClicked()
+    {
         sendmsg(mBottomPanel.getText());
     }
 
     void getMesseges() {
         final FirebaseDatabase fdb = FirebaseDatabase.getInstance();
-        final DatabaseReference fdbr = fdb.getReference().child("chat").child(Pkey.getPkey());
+        final DatabaseReference fdbr = fdb.getReference().child(getString(R.string.chat)).child(Pkey.getPkey());
         fdbr.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -114,7 +109,7 @@ public class ChatActivity extends EmojiCompatActivity implements WhatsAppPanelEv
         String localTime = date.format(currentLocalTime);
         String localTime2 = date2.format(currentLocalTime);
         final FirebaseDatabase fdb = FirebaseDatabase.getInstance();
-        final DatabaseReference fdbr = fdb.getReference().child("chat").child(Pkey.getPkey());
+        final DatabaseReference fdbr = fdb.getReference().child(getString(R.string.chat)).child(Pkey.getPkey());
         String pushKey = fdbr.push().getKey();
         Smsitem s = new Smsitem(msg, "camo", localTime, acc.get_username().getName());
         fdbr.child(pushKey).setValue(s);
@@ -124,8 +119,8 @@ public class ChatActivity extends EmojiCompatActivity implements WhatsAppPanelEv
 
     void notfy(Smsitem s) {
         Intent intent = new Intent(this, NotfyUsers.class);
-        intent.putExtra("Smsitem", s);
-        intent.putExtra("UserprojectItem", Pkey);
+        intent.putExtra(getString(R.string.smsitem), s);
+        intent.putExtra(getString(R.string.userPitem), Pkey);
         startService(intent);
     }
 }

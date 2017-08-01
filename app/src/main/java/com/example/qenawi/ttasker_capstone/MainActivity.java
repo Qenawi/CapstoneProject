@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         textView = (TextView) findViewById(R.id.textView5);
         PG = (ProgressBar) findViewById(R.id.progressBar2);
-        textView.setText("signing in.....");
+        textView.setText(R.string.msgsignin);
         PG.setVisibility(View.VISIBLE);
         is_user_signed();
     }
@@ -60,7 +60,11 @@ public class MainActivity extends AppCompatActivity {
                 // sign in finished
                 //            Toast.makeText(this, "Sign in successfully", Toast.LENGTH_SHORT).show();
                 //   DoExtraWork();
-                test();
+                try {
+                    test();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
             if (resultCode == Activity.RESULT_CANCELED) {
                 //Write your code if there's no result
@@ -75,30 +79,37 @@ public class MainActivity extends AppCompatActivity {
             // Not signed in, launch the Sign In activity
             startActivityForResult(new Intent(this, SignInActivity.class), 1);
         } else {
-            Toast.makeText(this, "user is oReady signed in", Toast.LENGTH_SHORT).show();
-            // Call main Activity Create,Join,myprojects
-            //   DoExtraWork();
-            test();
+            Toast.makeText(this, R.string.userissignedin, Toast.LENGTH_SHORT).show();
+            try {
+                test();
+            } catch (Exception ignore)
+            {
+
+            }
         }
     }
 
-    void test() {
-        textView.setText("Syncing.....");
+    void test() throws Exception
+    {
+        textView.setText(R.string.msgsync);
         FirebaseDatabase fdb = FirebaseDatabase.getInstance();
         DatabaseReference fdbr = fdb.getReference().child("widgetdata").child(getStoredPair());
         fdbr.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
                 Log.v("HERO", dataSnapshot.getChildrenCount() + "  A0");
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren())
+                {
                     Log.v("HERO", "project Key" + dataSnapshot1.getKey());
-                    for (DataSnapshot dataSnapshot2 : dataSnapshot1.getChildren()) {
+                    for (DataSnapshot dataSnapshot2 : dataSnapshot1.getChildren())
+                    {
                         Log.v("HERO", "task key " + dataSnapshot2.getKey());
                         TaskItem item = (TaskItem) dataSnapshot2.getValue(TaskItem.class);
                         Pair<String, String> pair = new Pair<>(dataSnapshot1.getKey(), dataSnapshot2.getKey());
+                        if (pair.first==null||pair.second==null){continue;}
                         pkey_taskkey.add(pair);
                         sync.add(item);
-                        Log.v("HERO", item.getName());
                     }
                 }
                 Sync();
@@ -111,7 +122,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void Sync() {
+    private void Sync()
+    {
         clean_add();
 
     }
@@ -132,9 +144,14 @@ public class MainActivity extends AppCompatActivity {
             Query query = fdbr.orderByChild("email").equalTo(acc.get_username().getEmail());
             query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                        setSTored(dataSnapshot1.getKey().toString());
+                public void onDataChange(DataSnapshot dataSnapshot)
+                {
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren())
+                    {
+                        try
+                        {setSTored(dataSnapshot1.getKey());
+                        }catch (Exception ignore){}
+
                     }
                     lunch();
                 }
@@ -152,41 +169,51 @@ public class MainActivity extends AppCompatActivity {
         if (simpleIdlingResource != null) simpleIdlingResource.setIdleState(false);
         PG.setEnabled(false);
         PG.setVisibility(View.GONE);
+        UpdateWedgie();
         startService(new Intent(this, NotificationService.class));
         startActivity(new Intent(this, MainActivity3Tasks.class));
     }
 
     void setSTored(String e) {
-        PreferenceManager.getDefaultSharedPreferences(this).edit().putString("eTa", e).apply();
+        PreferenceManager.getDefaultSharedPreferences(this).edit().putString(getString(R.string.eta), e).apply();
     }
 
     String getStoredPair() {
-        String res = PreferenceManager.getDefaultSharedPreferences(this).getString("eTa", "null");
+        String res = PreferenceManager.getDefaultSharedPreferences(this).getString(getString(R.string.eta), getString(R.string.N));
         return res;
     }
 
     void settasksCnt() {
-        PreferenceManager.getDefaultSharedPreferences(this).edit().putInt("eTa7", 0).apply();
+        PreferenceManager.getDefaultSharedPreferences(this).edit().putInt(getString(R.string.eta7), 0).apply();
     }
 
     void setchatCnt() {
-        PreferenceManager.getDefaultSharedPreferences(this).edit().putInt("eTa7", 0).apply();
+        PreferenceManager.getDefaultSharedPreferences(this).edit().putInt(getString(R.string.eta7x), 0).apply();
     }
 
     @Override
-    protected void onDestroy() {
+    protected void onDestroy()
+    {
+
         UpdateWedgie();
         super.onDestroy();
     }
 
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+    }
+
     void clean_add() {
         //    get();
-        getContentResolver().delete(ContractProvider.CONTENT_URI, "dummy", null);
+        getContentResolver().delete(ContractProvider.CONTENT_URI, getString(R.string.dum), null);
         //   get();
         add_to_dp();
     }
 
-    void add_to_dp() {
+    void add_to_dp()
+    {
         //    addH(recipeItems.get(pos).getName());
         for (int i = 0; i < sync.size(); i++) {
             add(sync.get(i), pkey_taskkey.get(i));
@@ -207,13 +234,13 @@ public class MainActivity extends AppCompatActivity {
         getContentResolver().insert(ContractProvider.CONTENT_URI, contentValues);
     }
 
-    void UpdateWedgie() {
+    void UpdateWedgie()
+    {
 
-        Intent i = new Intent(this, MyTasksAppWidget.class);
+        Intent i = new Intent(getApplicationContext(), MyTasksAppWidget.class);
         i.setAction(getString(R.string.Action0));
         sendBroadcast(i);
     }
-
     @VisibleForTesting
     @NonNull
     public IdlingResource getIdlingResource() {
@@ -222,5 +249,4 @@ public class MainActivity extends AppCompatActivity {
         }
         return simpleIdlingResource;
     }
-
 }

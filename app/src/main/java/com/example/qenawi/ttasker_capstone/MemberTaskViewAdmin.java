@@ -20,8 +20,8 @@ public class MemberTaskViewAdmin extends AppCompatActivity implements com.exampl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member_task_view_admin);
         if (savedInstanceState == null) {
-            user = (Pmemberitem) getIntent().getExtras().getParcelable("member data");
-            Pkey = getIntent().getExtras().getString("project data");
+            user = (Pmemberitem) getIntent().getExtras().getParcelable(getString(R.string.memperdata));
+            Pkey = getIntent().getExtras().getString(getString(R.string.projectdata));
             Call_tasks();
         } else {
             user = savedInstanceState.getParcelable(getString(R.string.bundleK1));
@@ -34,7 +34,7 @@ public class MemberTaskViewAdmin extends AppCompatActivity implements com.exampl
         com.example.qenawi.ttasker_capstone.fragmentsx.MemberTaskViewAdmin fragment = new com.example.qenawi.ttasker_capstone.fragmentsx.MemberTaskViewAdmin();
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
-        transaction.replace(R.id.view_holder, fragment, "tasks_fragment"); //Container -> R.id.contentFragment
+        transaction.replace(R.id.view_holder, fragment, getString(R.string.Tfragment)); //Container -> R.id.contentFragment
         transaction.commit();
     }
 
@@ -43,7 +43,7 @@ public class MemberTaskViewAdmin extends AppCompatActivity implements com.exampl
         AddTaskAdmin fragment = new AddTaskAdmin();
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
-        transaction.replace(R.id.view_holder, fragment, "Addtasks_fragment"); //Container -> R.id.contentFragment
+        transaction.replace(R.id.view_holder, fragment, getString(R.string.addTfragment)); //Container -> R.id.contentFragment
         transaction.commit();
     }
 
@@ -54,7 +54,7 @@ public class MemberTaskViewAdmin extends AppCompatActivity implements com.exampl
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         //stack over Flow
-        AddTaskAdmin myFragment = (AddTaskAdmin) getSupportFragmentManager().findFragmentByTag("Addtasks_fragment");
+        AddTaskAdmin myFragment = (AddTaskAdmin) getSupportFragmentManager().findFragmentByTag(getString(R.string.addTfragment));
         if (Integer.parseInt(android.os.Build.VERSION.SDK) > 5
                 && keyCode == KeyEvent.KEYCODE_BACK
                 && event.getRepeatCount() == 0 && myFragment != null && myFragment.isVisible()) {

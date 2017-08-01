@@ -76,7 +76,11 @@ public class MemberTaskViewAdmin extends Fragment implements MempertasksViewAdmi
             }
 
         } else {
-            getMemberTasks();
+            try {
+                getMemberTasks();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         return Root;
     }
@@ -110,13 +114,16 @@ public class MemberTaskViewAdmin extends Fragment implements MempertasksViewAdmi
     }
 
     //-----------------------------------
-    void getMemberTasks() {
+    void getMemberTasks() throws  Exception
+    {
         final FirebaseDatabase fdb = FirebaseDatabase.getInstance();
         final DatabaseReference fdbr = fdb.getReference().child("widgetdata").child(user.getKey()).child(Pkey.getPkey());
         fdbr.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren())
+                {
                     TaskItem d = (TaskItem) dataSnapshot1.getValue(TaskItem.class);
                     taskItems.add(d);
                 }

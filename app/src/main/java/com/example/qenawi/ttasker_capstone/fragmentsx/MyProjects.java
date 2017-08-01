@@ -55,7 +55,11 @@ public class MyProjects extends Fragment implements RecyclerViewAdapterMainActiv
         ly = new LinearLayoutManager(getActivity());
         rv.setLayoutManager(ly);
         rv.setAdapter(adapter);
-        get_UserProjects();
+        try {
+            get_UserProjects();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return root;
     }
 
@@ -86,10 +90,14 @@ public class MyProjects extends Fragment implements RecyclerViewAdapterMainActiv
     public void onListItemClick(int Clickpos) {
         Toast.makeText(getActivity(), data.get(Clickpos), Toast.LENGTH_SHORT).show();
 //      mListener.onFragmentInteraction3(data.get(Clickpos));
-        get_projectData(datax.get(Clickpos));
+        try {
+            get_projectData(datax.get(Clickpos));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }// adapter Call back
 
-    void get_UserProjects() {
+    void get_UserProjects() throws  Exception {
         FirebaseDatabase Fdb = FirebaseDatabase.getInstance();
         DatabaseReference Fdbr = Fdb.getReference().child("userproject").child(getStoredPair());
         //Query query = Fdbr.g
@@ -113,7 +121,8 @@ public class MyProjects extends Fragment implements RecyclerViewAdapterMainActiv
         });
     }
 
-    void get_projectData(final UserprojectItem projectKey) {
+    void get_projectData(final UserprojectItem projectKey)  throws  Exception
+    {
         FirebaseDatabase Fdb = FirebaseDatabase.getInstance();
         DatabaseReference Fdbr = Fdb.getReference().child("projects").child(projectKey.getPkey());
 
@@ -143,9 +152,10 @@ public class MyProjects extends Fragment implements RecyclerViewAdapterMainActiv
     }
 
     @Override
-    public void adminKeyArrived(Object object, Object object2) {
-        Toast.makeText(getActivity(), (String) object + " | " + getStoredPair(), Toast.LENGTH_LONG).show();
+    public void adminKeyArrived(Object object, Object object2)
+    {
         if (object == null) mListener.onFragmentInteraction3("0", (UserprojectItem) object2);
+        else if(object2==null){Toast.makeText(getActivity(),"faild to get data",Toast.LENGTH_SHORT).show();}
         else {
             String res = getStoredPair().equals((String) object) ? "1" : "0";
             mListener.onFragmentInteraction3(res, (UserprojectItem) object2);

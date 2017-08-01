@@ -75,8 +75,13 @@ public class ChatAdp extends RecyclerView.Adapter<GenericViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(GenericViewHolder holder, int position) {
-        holder.bind(position);
+    public void onBindViewHolder(GenericViewHolder holder, int position)
+    {
+        try {
+            holder.bind(position);
+        }catch (Exception ignore){}
+
+
     }
 
     @Override

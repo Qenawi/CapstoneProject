@@ -51,5 +51,37 @@
     <string name="x_o">x/O</string>
     <string name="recycler_view">recycler view</string>
     <string name="chatbutton">chatButton</string>
+    <string name="dum">dummy</string>
+    <string name="widgetdata">widgetdata</string>
+    <string name="eta">eTa</string>
+    <string name="eta7">eTa7</string>
+    <string name="userissignedin">user is oReady signed in</string>
+    <string name="target">target</string>
+    <string name="createdsucss">project Created Successfully</string>
+    <string name="noSuch">no such project</string>
+    <string name="wb">welcome_back</string>
+    <string name="resettasks">resetTasks</string>
+    <string name="resetchat">resetChat</string>
+    <string name="N">null</string>
+    <string name="eta7x">eta7x</string>
+    <string name="notification">Notification</string>
+    <string name="notfstate">notfstate</string>
+    <string name="alpha">Alpha</string>
+    <string name="chat">chat</string>
+    <string name="smsitem">Smsitem</string>
+    <string name="userPitem">UserprojectItem</string>
+    <string name="acess">Access</string>
+    <string name="pkey">PKey</string>
+    <string name="cfrag">create_frag</string>
+    <string name="Jfrag">join_frag</string>
+    <string name="MYfrag">MyProjects</string>
+    <string name="adminfag">admin_frag</string>
+    <string name="userfrag">user_frag</string>
+    <string name="memperdata">member data</string>
+    <string name="projectdata">project data</string>
+    <string name="Tfragment">tasks_fragment</string>
+    <string name="addTfragment">Addtasks_fragment</string>
+    <string name="msgsignin">signing in.....</string>
+    <string name="msgsync">Syncing.....</string>
 </resources>
 
